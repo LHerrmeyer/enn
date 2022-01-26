@@ -2,6 +2,7 @@
 Explainable Neural Network written in C, designed for teaching how neural networks work in depth.
 
 ## Roadmap
+
 ### Done
 ### Not Done
 - Create linear algebra file
