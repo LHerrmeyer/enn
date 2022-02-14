@@ -14,5 +14,6 @@ Matrix* mcreate(int rows, int cols);
 Matrix* mmul(const Matrix* a, const Matrix* b);
 Matrix* madd(const Matrix* a, const Matrix* b);
 Matrix* mscale(const Matrix* a, int b);
+void mprint(const Matrix* a);
 
 #endif

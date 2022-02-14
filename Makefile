@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-std=c90 -pedantic -Wall -Wextra
+CFLAGS=-std=c90 -pedantic -Wall -Wextra $(EFLAGS)
 SOURCES=linalg.c main.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=enn

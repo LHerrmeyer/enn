@@ -1,18 +1,22 @@
 #include "linalg.h"
 #include <stdlib.h>
+#include <stdio.h>
 
-void mprint(Matrix* x){
+void mprint(const Matrix* x){
 	int col;
 	int row;
-	for(col = 0; col < x->cols, col++){
+	printf("[\n");
+	for(col = 0; col < x->cols; col++){
+		printf("[\t");
 		for(row = 0; row < x->rows; row++){
-			printf("%f\t",x[col][row]);
+			printf("%f\t",(x->data)[col][row]);
 		}
-	printf("\n");
+		printf("]\n");
 	}
+	printf("]\n");
 }
 
-Matrix* mcreate(int rows, int cols){
+Matrix* mcreate(int cols, int rows){
 	Matrix* output;
 	int col;
 
@@ -20,8 +24,9 @@ Matrix* mcreate(int rows, int cols){
 	output->rows = rows;
 	output->cols = cols;
 	output->data = malloc(cols * sizeof(double));
-	for(col = 0; col < cols; col_num++){
+	for(col = 0; col < cols; col++){
 		output->data[col] = malloc(rows * sizeof(double));
 	}
 	return output;
 }
+
