@@ -30,3 +30,10 @@ Matrix* mcreate(int cols, int rows){
 	return output;
 }
 
+void mfree(Matrix* x){
+	int col;
+	for(col = 0; col < x->cols; col++){
+		free(x->data[col]);
+	}
+	free(x);
+}

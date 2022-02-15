@@ -8,5 +8,6 @@ int main(void){
 	mat->data[1][0] = 6.0;
 	mat->data[1][1] = 7.0;
 	mprint(mat);
+	mfree(mat);
 	return 0;
 }
