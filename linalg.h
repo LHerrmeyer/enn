@@ -10,8 +10,8 @@ struct Matrix {
 typedef struct Matrix Matrix;
 
 /* Define function prototypes*/
-Matrix* mcreate(int rows, int cols);
-Matrix* mfree(Matrix* x);
+Matrix* mnew(int rows, int cols);
+void mfree(Matrix* x);
 Matrix* mmul(const Matrix* a, const Matrix* b);
 Matrix* madd(const Matrix* a, const Matrix* b);
 Matrix* mscale(const Matrix* a, int b);

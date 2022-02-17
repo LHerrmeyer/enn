@@ -1,7 +1,13 @@
-#include "linalg.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "linalg.h"
+#include "enn.h"
 
+/**
+* Prints out a Matrix to the screen.
+*
+* @param x a pointer to a Matrix to be printed
+*/
 void mprint(const Matrix* x){
 	int col;
 	int row;
@@ -16,7 +22,14 @@ void mprint(const Matrix* x){
 	printf("]\n");
 }
 
-Matrix* mcreate(int cols, int rows){
+/**
+* Creates and allocates memory for a new Matrix.
+*
+* @param cols Number of columns for the matrix.
+* @param rows Number of rows for the matrix.
+* @return A pointer to a Matrix.
+*/
+Matrix* mnew(int cols, int rows){
 	Matrix* output;
 	int col;
 
@@ -30,6 +43,11 @@ Matrix* mcreate(int cols, int rows){
 	return output;
 }
 
+/**
+* Frees memory for a Matrix.
+*
+* @param x Matrix to free.
+*/
 void mfree(Matrix* x){
 	int col;
 	for(col = 0; col < x->cols; col++){
