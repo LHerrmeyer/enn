@@ -12,9 +12,9 @@ void mprint(const Matrix* x){
 	int col;
 	int row;
 	printf("[\n");
-	for(col = 0; col < x->cols; col++){
+	for(row = 0; row < x->rows; row++){
 		printf("[\t");
-		for(row = 0; row < x->rows; row++){
+		for(col = 0; col < x->cols; col++){
 			printf("%f\t",(x->data)[col][row]);
 		}
 		printf("]\n");
