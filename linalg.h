@@ -1,7 +1,7 @@
 #ifndef LINALG_H
 #define LINALG_H
 /* Define data structures */
-/* Matrix is addressed in matrix[col][row] format to support column vectors */
+/* Matrix is addressed in matrix[row][col] format like matrix notation and NumPy */
 struct Matrix {
 	int rows;
 	int cols;

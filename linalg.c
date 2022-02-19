@@ -15,7 +15,7 @@ void mprint(const Matrix* x){
 	for(row = 0; row < x->rows; row++){
 		printf("[\t");
 		for(col = 0; col < x->cols; col++){
-			printf("%f\t",(x->data)[col][row]);
+			printf("%f\t",(x->data)[row][col]);
 		}
 		printf("]\n");
 	}
@@ -25,20 +25,20 @@ void mprint(const Matrix* x){
 /**
 * Creates and allocates memory for a new Matrix.
 *
-* @param cols Number of columns for the matrix.
 * @param rows Number of rows for the matrix.
+* @param cols Number of columns for the matrix.
 * @return A pointer to a Matrix.
 */
-Matrix* mnew(int cols, int rows){
+Matrix* mnew(int rows, int cols){
 	Matrix* output;
-	int col;
+	int row;
 
 	output = malloc(sizeof(Matrix));
 	output->rows = rows;
 	output->cols = cols;
-	output->data = malloc(cols * sizeof(double));
-	for(col = 0; col < cols; col++){
-		output->data[col] = malloc(rows * sizeof(double));
+	output->data = malloc(rows * sizeof(double));
+	for(row = 0; row < rows; row++){
+		output->data[row] = malloc(rows * sizeof(double));
 	}
 	return output;
 }
@@ -49,9 +49,9 @@ Matrix* mnew(int cols, int rows){
 * @param x Matrix to free.
 */
 void mfree(Matrix* x){
-	int col;
-	for(col = 0; col < x->cols; col++){
-		free(x->data[col]);
+	int row;
+	for(row = 0; row < x->rows; row++){
+		free(x->data[row]);
 	}
 	free(x);
 }
