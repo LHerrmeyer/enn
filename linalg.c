@@ -27,7 +27,8 @@ void mprint(const Matrix* x){
 *
 * @param rows Number of rows for the matrix.
 * @param cols Number of columns for the matrix.
-* @return A pointer to a Matrix.
+*
+* @return A pointer to the allocated Matrix.
 */
 Matrix* mnew(int rows, int cols){
 	Matrix* output;
@@ -60,6 +61,8 @@ void mfree(Matrix* x){
 * Returns an n by n identity matrix, compare np.eye()
 *
 * @param n Number of rows/columns
+*
+* @return A n by n identity matrix
 */
 Matrix* eye(int n) {
 	Matrix* mat;
@@ -79,6 +82,14 @@ Matrix* eye(int n) {
 	return mat;
 }
 
+/**
+* Adds two Matrix* together and returns the result
+*
+* @param a The first matrix to be added
+* @param b The second matrix to be added
+*
+* @return The sum of the matrices
+*/
 Matrix* madd(const Matrix* a, const Matrix* b){
 	int row;
 	int col;
