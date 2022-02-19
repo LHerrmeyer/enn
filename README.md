@@ -4,17 +4,17 @@ Explainable Neural Network written in C, designed for teaching how neural networ
 ## Roadmap
 
 ### Done
+- Linalg, NN, data structs, main files
 ### Not Done
-- Create linear algebra file
-- Loss function file
-- NN file
-- Data structures file
-- main file
+- Testing folder
+- Linalg functions (mcpy, add, subtract, mul, div, transpose, possibly gauss elim?)
+- CMake
+- Tutorial book
 - Normalizer
 - Functional prog headers
 - Working Feedforward NN
 - Write in functional style
-- Testing
+- Proper testing
 - Documentation comments
 - Read from CSV
 - Command line options

@@ -55,3 +55,45 @@ void mfree(Matrix* x){
 	}
 	free(x);
 }
+
+/**
+* Returns an n by n identity matrix, compare np.eye()
+*
+* @param n Number of rows/columns
+*/
+Matrix* eye(int n) {
+	Matrix* mat;
+	int row;
+	int col;
+
+	mat = mnew(n, n);
+
+	/* Fill with 1 for every diagonal, 0 otherwise */
+	for(row = 0; row < n; row++){
+		for(col = 0; col < n; col++){
+			if(row == col) mat->data[row][col] = 1;
+			else mat->data[row][col] = 0;
+		}
+	}
+
+	return mat;
+}
+
+Matrix* madd(const Matrix* a, const Matrix* b){
+	int row;
+	int col;
+	Matrix* out;
+
+	/* Make sure both have the same number of rows and columns */
+	if(a->rows != b->rows || a->cols != b->cols){
+		return NULL;
+	}
+
+	out = mnew(a->rows, a->cols);
+	for(row = 0; row < a->rows; row++){
+		for(col = 0; col < a->cols; col++){
+			out->data[row][col] = a->data[row][col] + b->data[row][col];
+		}
+	}
+	return out;
+}

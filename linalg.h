@@ -10,11 +10,12 @@ struct Matrix {
 typedef struct Matrix Matrix;
 
 /* Define function prototypes*/
+void mprint(const Matrix* x);
 Matrix* mnew(int rows, int cols);
 void mfree(Matrix* x);
+Matrix* eye(int n);
 Matrix* mmul(const Matrix* a, const Matrix* b);
 Matrix* madd(const Matrix* a, const Matrix* b);
 Matrix* mscale(const Matrix* a, int b);
-void mprint(const Matrix* a);
 
 #endif
