@@ -7,6 +7,7 @@ Explainable Neural Network written in C, designed for teaching how neural networ
 - Linalg, NN, data structs, main files
 ### Not Done
 - Testing folder
+- Seperate into src, build folders
 - Linalg functions (mcpy, add, subtract, mul, div, transpose, possibly gauss elim?)
 - CMake
 - Tutorial book

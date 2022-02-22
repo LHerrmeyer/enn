@@ -45,6 +45,7 @@ enn
 *.idb
 *.pdb
 *.stackdump
+infer-out
 
 # Kernel Module Compile Results
 *.mod*
