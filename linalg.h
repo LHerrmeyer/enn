@@ -16,6 +16,7 @@ void mfree(Matrix* x);
 Matrix* eye(int n);
 Matrix* mmul(const Matrix* a, const Matrix* b);
 Matrix* madd(const Matrix* a, const Matrix* b);
-Matrix* mscale(const Matrix* a, int b);
+Matrix* mscale(const Matrix* a, double b);
+Matrix* mdup(const Matrix* a);
 
 #endif

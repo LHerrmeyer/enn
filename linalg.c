@@ -6,7 +6,7 @@
 /**
 * Prints out a Matrix to the screen.
 *
-* @param x a pointer to a Matrix to be printed
+* @param x A pointer to a Matrix to be printed
 */
 void mprint(const Matrix* x){
 	int col;
@@ -47,7 +47,7 @@ Matrix* mnew(int rows, int cols){
 /**
 * Frees memory for a Matrix.
 *
-* @param x Matrix to free.
+* @param x Pointer to a Matrix to free.
 */
 void mfree(Matrix* x){
 	int row;
@@ -62,7 +62,7 @@ void mfree(Matrix* x){
 *
 * @param n Number of rows/columns
 *
-* @return A n by n identity matrix
+* @return A pointer to an n by n identity matrix
 */
 Matrix* eye(int n) {
 	Matrix* mat;
@@ -85,10 +85,10 @@ Matrix* eye(int n) {
 /**
 * Adds two Matrix* together and returns the result
 *
-* @param a The first matrix to be added
-* @param b The second matrix to be added
+* @param a Pointer to first matrix to be added
+* @param b Pointer to second matrix to be added
 *
-* @return The sum of the matrices
+* @return A pointer to the Matrix sum of the matrices
 */
 Matrix* madd(const Matrix* a, const Matrix* b){
 	int row;
@@ -100,11 +100,35 @@ Matrix* madd(const Matrix* a, const Matrix* b){
 		return NULL;
 	}
 
+	/* Allocate output matrix and set it to the sum of the input matrices */
 	out = mnew(a->rows, a->cols);
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
 			out->data[row][col] = a->data[row][col] + b->data[row][col];
 		}
 	}
+	return out;
+}
+
+/**
+* Scales (multiplies) a Matrix by a scalar amount. This can also be used for duplicating a
+* matrix, by setting the scalar value to 1.0
+*
+* @param a Pointer to the Matrix to scale.
+* @param b The scalar to scale the matrix by.
+*
+* @returns The scaled Matrix.
+*/
+Matrix* mscale(const Matrix* a, double b){
+	int row, col;
+
+	/* Allocate output matrix and set to the input matrix scaled by the scalar */
+	Matrix* out = mnew(a->rows, a->cols);
+	for(row = 0; row < a->rows; row++){
+		for(col = 0; col < a->cols; col++){
+			out->data[row][col] = a->data[row][col] * b;
+		}
+	}
+
 	return out;
 }
