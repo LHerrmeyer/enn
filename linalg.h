@@ -17,6 +17,6 @@ Matrix* eye(int n);
 Matrix* mmul(const Matrix* a, const Matrix* b);
 Matrix* madd(const Matrix* a, const Matrix* b);
 Matrix* mscale(const Matrix* a, double b);
-Matrix* mdup(const Matrix* a);
+Matrix* mtrns(const Matrix* a);
 
 #endif

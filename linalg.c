@@ -132,3 +132,36 @@ Matrix* mscale(const Matrix* a, double b){
 
 	return out;
 }
+
+/**
+* Transposes a matrix.
+*
+* @param a A pointer to the Matrix to transpose.
+*
+* @returns A pointer to the transposed Matrix.
+*/
+Matrix* mtrns(const Matrix* a){
+	int row, col;
+	Matrix* out = mnew(a->cols, a->rows);
+
+	for(row = 0; row < a->rows; row++){
+		for(col = 0; col < a->cols; col++){
+			out->data[col][row] = a->data[row][col];
+		}
+	}
+
+	return out;
+}
+
+/**
+* Multiplies two matrices together
+*
+* @param a A pointer to the 1st Matrix to be multiplied.
+* @param b A pointer to the 2nd Matrix to be multiplied.
+*
+* @returns A pointer to the matrix product.
+*/
+Matrix* mmul(const Matrix* a, const Matrix* b){
+	/* (m x n) * (n x k) = (m x k) */
+	Matrix* product = mnew(a->rows, b->cols);
+}
