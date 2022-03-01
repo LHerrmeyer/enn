@@ -164,4 +164,5 @@ Matrix* mtrns(const Matrix* a){
 Matrix* mmul(const Matrix* a, const Matrix* b){
 	/* (m x n) * (n x k) = (m x k) */
 	Matrix* product = mnew(a->rows, b->cols);
+	return product;
 }
