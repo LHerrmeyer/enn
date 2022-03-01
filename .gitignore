@@ -9,6 +9,7 @@ enn
 *.ko
 *.obj
 *.elf
+*.exe
 
 # Linker output
 *.ilk
