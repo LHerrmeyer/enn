@@ -13,7 +13,7 @@ int main(void){
 	mat->data[1][1] = 7.0;
 	mprint(mat);
 
-	i_mat = eye(2);
+	i_mat = meye(2);
 	mprint(i_mat);
 
 	sum = madd(mat, i_mat);

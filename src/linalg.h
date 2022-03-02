@@ -13,10 +13,12 @@ typedef struct Matrix Matrix;
 void mprint(const Matrix* x);
 Matrix* mnew(int rows, int cols);
 void mfree(Matrix* x);
-Matrix* eye(int n);
+Matrix* meye(int n);
 Matrix* mmul(const Matrix* a, const Matrix* b);
 Matrix* madd(const Matrix* a, const Matrix* b);
 Matrix* mscale(const Matrix* a, double b);
 Matrix* mtrns(const Matrix* a);
+Matrix* mdup(double** a);
+int mcmp(const Matrix* a, const Matrix* b);
 
 #endif

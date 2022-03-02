@@ -12,8 +12,22 @@ static char* test_mnew(){
 	return NULL;
 }
 
-static char* all_tests(){
+static char* test_meye(){
+	int res;
+	double i3_data[3][3] = {
+		{1.0, 0.0, 0.0},
+		{0.0, 1.0, 0.0},
+		{0.0, 0.0, 1.0}
+	};
+
+	res = mcmp(mdup((double**)i3_data), meye(3));
+	mu_assert("Error meye(3) != mdup(i3_data)", res);
+	return NULL;
+}
+
+static char* all_tests(){;
 	mu_run_test(test_mnew);
+	mu_run_test(test_meye);
 	return NULL;
 }
 

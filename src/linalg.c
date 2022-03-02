@@ -64,7 +64,7 @@ void mfree(Matrix* x){
 *
 * @return A pointer to an n by n identity matrix
 */
-Matrix* eye(int n) {
+Matrix* meye(int n) {
 	Matrix* mat;
 	int row;
 	int col;
@@ -174,11 +174,11 @@ Matrix* mmul(const Matrix* a, const Matrix* b){
 *
 * @return The duplicated matrix
 */
-Matrix* mdup(const double** a){
+Matrix* mdup(double** a){
 	int rows, cols;
 	Matrix* mat;
-	rows = (sizeof(a)) / (sizeof(double**));
-	cols = (sizeof(a[0]) / (sizeof(double*));
+	rows = sizeof(a) / sizeof(double**);
+	cols = sizeof(a[0]) / sizeof(double*);
 
 	/* Create a matrix with the constant array in it */
 	mat = mnew(rows, cols);
@@ -195,7 +195,7 @@ Matrix* mdup(const double** a){
 *
 * @returns Whether the matrices are equal (1 or 0)
 */
-Matrix* mcmp(const Matrix* a, const Matrix* b){
+int mcmp(const Matrix* a, const Matrix* b){
 	int row, col;
 
 	/* If the rows or columns are not equal, then return 0 */
@@ -204,7 +204,7 @@ Matrix* mcmp(const Matrix* a, const Matrix* b){
 	/* If any cell is not equal, then return 0 */
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
-			if(a[row][col] !== b[row][col]) return 0;
+			if(a->data[row][col] != b->data[row][col]) return 0;
 		}
 	}
 
