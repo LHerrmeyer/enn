@@ -126,7 +126,7 @@ Matrix* mscale(const Matrix* a, double b){
 	Matrix* out = mnew(a->rows, a->cols);
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
-			out->data[row][col] = a->data[row][col] * b;
+			out->data[row][col] = a->data[row][col] * b; /* Segfault */
 		}
 	}
 
