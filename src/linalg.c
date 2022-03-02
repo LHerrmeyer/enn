@@ -166,3 +166,47 @@ Matrix* mmul(const Matrix* a, const Matrix* b){
 	Matrix* product = mnew(a->rows, b->cols);
 	return product;
 }
+
+/*
+* Create a new matrix from a constant double**
+*
+* @param a The 2d array of doubles to convert to a matrix
+*
+* @return The duplicated matrix
+*/
+Matrix* mdup(const double** a){
+	int rows, cols;
+	Matrix* mat;
+	rows = (sizeof(a)) / (sizeof(double**));
+	cols = (sizeof(a[0]) / (sizeof(double*));
+
+	/* Create a matrix with the constant array in it */
+	mat = mnew(rows, cols);
+	mat->data = a;
+
+	/* Create a duplicate of that matrix (by multiplying by 1) */
+	return mscale(mat, 1);
+}
+
+/* Determine if two matrices are equal
+*
+* @param a First matrix to compare
+* @param b Second matrix to compare
+*
+* @returns Whether the matrices are equal (1 or 0)
+*/
+Matrix* mcmp(const Matrix* a, const Matrix* b){
+	int row, col;
+
+	/* If the rows or columns are not equal, then return 0 */
+	if(a->rows != b->rows || a->cols != b->cols) return 0;
+
+	/* If any cell is not equal, then return 0 */
+	for(row = 0; row < a->rows; row++){
+		for(col = 0; col < a->cols; col++){
+			if(a[row][col] !== b[row][col]) return 0;
+		}
+	}
+
+	return 1;
+}
