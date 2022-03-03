@@ -21,4 +21,9 @@ Matrix* mtrns(const Matrix* a);
 Matrix* mdup(double*** a, int rows, int cols);
 int mcmp(const Matrix* a, const Matrix* b);
 
+/* Define macros */
+#define MDUP(arr, nrows, ncols)	do { Matrix* a; \
+								a = mnew(nrows, ncols); \
+                               	} while (0)
+
 #endif
