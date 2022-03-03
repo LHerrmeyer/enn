@@ -14,13 +14,15 @@ static char* test_mnew(){
 
 static char* test_meye(){
 	int res;
+	Matrix* a;
 	double i3_data[3][3] = {
 		{1.0, 0.0, 0.0},
 		{0.0, 1.0, 0.0},
 		{0.0, 0.0, 1.0}
 	};
 
-	res = mcmp(mdup((double**)i3_data), meye(3));
+	a = mdup((double***)&i3_data, 3, 3);
+	res = mcmp(a, meye(3));
 	mu_assert("Error meye(3) != mdup(i3_data)", res);
 	return NULL;
 }

@@ -1,0 +1,15 @@
+Breakpoint 2 at 0x8001846: file test/test.c, line 24.
+Starting program: /mnt/c/Users/logan/Documents/prog/enn/build/enn_test 
+
+Breakpoint 2, test_meye () at test/test.c:24
+24		a = mdup((double***)&i3_data, 3, 3);
+Undefined command: "i3_data".  Try "help".
+8: i3_data = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}
+9: i3_data[0] = {1, 0, 0}
+10: i3_data[0][0] = 1
+11: i3_data[0] = {1, 0, 0}
+12: &i3_data = (double (*)[3][3]) 0x7ffffffedf80
+13: i3_data = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}
+14: i3_data = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}
+15: *i3_data = {1, 0, 0}
+16: *(&i3_data) = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}
