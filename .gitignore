@@ -1,5 +1,10 @@
 # Executable
 enn
+enn_test
+
+# Nano files
+*.swp
+*.save
 
 # Prerequisites
 *.d

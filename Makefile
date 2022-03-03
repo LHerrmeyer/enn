@@ -20,6 +20,7 @@ all: $(SOURCES) $(EXECUTABLE) $(TEST_SRC) $(TEST_EXE)
 clean:
 	rm -f $(SRC_DIR)/*.o
 	rm -f $(BIN_DIR)/enn
+	rm -f $(BIN_DIR)/enn_test
 	rm -f $(TEST_DIR)/*.o
 
 $(EXECUTABLE): $(OBJECTS)
