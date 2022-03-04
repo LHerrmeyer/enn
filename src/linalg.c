@@ -167,24 +167,6 @@ Matrix* mmul(const Matrix* a, const Matrix* b){
 	return product;
 }
 
-/*
-* Create a new matrix from a constant double**
-*
-* @param a The pointer to the 2d array of doubles to convert to a matrix
-*
-* @return The duplicated matrix
-*/
-Matrix* mdup(double*** a, int rows, int cols){
-	Matrix* mat;
-
-	/* Create a matrix with the constant array in it */
-	mat = mnew(rows, cols);
-	mat->data = *a;
-
-	/* Create a duplicate of that matrix (by multiplying by 1) */
-	return mscale(mat, 1);
-}
-
 /* Determine if two matrices are equal
 *
 * @param a First matrix to compare

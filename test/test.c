@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "../src/enn.h"
 #include "minunit.h"
 
@@ -13,17 +14,33 @@ static char* test_mnew(){
 }
 
 static char* test_meye(){
-	int res;
-	Matrix* a;
-	double i3_data[3][3] = {
-		{1.0, 0.0, 0.0},
-		{0.0, 1.0, 0.0},
-		{0.0, 0.0, 1.0}
+	Matrix *a, *a2, *b, *b2;
+	double a_data[2][2] = {
+		{1.0, 0.0},
+		{0.0, 1.0}
+	};
+	double b_data[2][3] = {
+		{5.0, 4.0, 3.0},
+		{2.0, 1.0, 0.0}
 	};
 
-	MDUP(i3_data, a, 3, 3);
-	res = mcmp(a, meye(3));
-	mu_assert("Error meye(3) != mdup(i3_data)", res);
+	/* Convert arrays in to matrices */
+	MDUP(a_data, a, 2, 2);
+	MDUP(a_data, a2, 2, 2);
+	MDUP(b_data, b, 2, 3);
+	MDUP(b_data, b2, 2, 3);
+
+	/* Run the tests */
+	mu_assert("Error, a != a2", mcmp(a, a2));
+	mu_assert("Error, a == b", !mcmp(a, b));
+	mu_assert("Error, b != b2", mcmp(b, b2));
+
+	/* Free matrix variables */
+	free(a);
+	free(a2);
+	free(b);
+	free(b2);
+
 	return NULL;
 }
 

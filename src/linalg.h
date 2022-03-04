@@ -18,18 +18,18 @@ Matrix* mmul(const Matrix* a, const Matrix* b);
 Matrix* madd(const Matrix* a, const Matrix* b);
 Matrix* mscale(const Matrix* a, double b);
 Matrix* mtrns(const Matrix* a);
-Matrix* mdup(double*** a, int rows, int cols);
 int mcmp(const Matrix* a, const Matrix* b);
 
 /* Define macros */
-#define MDUP(arr,out,nrow,ncol) do { int row, col; \
+#define MDUP(arr,out,nrow,ncol) do { \
+								int row, col; \
 								out = mnew(nrow, ncol); \
 								for(row = 0; row < nrow; row++){ \
 									for(col = 0; col < ncol; col++){ \
 										out->data[row][col] = arr[row][col]; \
 									} \
 								} \
-								out = mscale(out, 1); \
+								out = mscale(out, 1.0); \
                                	} while (0)
 
 #endif
