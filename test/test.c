@@ -21,7 +21,7 @@ static char* test_meye(){
 		{0.0, 0.0, 1.0}
 	};
 
-	a = mdup((double***)&i3_data, 3, 3);
+	MDUP(i3_data, a, 3, 3);
 	res = mcmp(a, meye(3));
 	mu_assert("Error meye(3) != mdup(i3_data)", res);
 	return NULL;

@@ -22,8 +22,14 @@ Matrix* mdup(double*** a, int rows, int cols);
 int mcmp(const Matrix* a, const Matrix* b);
 
 /* Define macros */
-#define MDUP(arr, nrows, ncols)	do { Matrix* a; \
-								a = mnew(nrows, ncols); \
+#define MDUP(arr,out,nrow,ncol) do { int row, col; \
+								out = mnew(nrow, ncol); \
+								for(row = 0; row < nrow; row++){ \
+									for(col = 0; col < ncol; col++){ \
+										out->data[row][col] = arr[row][col]; \
+									} \
+								} \
+								out = mscale(out, 1); \
                                	} while (0)
 
 #endif

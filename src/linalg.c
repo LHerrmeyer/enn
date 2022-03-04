@@ -175,8 +175,6 @@ Matrix* mmul(const Matrix* a, const Matrix* b){
 * @return The duplicated matrix
 */
 Matrix* mdup(double*** a, int rows, int cols){
-	int row;
-	int col;
 	Matrix* mat;
 
 	/* Create a matrix with the constant array in it */
