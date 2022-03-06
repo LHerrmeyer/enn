@@ -36,10 +36,10 @@ static char* test_meye(){
 	mu_assert("Error, b != b2", mcmp(b, b2));
 
 	/* Free matrix variables */
-	free(a);
-	free(a2);
-	free(b);
-	free(b2);
+	mfree(a);
+	mfree(a2);
+	mfree(b);
+	mfree(b2);
 
 	return NULL;
 }
