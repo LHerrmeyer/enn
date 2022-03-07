@@ -15,6 +15,7 @@ Matrix* mnew(int rows, int cols);
 void mfree(Matrix* x);
 Matrix* meye(int n);
 Matrix* mmul(const Matrix* a, const Matrix* b);
+Matrix* mhad(const Matrix* a, const Matrix* b);
 Matrix* madd(const Matrix* a, const Matrix* b);
 Matrix* mscale(const Matrix* a, double b);
 Matrix* mtrns(const Matrix* a);

@@ -66,9 +66,6 @@ static char* test_mmul(){
 
 	/* Run tests */
 	prod = mmul(a, b);
-	mprint(a);
-	mprint(b);
-	mprint(prod);
 	mu_assert("Error, a * b != c", mcmp(prod, c));
 	mfree(prod);
 	prod = mmul(b, a);
@@ -83,10 +80,44 @@ static char* test_mmul(){
 	return NULL;
 }
 
+static char* test_mhad(){
+	Matrix *a, *b, *c, *prod;
+	double ad[2][2] = {
+		{1., 2.},
+		{3., 4.}
+	};
+	double bd[2][2] = {
+		{2., 1.},
+		{1., 2.}
+	};
+	double cd[2][2] = {
+		{2., 2.},
+		{3., 8.}
+	};
+
+	/* Convert arrays into matrices */
+	MDUP(ad, a, 2, 2);
+	MDUP(bd, b, 2, 2);
+	MDUP(cd, c, 2, 2);
+
+	/* Run tests */
+	prod = mhad(a, b);
+	mu_assert("Error, mhad(a, b) != c", mcmp(prod, c));
+	mfree(prod);
+
+	/* Free variables */
+	mfree(a);
+	mfree(b);
+	mfree(c);
+
+	return NULL;
+}
+
 static char* all_tests(){;
 	mu_run_test(test_mnew);
 	mu_run_test(test_meye);
 	mu_run_test(test_mmul);
+	mu_run_test(test_mhad);
 	return NULL;
 }
 
