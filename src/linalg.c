@@ -85,10 +85,15 @@ Matrix* meye(int n) {
 
 /**
 * Multiply two matrices
+*
+* @param a Pointer to first matrix to be multiplied
+* @param b Pointer to second matrix to be multiplied
+*
+* @returns A pointer to the product of the matrices
 */
 Matrix* mmul(const Matrix* a, const Matrix* b){
 	Matrix* out;
-	int i, j, k;
+	int row, col, index;
 
 	/* Make sure matrices are comformable */
 	if(a->cols != b->rows) return NULL;
@@ -97,15 +102,41 @@ Matrix* mmul(const Matrix* a, const Matrix* b){
 	out = mnew(a->rows, b->cols);
 
 	/* For each row in matrix a */
-	for(i = 0; i < a->rows; i++){
+	for(row = 0; row < a->rows; row++){
 		/* For each column matrix b */
-		for(j = 0; j < b->cols; j++){
+		for(col = 0; col < b->cols; col++){
 			/* Set the output cell to the sum of the products of the entries in the row of a
 			and the column of b. */
-			out->data[i][j] = 0;
-			for(k = 0; k < a->cols; k++){
-				out->data[i][j] += a->data[i][k] * b->data[k][j];
+			out->data[row][col] = 0;
+			for(index = 0; index < a->cols; index++){
+				out->data[row][col] += a->data[row][index] * b->data[index][col];
 			}
+		}
+	}
+
+	return out;
+}
+
+/**
+* Calculates the Hadamard product of two matrices
+*
+* @param a Pointer to first matrix to be multiplied
+* @param b Pointer to second matrix to be multiplied
+*
+* @returns A pointer to the Hadamard product of the two matrices
+*/
+Matrix* mhad(const Matrix* a, const Matrix* b){
+	Matrix* out;
+	int row, col;
+
+	/* Make sure matrices have same dimensions */
+	if((a->rows != b->rows) || (a->cols != b->cols)) return NULL;
+
+	out = mnew(a->rows, a->cols);
+
+	for(row = 0; row < a->rows; row++){
+		for(col = 0; col < a->cols; col++){
+			out->data[row][col] = a->data[row][col] * b->data[row][col];
 		}
 	}
 
