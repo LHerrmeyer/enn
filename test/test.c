@@ -44,9 +44,49 @@ static char* test_meye(){
 	return NULL;
 }
 
+static char* test_mmul(){
+	Matrix *a, *b, *c, *prod;
+	double ad[2][2] = {
+		{1., 2.},
+		{2., 1.}
+	};
+	double bd[2][3] = {
+		{2., 3., 4.},
+		{5., 6., 7.}
+	};
+	double cd[2][3] = {
+		{12., 15., 18.},
+		{9., 12., 15.}
+	};
+
+	/* Convert arrays into matrices */
+	MDUP(ad, a, 2, 2);
+	MDUP(bd, b, 2, 3);
+	MDUP(cd, c, 2, 3);
+
+	/* Run tests */
+	prod = mmul(a, b);
+	mprint(a);
+	mprint(b);
+	mprint(prod);
+	mu_assert("Error, a * b != c", mcmp(prod, c));
+	mfree(prod);
+	prod = mmul(b, a);
+	mu_assert("Error, b * a != NULL", !prod);
+	mfree(prod);
+
+	/* Free variables */
+	mfree(a);
+	mfree(b);
+	mfree(c);
+
+	return NULL;
+}
+
 static char* all_tests(){;
 	mu_run_test(test_mnew);
 	mu_run_test(test_meye);
+	mu_run_test(test_mmul);
 	return NULL;
 }
 
