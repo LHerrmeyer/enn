@@ -51,6 +51,7 @@ Matrix* mnew(int rows, int cols){
 */
 void mfree(Matrix* x){
 	int row;
+	if(!x) return;
 	for(row = 0; row < x->rows; row++){
 		free(x->data[row]);
 	}
@@ -103,7 +104,7 @@ Matrix* mmul(const Matrix* a, const Matrix* b){
 			and the column of b. */
 			out->data[i][j] = 0;
 			for(k = 0; k < a->cols; k++){
-				out->data[i][j] += a->data[i][k] + b->data[k][j];
+				out->data[i][j] += a->data[i][k] * b->data[k][j];
 			}
 		}
 	}
