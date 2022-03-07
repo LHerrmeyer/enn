@@ -24,3 +24,5 @@ To build, run `make`. To enable debug flags, run `make EFLAGS=-g`.
 - Read from CSV
 - Command line options
 - Save weight functionality
+- Null checks
+- run infer (`/opt/infer-linux64-v0.17.0/bin/infer -- make`)

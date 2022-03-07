@@ -83,6 +83,35 @@ Matrix* meye(int n) {
 }
 
 /**
+* Multiply two matrices
+*/
+Matrix* mmul(const Matrix* a, const Matrix* b){
+	Matrix* out;
+	int i, j, k;
+
+	/* Make sure matrices are comformable */
+	if(a->cols != b->rows) return NULL;
+
+	/* (n x m) * (m x k) -> (m x k) */
+	out = mnew(a->rows, b->cols);
+
+	/* For each row in matrix a */
+	for(i = 0; i < a->rows; i++){
+		/* For each column matrix b */
+		for(j = 0; j < b->cols; j++){
+			/* Set the output cell to the sum of the products of the entries in the row of a
+			and the column of b. */
+			out->data[i][j] = 0;
+			for(k = 0; k < a->cols; k++){
+				out->data[i][j] += a->data[i][k] + b->data[k][j];
+			}
+		}
+	}
+
+	return out;
+}
+
+/**
 * Adds two Matrix* together and returns the result
 *
 * @param a Pointer to first matrix to be added
@@ -153,19 +182,6 @@ Matrix* mtrns(const Matrix* a){
 	return out;
 }
 
-/**
-* Multiplies two matrices together
-*
-* @param a A pointer to the 1st Matrix to be multiplied.
-* @param b A pointer to the 2nd Matrix to be multiplied.
-*
-* @returns A pointer to the matrix product.
-*/
-Matrix* mmul(const Matrix* a, const Matrix* b){
-	/* (m x n) * (n x k) = (m x k) */
-	Matrix* product = mnew(a->rows, b->cols);
-	return product;
-}
 
 /* Determine if two matrices are equal
 *
