@@ -1,6 +1,6 @@
 #ifndef ACTIV_H
 #define ACTIV_H
-Matrix* arelu(Matrix* a);
-Matrix* asigm(Matrix* a);
-Matrix* alin(Matrix* a);
+Matrix* arelu(const Matrix* a);
+Matrix* asigm(const Matrix* a);
+Matrix* alin(const Matrix* a);
 #endif
