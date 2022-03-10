@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../src/enn.h"
+#include "../src/linalg.h"
 #include "minunit.h"
 
 int tests_run = 0;

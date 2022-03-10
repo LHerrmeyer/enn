@@ -9,18 +9,19 @@ To build, run `make`. To enable debug flags, run `make EFLAGS=-g`.
 
 ### Done
 - Linalg, NN, data structs, main files
+- Linalg functions (mul, add, scale, transpose)
+- Some tests
+- Seperate into src, test, build folders
+- Documentation (Javadoc style) comments
+
 ### Not Done
-- Testing folder
-- Seperate into src, build folders
-- Linalg functions (mcpy, add, subtract, mul, div, transpose, possibly gauss elim?)
 - CMake
+- Valgrind
 - Tutorial book
 - Normalizer
 - Functional prog headers
 - Working Feedforward NN
 - Write in functional style
-- Proper testing
-- Documentation comments
 - Read from CSV
 - Command line options
 - Save weight functionality
