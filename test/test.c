@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "../src/enn.h"
 #include "../src/linalg.h"
+#include "../src/activ.h"
 #include "minunit.h"
 
 int tests_run = 0;
@@ -104,12 +105,39 @@ static char* test_mhad(){
 	/* Run tests */
 	prod = mhad(a, b);
 	mu_assert("Error, mhad(a, b) != c", mcmp(prod, c));
-	mfree(prod);
 
 	/* Free variables */
 	mfree(a);
 	mfree(b);
 	mfree(c);
+	mfree(prod);
+
+	return NULL;
+}
+
+static char* test_arelu(){
+	Matrix *a_in, *a_int, *a_out, *a_outt, *res;
+	double a_ind[6] = {1.0, 5.0, 4.0, 3.0, -5.0, -1.0};
+	double a_outd[6] = {1.0, 5.0, 4.0, 3.0, 0.0, 0.0};
+
+	/* Convert arrays to matrices */
+	MDUP((&a_ind), a_in, 6, 1);
+	MDUP((&a_outd), a_out, 6, 1);
+
+	/* Transpose (convert to column vectors) */
+	a_int = mtrns(a_in);
+	a_outt = mtrns(a_out);
+
+	/* Run tests*/
+	res = arelu(a_int);
+	mu_assert("Error, arelu(a_in) != a_out", mcmp(res, a_outt));
+
+	/* Free variables */
+	mfree(a_in);
+	mfree(a_out);
+	mfree(a_int);
+	mfree(a_outt);
+	mfree(res);
 
 	return NULL;
 }
@@ -119,6 +147,7 @@ static char* all_tests(){;
 	mu_run_test(test_meye);
 	mu_run_test(test_mmul);
 	mu_run_test(test_mhad);
+	mu_run_test(test_arelu);
 	return NULL;
 }
 
