@@ -39,13 +39,13 @@ Matrix* mnew(int rows, int cols){
 	output->rows = rows;
 	output->cols = cols;
 
-	/* The data is accessed as [row][col]
-	Therefore, we allocate an array of rows.
+	/* The data is accessed as Matrix->data[row][col]
+	Therefore, we allocate an array of rows first
 	Each row is an array of ncol doubles (double*).
 	*/
 	output->data = malloc(rows * sizeof(double*));
 	for(row = 0; row < rows; row++){
-		/* Set each row to have cols number of buckets (one spot for each column in the row) */
+		/* Set each row to have cols number of spots (one spot for each column in the row) */
 		output->data[row] = malloc(cols * sizeof(double));
 	}
 	return output;
