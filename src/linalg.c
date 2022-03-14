@@ -34,12 +34,19 @@ Matrix* mnew(int rows, int cols){
 	Matrix* output;
 	int row;
 
+	/* Allocate a Matrix object and set the number of rows and cols */
 	output = malloc(sizeof(Matrix));
 	output->rows = rows;
 	output->cols = cols;
-	output->data = malloc(rows * sizeof(double));
+
+	/* The data is accessed as [row][col]
+	Therefore, we allocate an array of rows.
+	Each row is an array of ncol doubles (double*).
+	*/
+	output->data = malloc(rows * sizeof(double*));
 	for(row = 0; row < rows; row++){
-		output->data[row] = malloc(rows * sizeof(double));
+		/* Set each row to have cols number of buckets (one spot for each column in the row) */
+		output->data[row] = malloc(cols * sizeof(double));
 	}
 	return output;
 }
