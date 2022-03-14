@@ -1,5 +1,6 @@
 #include "activ.h"
 #include "linalg.h"
+#include <math.h>
 
 Matrix* arelu(const Matrix* a){
 	int i;
@@ -27,4 +28,20 @@ Matrix* alin(const Matrix* a){
 
 /* Sigmoid activation function */
 Matrix* asig(const Matrix* a){
+	int i;
+	Matrix *in, *out;
+
+	/* Transpose matrix (convert to row vector) */
+	in = mtrns(a);
+
+	/* Calculate sigmoid */
+	for(i = 0; i < in->cols; i++){
+		in->data[0][i] = 1/(1 + exp(-1*in->data[0][i]));
+	}
+
+	/* Transpose vector back to column vector, free old variable*/
+	out = mtrns(in);
+	mfree(in);
+
+	return out;
 }
