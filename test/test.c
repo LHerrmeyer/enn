@@ -130,6 +130,7 @@ static char* test_arelu(){
 
 	/* Run tests*/
 	res = arelu(a_int);
+	mprint(res);
 	mu_assert("Error, arelu(a_in) != a_out", mcmp(res, a_outt));
 
 	/* Free variables */
