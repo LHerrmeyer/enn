@@ -117,16 +117,20 @@ static char* test_mhad(){
 
 static char* test_arelu(){
 	Matrix *a_in, *a_int, *a_out, *a_outt, *res;
-	double a_ind[6] = {1.0, 5.0, 4.0, 3.0, -5.0, -1.0};
-	double a_outd[6] = {1.0, 5.0, 4.0, 3.0, 0.0, 0.0};
+	double a_ind[6] = {1.0, 5.0, 4.0, 8.0, -5.0, -1.0};
+	double a_outd[6] = {1.0, 5.0, 4.0, 8.0, 0.0, 0.0};
 
 	/* Convert arrays to matrices */
-	MDUP((&a_ind), a_in, 6, 1);
-	MDUP((&a_outd), a_out, 6, 1);
+	MDUP((&a_ind), a_in, 1, 6);
+	MDUP((&a_outd), a_out, 1, 6);
 
 	/* Transpose (convert to column vectors) */
 	a_int = mtrns(a_in);
 	a_outt = mtrns(a_out);
+	mprint(a_in);
+	mprint(a_out);
+	mprint(a_int);
+	mprint(a_outt);
 
 	/* Run tests*/
 	res = arelu(a_int);
