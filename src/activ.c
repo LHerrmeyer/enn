@@ -24,3 +24,7 @@ Matrix* arelu(const Matrix* a){
 Matrix* alin(const Matrix* a){
 	return (Matrix*)a;
 }
+
+/* Sigmoid activation function */
+Matrix* asig(const Matrix* a){
+}
