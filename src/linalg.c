@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 #include "linalg.h"
 #include "enn.h"
 
@@ -221,6 +222,20 @@ Matrix* mtrns(const Matrix* a){
 	return out;
 }
 
+/* Calculate the Frobenius norm of a matrix
+*/
+int mfrob(const Matrix* a){
+	int row, col;
+	double sum = 0;
+
+	for(row = 0; row < a->rows; row++){
+		for(col = 0; col < a->cols; col++){
+			sum = a[row][col] * a[row][col];
+		}
+	}
+
+	return sqrt(sum);
+}
 
 /* Determine if two matrices are equal
 *
