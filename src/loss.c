@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "enn.h"
 #include "linalg.h"
+#include "loss.h"
 
 /**
 * Calculates mean squared error of two column vectors.

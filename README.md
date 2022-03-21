@@ -15,6 +15,8 @@ To build, run `make`. To enable debug flags, run `make EFLAGS=-g`.
 - Documentation (Javadoc style) comments
 
 ### Not Done
+- Test newly created functions (losses)
+- Convert loss functions from Matrix* to double and use function pointers
 - CMake
 - Valgrind
 - Tutorial book

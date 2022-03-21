@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include "linalg.h"
 #include "enn.h"
+#include "linalg.h"
 
 /**
 * Prints out a Matrix to the screen.
