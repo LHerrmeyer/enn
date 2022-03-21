@@ -230,7 +230,7 @@ int mfrob(const Matrix* a){
 
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
-			sum = a[row][col] * a[row][col];
+			sum = a->data[row][col] * a->data[row][col];
 		}
 	}
 
