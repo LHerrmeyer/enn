@@ -1,7 +1,6 @@
 #ifndef ACTIV_H
 #define ACTIV_H
-#include "linalg.h"
-Matrix* arelu(const Matrix* a);
-Matrix* asigm(const Matrix* a);
-Matrix* alin(const Matrix* a);
+double arelu(double a);
+double alin(double a);
+double asigm(double a);
 #endif

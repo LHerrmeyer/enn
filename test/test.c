@@ -115,6 +115,7 @@ static char* test_mhad(){
 	return NULL;
 }
 
+/* This function tests both arelu() and mapply() */
 static char* test_arelu(){
 	Matrix *a_in, *a_int, *a_out, *a_outt, *res;
 	double a_ind[6] = {1.0, 5.0, 4.0, 8.0, -5.0, -1.0};
@@ -133,7 +134,7 @@ static char* test_arelu(){
 	mprint(a_outt);
 
 	/* Run tests*/
-	res = arelu(a_int);
+	res = mapply(a_int, &arelu);
 	mprint(res);
 	mu_assert("Error, arelu(a_in) != a_out", mcmp(res, a_outt));
 

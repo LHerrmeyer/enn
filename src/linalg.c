@@ -29,7 +29,7 @@ void mprint(const Matrix* x){
 * @param rows Number of rows for the matrix.
 * @param cols Number of columns for the matrix.
 *
-* @return A pointer to the allocated Matrix.
+* @returns A pointer to the allocated Matrix.
 */
 Matrix* mnew(int rows, int cols){
 	Matrix* output;
@@ -67,11 +67,34 @@ void mfree(Matrix* x){
 }
 
 /**
+* Applies a function (type dfunc) to a Matrix and returns the result
+*
+* @param a Matrix* to apply the function to
+* @param func A function pointer (type dfunc) to apply to the Matrix
+*
+* @returns A Matrix* of the function applied to each element in the Matrix* a
+*/
+
+Matrix* mapply(const Matrix* a, dfunc func){
+	int row, col;
+	Matrix* out;
+
+	out = mnew(a->rows, a->cols);
+	for(row = 0; row < a->rows; row++){
+		for(col = 0; col < a->cols; col++){
+			out->data[row][col] = (*func)(a->data[row][col]);
+		}
+	}
+
+	return out;
+}
+
+/**
 * Returns an n by n identity matrix, compare np.eye()
 *
 * @param n Number of rows/columns
 *
-* @return A pointer to an n by n identity matrix
+* @returns A pointer to an n by n identity matrix
 */
 Matrix* meye(int n) {
 	Matrix* mat;

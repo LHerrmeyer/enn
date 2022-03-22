@@ -8,11 +8,13 @@ struct Matrix {
 	double** data; /* A 2d double array */
 };
 typedef struct Matrix Matrix;
+typedef double (*dfunc)(double);
 
 /* Define function prototypes*/
 void mprint(const Matrix* x);
 Matrix* mnew(int rows, int cols);
 void mfree(Matrix* x);
+Matrix* mapply(const Matrix* x, dfunc func);
 Matrix* meye(int n);
 Matrix* mmul(const Matrix* a, const Matrix* b);
 Matrix* mhad(const Matrix* a, const Matrix* b);

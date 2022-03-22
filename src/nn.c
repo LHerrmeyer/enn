@@ -11,7 +11,8 @@
 * @param biases An array of Matrices of the biases.
 * @param n The number of weights/biases (they should be the same number)
 *
-* TODO: Add activation function, make a mapply() function. Convert Matrix* activation functions to simple double functions.
 */
+/*
 Matrix* npred(Matrix* x, Matrix** weights, Matrix** biases, int n){
 }
+*/
