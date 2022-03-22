@@ -1,6 +1,7 @@
 #ifndef ACTIV_H
 #define ACTIV_H
-double arelu(double a);
-double alin(double a);
-double asigm(double a);
+double arelu(double x);
+double alrelu(double x);
+double alin(double x);
+double asigm(double x);
 #endif
