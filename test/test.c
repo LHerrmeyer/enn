@@ -128,14 +128,9 @@ static char* test_arelu(){
 	/* Transpose (convert to column vectors) */
 	a_int = mtrns(a_in);
 	a_outt = mtrns(a_out);
-	mprint(a_in);
-	mprint(a_out);
-	mprint(a_int);
-	mprint(a_outt);
 
 	/* Run tests*/
 	res = mapply(a_int, &arelu);
-	mprint(res);
 	mu_assert("Error, arelu(a_in) != a_out", mcmp(res, a_outt));
 
 	/* Free variables */
