@@ -1,5 +1,6 @@
-#include "activ.h"
 #include <math.h>
+#include "linalg.h"
+#include "activ.h"
 
 /* ReLU (rectified linear unit) */
 double arelu(double x){
@@ -19,4 +20,30 @@ double alin(double x){
 /* Sigmoid activation function */
 double asig(double x){
 	return 1/(1 + exp(-1*x));
+}
+
+/* Softmax function, used for estimating probabilities from raw outputs */
+Matrix* asmax(const Matrix* a){
+	Matrix* out;
+	int row, col;
+	double sum = 0.0;
+
+	out = mnew(a->rows, a->cols);
+
+	/* Calculate exp(x) for each x in the matrix a, and update the sum */
+	for(row = 0; row < a->rows; row++){
+		for(col = 0; col < a->cols; col++){
+			out->data[row][col] = exp(a->data[row][col]);
+			sum += out->data[row][col];
+		}
+	}
+
+	/* Scale each entry by the sum */
+	for(row = 0; row < a->rows; row++){
+		for(col = 0; col < a->cols; col++){
+			out->data[row][col] /= sum;
+		}
+	}
+
+	return out;
 }
