@@ -20,22 +20,26 @@ model.compile(optimizer="adam",
 				loss="sparse_categorical_crossentropy",
 				metrics=["accuracy"])
 
-model.fit(X_train, y_train, epochs=1000, verbose=0)
+model.fit(X_train, y_train, epochs=1000, validation_split=0.3, verbose=0)
 
 print("Accuracy:")
 model.evaluate(X_test, y_test)
 
-print("Layer 0 (Input):")
-print(model.layers[0].get_weights())
-print("Layer 1:")
-print(model.layers[1].get_weights())
-print("Layer 2 (Output):")
-print(model.layers[2].get_weights())
+for i in range(0, 3):
+	weights = model.layers[i].get_weights()
+	shape = np.shape(weights[0])
+	print(f"Layer {i} {shape[1]}x{shape[0]}")
+	print(np.transpose(weights[0]))
+	print(np.transpose(weights[1]))
 
 np.set_printoptions(suppress=True)
 test_set = X_test[0:5]
 preds = model.predict(test_set)
-print("Test set:")
+print("Test set (Sepal length, sepal width, petal length, petal width):")
 print(test_set)
 print("Preds (setosa, versicolor, virginica):")
 print(preds)
+print("Preds (max prob):")
+print(preds.argmax(1))
+print("True results:")
+print(y_test[0:5])
