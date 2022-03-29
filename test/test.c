@@ -16,6 +16,15 @@ static char* test_mnew(){
 	return NULL;
 }
 
+static char* test_mnew2(){
+	Matrix *mat, *mat2;
+	mat = mnew2(5, 3, NULL);
+	mat2 = mnew2(5, 3, mat);
+	mu_assert("Error, mat is NULL", mat);
+	mu_assert("Error, mat != mat2", mat == mat2);
+	return NULL;
+}
+
 static char* test_meye(){
 	Matrix *a, *a2, *b, *b2;
 	double a_data[2][2] = {
@@ -205,6 +214,7 @@ static char* test_npred(){
 
 static char* all_tests(){;
 	mu_run_test(test_mnew);
+	mu_run_test(test_mnew2);
 	mu_run_test(test_meye);
 	mu_run_test(test_mmul);
 	mu_run_test(test_mhad);

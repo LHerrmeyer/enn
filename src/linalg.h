@@ -13,6 +13,7 @@ typedef double (*dfunc)(double);
 /* Define function prototypes*/
 void mprint(const Matrix* x);
 Matrix* mnew(int rows, int cols);
+Matrix* mnew2(int rows, int cols, Matrix* a);
 void mfree(Matrix* x);
 Matrix* mapply(const Matrix* x, dfunc func);
 Matrix* meye(int n);

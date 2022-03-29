@@ -20,7 +20,7 @@ static const char* UNUSED_VAR check_if_fmt = "**** Check <%s> failed at %s:%d **
 	} while (0)
 #define CHECK_IF(expr)						\
 	do {									\
-		if(expr){							\
+		if((expr)){							\
 			fprintf(stderr, check_if_fmt,	\
 					#expr, __FILE__,		\
 					__LINE__);				\

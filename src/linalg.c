@@ -57,6 +57,23 @@ Matrix* mnew(int rows, int cols){
 }
 
 /**
+* Creates and allocates memory for a matrix if the given matrix is not NULL.
+*
+* @param rows Number of rows for the Matrix.
+* @param cols Number of columns for the Matrix.
+* @a A pointer to an existing matrix to pass back, if NULL, a new matrix will be allocated.
+*
+* @returns A pointer to the allocated Matrix.
+*/
+Matrix* mnew2(int rows, int cols, Matrix* a){
+	if(a){
+		CHECK_IF(rows != a->rows || cols != a->cols);
+		return a;
+	}
+	return mnew(rows, cols);
+}
+
+/**
 * Frees memory for a Matrix.
 *
 * @param x Pointer to a Matrix to free.
