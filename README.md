@@ -13,13 +13,14 @@ To build, run `make`. To enable debug flags, run `make EFLAGS=-g`.
 - Some tests
 - Seperate into src, test, build folders
 - Documentation (Javadoc style) comments
+- Convert loss functions from Matrix* to double and use function pointers
 
 ### Not Done
+- Add mnewo/mcreat/mnew2 function to allocate only if NULL or rows and cols incorrect.
 - Add optional out argument to linalg functions for mutability.
 - Add NULL checks to linalg functions
 - Test newly created functions (losses)
 - Add backprop
-- Convert loss functions from Matrix* to double and use function pointers
 - CMake
 - Valgrind
 - Tutorial book

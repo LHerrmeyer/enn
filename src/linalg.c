@@ -264,7 +264,12 @@ Matrix* mtrns(const Matrix* a){
 	return out;
 }
 
-/* Calculate the Frobenius norm of a matrix
+/**
+* Calculate the Frobenius norm of a matrix
+*
+* @param a A pointer to the Matrix to get the norm of.
+*
+* @returns The norm of the Matrix.
 */
 int mfrob(const Matrix* a){
 	int row, col;
