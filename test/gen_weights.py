@@ -25,12 +25,15 @@ model.fit(X_train, y_train, epochs=1000, validation_split=0.3, verbose=0)
 print("Accuracy:")
 model.evaluate(X_test, y_test)
 
+n = ''
+np.set_string_function(lambda x: repr(x).replace('(', n).replace(')', n).replace('array', n).replace("       ", ' ').replace('[','{').replace(']','}') , repr=False)
+
 for i in range(0, 3):
 	weights = model.layers[i].get_weights()
 	shape = np.shape(weights[0])
 	print(f"Layer {i} {shape[1]}x{shape[0]}")
 	print(np.transpose(weights[0]))
-	print(np.transpose(weights[1]))
+	print(repr(np.transpose(weights[1])))
 
 np.set_printoptions(suppress=True)
 test_set = X_test[0:5]
