@@ -19,6 +19,8 @@ Matrix* npred(const Matrix* x, const Matrix** weights, const Matrix** biases, in
 	int layer;
 	Matrix *current_vector, *product, *sum;
 
+	CHECK_NULL(x);CHECK_NULL(weights);CHECK_NULL(biases);CHECK_NULL(activ_func);
+
 	current_vector = mscale(x, 1.0);
 	for(layer = 0; layer < n; layer++){
 		/* Apply the weights and biases */

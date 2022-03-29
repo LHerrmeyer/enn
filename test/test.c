@@ -164,9 +164,9 @@ static char* test_npred(){
 		{-0.88661844, -1.3611857 ,  0.29023024,  1.1938326 },
 		{ 0.01811641,  0.8420355 ,  0.980748  , -0.07365165}
 	};
-	double b0[] = {0.0, -0.563959, -0.06092859, 0.0};
-	double b1[] = {0.0, -0.82546085, -0.3782354, -0.00169147};
-	double b2[] = {1.9372896, -0.7055002, -1.4840443};
+	double b0[4] = {0.0, -0.563959, -0.06092859, 0.0};
+	double b1[4] = {0.0, -0.82546085, -0.3782354, -0.00169147};
+	double b2[3] = {1.9372896, -0.7055002, -1.4840443};
 	double test_set[5][4] = {
 		{6.1, 2.8, 4.7, 1.2},
 		{5.7, 3.8, 1.7, 0.3},
@@ -175,13 +175,17 @@ static char* test_npred(){
 		{6.8, 2.8, 4.8, 1.4}
 	};
 
+	/* Allocate variables for weights and biases */
+	weights = malloc(sizeof(Matrix*) * 3);
+	biases = malloc(sizeof(Matrix*) * 3);
+
 	/* Put weights and biases into Matrix* structs */
 	MDUP(w0, weights[0], 4, 4);
 	MDUP(w1, weights[1], 4, 4);
 	MDUP(w2, weights[2], 3, 4);
-	MDUP(&(b0), biases[0], 1, 4);
-	MDUP(&(b1), biases[1], 1, 4);
-	MDUP(&(b2), biases[2], 1, 3);
+	MDUP(&b0, biases[0], 1, 4);
+	MDUP(&b1, biases[1], 1, 4);
+	MDUP(&b2, biases[2], 1, 3);
 
 	/* Convert biases to column vectors */
 	biases[0] = mtrns(biases[0]);
@@ -189,9 +193,9 @@ static char* test_npred(){
 	biases[2] = mtrns(biases[2]);
 
 	/* Run the tests */
-	for(i = 0; i < sizeof(test_set)/sizeof(double*); i++){
-		MDUP(test_set[i], current_vector, 1, 4);
-		out = npred(current_vector, weights, biases, sizeof(test_set)/sizeof(double*), &arelu);
+	for(i = 0; i < (int)(sizeof(test_set)/sizeof(double*)); i++){
+		MDUP(&test_set[i], current_vector, 1, 4);
+		out = npred(current_vector, (const Matrix**)weights, (const Matrix**)biases, sizeof(test_set[0])/sizeof(double*), &arelu);
 		mprint(out);
 		mfree(current_vector);
 		mfree(out);

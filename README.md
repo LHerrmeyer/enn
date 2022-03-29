@@ -15,6 +15,8 @@ To build, run `make`. To enable debug flags, run `make EFLAGS=-g`.
 - Documentation (Javadoc style) comments
 
 ### Not Done
+- Add optional out argument to linalg functions for mutability.
+- Add NULL checks to linalg functions
 - Test newly created functions (losses)
 - Add backprop
 - Convert loss functions from Matrix* to double and use function pointers

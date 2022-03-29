@@ -12,6 +12,9 @@
 void mprint(const Matrix* x){
 	int col;
 	int row;
+
+	CHECK_NULL(x);
+
 	printf("[\n");
 	for(row = 0; row < x->rows; row++){
 		printf("[\t");
@@ -37,6 +40,7 @@ Matrix* mnew(int rows, int cols){
 
 	/* Allocate a Matrix object and set the number of rows and cols */
 	output = malloc(sizeof(Matrix));
+	CHECK_NULL(output);
 	output->rows = rows;
 	output->cols = cols;
 
@@ -78,6 +82,8 @@ void mfree(Matrix* x){
 Matrix* mapply(const Matrix* a, dfunc func){
 	int row, col;
 	Matrix* out;
+
+	CHECK_NULL(a);CHECK_NULL(func);
 
 	out = mnew(a->rows, a->cols);
 	for(row = 0; row < a->rows; row++){
@@ -126,6 +132,8 @@ Matrix* mmul(const Matrix* a, const Matrix* b){
 	Matrix* out;
 	int row, col, index;
 
+	CHECK_NULL(a);CHECK_NULL(b);
+
 	/* Make sure matrices are comformable */
 	if(a->cols != b->rows) return NULL;
 
@@ -160,6 +168,8 @@ Matrix* mhad(const Matrix* a, const Matrix* b){
 	Matrix* out;
 	int row, col;
 
+	CHECK_NULL(a);CHECK_NULL(b);
+
 	/* Make sure matrices have same dimensions */
 	if((a->rows != b->rows) || (a->cols != b->cols)) return NULL;
 
@@ -187,6 +197,8 @@ Matrix* madd(const Matrix* a, const Matrix* b){
 	int col;
 	Matrix* out;
 
+	CHECK_NULL(a);CHECK_NULL(b);
+
 	/* Make sure both have the same number of rows and columns */
 	if(a->rows != b->rows || a->cols != b->cols){
 		return NULL;
@@ -213,9 +225,12 @@ Matrix* madd(const Matrix* a, const Matrix* b){
 */
 Matrix* mscale(const Matrix* a, double b){
 	int row, col;
+	Matrix* out;
+
+	CHECK_NULL(a);
 
 	/* Allocate output matrix and set to the input matrix scaled by the scalar */
-	Matrix* out = mnew(a->rows, a->cols);
+	out = mnew(a->rows, a->cols);
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
 			out->data[row][col] = a->data[row][col] * b; /* Segfault */
@@ -234,7 +249,11 @@ Matrix* mscale(const Matrix* a, double b){
 */
 Matrix* mtrns(const Matrix* a){
 	int row, col;
-	Matrix* out = mnew(a->cols, a->rows);
+	Matrix* out;
+
+	CHECK_NULL(a);
+
+	out = mnew(a->cols, a->rows);
 
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
@@ -250,6 +269,8 @@ Matrix* mtrns(const Matrix* a){
 int mfrob(const Matrix* a){
 	int row, col;
 	double sum = 0;
+
+	CHECK_NULL(a);
 
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
@@ -269,6 +290,8 @@ int mfrob(const Matrix* a){
 */
 int mcmp(const Matrix* a, const Matrix* b){
 	int row, col;
+
+	CHECK_NULL(a);CHECK_NULL(b);
 
 	/* If the rows or columns are not equal, then return 0 */
 	if(a->rows != b->rows || a->cols != b->cols) return 0;

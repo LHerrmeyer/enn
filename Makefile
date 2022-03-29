@@ -1,6 +1,7 @@
 # To run infer: /opt/infer-linux64-v0.17.0/bin/infer run -- make
 CC=gcc
-CFLAGS=-std=c90 -pedantic -Wall -Wextra -lm $(EFLAGS)
+CFLAGS=-std=c90 -pedantic -Wall -Wextra $(EFLAGS)
+LDFLAGS=-lm
 
 SRC_DIR=./src
 BIN_DIR=./build
@@ -24,10 +25,10 @@ clean:
 	rm -f $(TEST_DIR)/*.o
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $@
+	$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
 
 $(TEST_EXE): $(TEST_OBJS)
-	$(CC) $(CFLAGS) $(filter-out $(SRC_DIR)/main.o, $(OBJECTS)) $(TEST_OBJS) -o $@
+	$(CC) $(CFLAGS) $(filter-out $(SRC_DIR)/main.o, $(OBJECTS)) $(TEST_OBJS) -o $@ $(LDFLAGS)
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
