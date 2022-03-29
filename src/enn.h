@@ -2,7 +2,12 @@
 #define ENN_H
 #include <stdio.h>
 #include <stdlib.h>
-static const char* check_if_fmt = "**** Check <%s> failed at %s:%d ****\n";
+#ifdef __GNUC__
+#define UNUSED_VAR __attribute__ ((unused))
+#else
+#define UNUSED_VAR
+#endif
+static const char* UNUSED_VAR check_if_fmt = "**** Check <%s> failed at %s:%d ****\n";
 /* Source https://ocw.cs.pub.ro/courses/so/laboratoare/resurse/die */
 #define ASSERTM(assertion, msg)				\
 	do {									\
