@@ -13,10 +13,10 @@ int main(void){
 	mat->data[1][1] = 7.0;
 	mprint(mat);
 
-	i_mat = meye(2);
+	i_mat = meye(2, NULL);
 	mprint(i_mat);
 
-	sum = madd(mat, i_mat);
+	sum = madd(mat, i_mat, NULL);
 	mprint(sum);
 
 	mfree(mat);

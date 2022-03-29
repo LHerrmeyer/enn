@@ -15,14 +15,15 @@ void mprint(const Matrix* x);
 Matrix* mnew(int rows, int cols);
 Matrix* mnew2(int rows, int cols, Matrix* a);
 void mfree(Matrix* x);
-Matrix* mapply(const Matrix* x, dfunc func);
-Matrix* meye(int n);
-Matrix* mmul(const Matrix* a, const Matrix* b);
-Matrix* mhad(const Matrix* a, const Matrix* b);
-Matrix* madd(const Matrix* a, const Matrix* b);
-Matrix* mscale(const Matrix* a, double b);
-Matrix* mtrns(const Matrix* a);
+Matrix* mapply(const Matrix* x, dfunc func, Matrix* out);
+Matrix* meye(int n, Matrix* out);
+Matrix* mmul(const Matrix* a, const Matrix* b, Matrix* out);
+Matrix* mhad(const Matrix* a, const Matrix* b, Matrix* out);
+Matrix* madd(const Matrix* a, const Matrix* b, Matrix* out);
+Matrix* mscale(const Matrix* a, double b, Matrix* out);
+Matrix* mtrns(const Matrix* a, Matrix* out);
 int mcmp(const Matrix* a, const Matrix* b);
+int mfrob(const Matrix* a);
 
 /* Define macros */
 #define MDUP(arr,out,nrow,ncol) do { \
@@ -34,7 +35,7 @@ int mcmp(const Matrix* a, const Matrix* b);
 										tmp->data[row][col] = (arr)[row][col]; \
 									} \
 								} \
-								out = mscale(tmp, 1.0); \
+								out = mscale(tmp, 1.0, NULL); \
 								mfree(tmp); \
                                	} while (0)
 

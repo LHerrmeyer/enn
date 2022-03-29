@@ -77,10 +77,10 @@ static char* test_mmul(){
 	MDUP(cd, c, 2, 3);
 
 	/* Run tests */
-	prod = mmul(a, b);
+	prod = mmul(a, b, NULL);
 	mu_assert("Error, a * b != c", mcmp(prod, c));
 	mfree(prod);
-	prod = mmul(b, a);
+	prod = mmul(b, a, NULL);
 	mu_assert("Error, b * a != NULL", !prod);
 	mfree(prod);
 
@@ -113,7 +113,7 @@ static char* test_mhad(){
 	MDUP(cd, c, 2, 2);
 
 	/* Run tests */
-	prod = mhad(a, b);
+	prod = mhad(a, b, NULL);
 	mu_assert("Error, mhad(a, b) != c", mcmp(prod, c));
 
 	/* Free variables */
@@ -136,11 +136,11 @@ static char* test_arelu(){
 	MDUP((&a_outd), a_out, 1, 6);
 
 	/* Transpose (convert to column vectors) */
-	a_int = mtrns(a_in);
-	a_outt = mtrns(a_out);
+	a_int = mtrns(a_in, NULL);
+	a_outt = mtrns(a_out, NULL);
 
 	/* Run tests*/
-	res = mapply(a_int, &arelu);
+	res = mapply(a_int, &arelu, NULL);
 	mu_assert("Error, arelu(a_in) != a_out", mcmp(res, a_outt));
 
 	/* Free variables */
@@ -197,9 +197,11 @@ static char* test_npred(){
 	MDUP(&b2, biases[2], 1, 3);
 
 	/* Convert biases to column vectors */
-	biases[0] = mtrns(biases[0]);
-	biases[1] = mtrns(biases[1]);
-	biases[2] = mtrns(biases[2]);
+	for(i = 0; i < 3; i++){
+		Matrix* cur_bias = biases[i];
+		biases[i] = mtrns(cur_bias, NULL);
+		mfree(cur_bias);
+	}
 
 	/* Run the tests */
 	for(i = 0; i < (int)(sizeof(test_set)/sizeof(double*)); i++){

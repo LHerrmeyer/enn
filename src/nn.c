@@ -21,16 +21,16 @@ Matrix* npred(const Matrix* x, const Matrix** weights, const Matrix** biases, in
 
 	CHECK_NULL(x);CHECK_NULL(weights);CHECK_NULL(biases);CHECK_NULL(activ_func);
 
-	current_vector = mscale(x, 1.0);
+	current_vector = mscale(x, 1.0, NULL);
 	for(layer = 0; layer < n; layer++){
 		/* Apply the weights and biases */
-		product = mmul(weights[layer], current_vector);
-		sum = madd(product, biases[layer]);
+		product = mmul(weights[layer], current_vector, NULL);
+		sum = madd(product, biases[layer], NULL);
 		mfree(current_vector);
 		mfree(product);
 
 		/* Apply the activation function */
-		current_vector = mapply(sum, activ_func);
+		current_vector = mapply(sum, activ_func, NULL);
 		mfree(sum);
 
 		/* Check for nulls */

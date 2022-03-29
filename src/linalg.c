@@ -90,19 +90,19 @@ void mfree(Matrix* x){
 /**
 * Applies a function (type dfunc) to a Matrix and returns the result
 *
-* @param a Matrix* to apply the function to
-* @param func A function pointer (type dfunc) to apply to the Matrix
+* @param a Matrix* to apply the function to.
+* @param func A function pointer (type dfunc) to apply to the Matrix.
+* @param out Pointer to output matrix (optional).
 *
-* @returns A Matrix* of the function applied to each element in the Matrix* a
+* @returns A Matrix* of the function applied to each element in the Matrix* a.
 */
 
-Matrix* mapply(const Matrix* a, dfunc func){
+Matrix* mapply(const Matrix* a, dfunc func, Matrix* out){
 	int row, col;
-	Matrix* out;
 
 	CHECK_NULL(a);CHECK_NULL(func);
 
-	out = mnew(a->rows, a->cols);
+	out = mnew2(a->rows, a->cols, out);
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
 			out->data[row][col] = (*func)(a->data[row][col]);
@@ -116,25 +116,25 @@ Matrix* mapply(const Matrix* a, dfunc func){
 * Returns an n by n identity matrix, compare np.eye()
 *
 * @param n Number of rows/columns
+* @param out Pointer to output matrix (optional)
 *
 * @returns A pointer to an n by n identity matrix
 */
-Matrix* meye(int n) {
-	Matrix* mat;
+Matrix* meye(int n, Matrix* out) {
 	int row;
 	int col;
 
-	mat = mnew(n, n);
+	out = mnew2(n, n, out);
 
 	/* Fill with 1 for every diagonal, 0 otherwise */
 	for(row = 0; row < n; row++){
 		for(col = 0; col < n; col++){
-			if(row == col) mat->data[row][col] = 1;
-			else mat->data[row][col] = 0;
+			if(row == col) out->data[row][col] = 1;
+			else out->data[row][col] = 0;
 		}
 	}
 
-	return mat;
+	return out;
 }
 
 /**
@@ -142,11 +142,11 @@ Matrix* meye(int n) {
 *
 * @param a Pointer to first matrix to be multiplied
 * @param b Pointer to second matrix to be multiplied
+* @param out Pointer to output matrix (optional)
 *
 * @returns A pointer to the product of the matrices
 */
-Matrix* mmul(const Matrix* a, const Matrix* b){
-	Matrix* out;
+Matrix* mmul(const Matrix* a, const Matrix* b, Matrix* out){
 	int row, col, index;
 
 	CHECK_NULL(a);CHECK_NULL(b);
@@ -155,7 +155,7 @@ Matrix* mmul(const Matrix* a, const Matrix* b){
 	if(a->cols != b->rows) return NULL;
 
 	/* (n x m) * (m x k) -> (m x k) */
-	out = mnew(a->rows, b->cols);
+	out = mnew2(a->rows, b->cols, out);
 
 	/* For each row in matrix a */
 	for(row = 0; row < a->rows; row++){
@@ -178,11 +178,11 @@ Matrix* mmul(const Matrix* a, const Matrix* b){
 *
 * @param a Pointer to first matrix to be multiplied
 * @param b Pointer to second matrix to be multiplied
+* @param out Pointer to output matrix (optional)
 *
 * @returns A pointer to the Hadamard product of the two matrices
 */
-Matrix* mhad(const Matrix* a, const Matrix* b){
-	Matrix* out;
+Matrix* mhad(const Matrix* a, const Matrix* b, Matrix* out){
 	int row, col;
 
 	CHECK_NULL(a);CHECK_NULL(b);
@@ -190,7 +190,7 @@ Matrix* mhad(const Matrix* a, const Matrix* b){
 	/* Make sure matrices have same dimensions */
 	if((a->rows != b->rows) || (a->cols != b->cols)) return NULL;
 
-	out = mnew(a->rows, a->cols);
+	out = mnew2(a->rows, a->cols, out);
 
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
@@ -206,13 +206,13 @@ Matrix* mhad(const Matrix* a, const Matrix* b){
 *
 * @param a Pointer to first matrix to be added
 * @param b Pointer to second matrix to be added
+* @param out Pointer to output matrix (optional)
 *
 * @return A pointer to the Matrix sum of the matrices
 */
-Matrix* madd(const Matrix* a, const Matrix* b){
+Matrix* madd(const Matrix* a, const Matrix* b, Matrix* out){
 	int row;
 	int col;
-	Matrix* out;
 
 	CHECK_NULL(a);CHECK_NULL(b);
 
@@ -222,7 +222,7 @@ Matrix* madd(const Matrix* a, const Matrix* b){
 	}
 
 	/* Allocate output matrix and set it to the sum of the input matrices */
-	out = mnew(a->rows, a->cols);
+	out = mnew2(a->rows, a->cols, out);
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
 			out->data[row][col] = a->data[row][col] + b->data[row][col];
@@ -237,20 +237,20 @@ Matrix* madd(const Matrix* a, const Matrix* b){
 *
 * @param a Pointer to the Matrix to scale.
 * @param b The scalar to scale the matrix by.
+* @param out Pointer to output matrix (optional)
 *
 * @returns The scaled Matrix.
 */
-Matrix* mscale(const Matrix* a, double b){
+Matrix* mscale(const Matrix* a, double b, Matrix* out){
 	int row, col;
-	Matrix* out;
 
 	CHECK_NULL(a);
 
 	/* Allocate output matrix and set to the input matrix scaled by the scalar */
-	out = mnew(a->rows, a->cols);
+	out = mnew2(a->rows, a->cols, out);
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
-			out->data[row][col] = a->data[row][col] * b; /* Segfault */
+			out->data[row][col] = a->data[row][col] * b;
 		}
 	}
 
@@ -261,16 +261,16 @@ Matrix* mscale(const Matrix* a, double b){
 * Transposes a matrix.
 *
 * @param a A pointer to the Matrix to transpose.
+* @param out Pointer to output matrix (optional)
 *
 * @returns A pointer to the transposed Matrix.
 */
-Matrix* mtrns(const Matrix* a){
+Matrix* mtrns(const Matrix* a, Matrix* out){
 	int row, col;
-	Matrix* out;
 
 	CHECK_NULL(a);
 
-	out = mnew(a->cols, a->rows);
+	out = mnew2(a->cols, a->rows, out);
 
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
