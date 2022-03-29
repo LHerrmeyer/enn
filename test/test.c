@@ -3,6 +3,7 @@
 #include "../src/enn.h"
 #include "../src/linalg.h"
 #include "../src/activ.h"
+#include "../src/nn.h"
 #include "minunit.h"
 
 int tests_run = 0;
@@ -144,7 +145,8 @@ static char* test_arelu(){
 }
 
 static char* test_npred(){
-	Matrix **weights, **biases;
+	Matrix **weights, **biases, *out, *current_vector;
+	int i;
 	double w0[4][4] = {
 		{-0.5206975 ,  0.5338802 , -0.5602411 , -0.09294045},
 		{-0.81646407,  0.07859222,  0.8910857 ,  0.9753645 },
@@ -165,6 +167,35 @@ static char* test_npred(){
 	double b0[] = {0.0, -0.563959, -0.06092859, 0.0};
 	double b1[] = {0.0, -0.82546085, -0.3782354, -0.00169147};
 	double b2[] = {1.9372896, -0.7055002, -1.4840443};
+	double test_set[5][4] = {
+		{6.1, 2.8, 4.7, 1.2},
+		{5.7, 3.8, 1.7, 0.3},
+		{7.7, 2.6, 6.9, 2.3},
+		{6. , 2.9, 4.5, 1.5},
+		{6.8, 2.8, 4.8, 1.4}
+	};
+
+	/* Put weights and biases into Matrix* structs */
+	MDUP(w0, weights[0], 4, 4);
+	MDUP(w1, weights[1], 4, 4);
+	MDUP(w2, weights[2], 3, 4);
+	MDUP(&(b0), biases[0], 1, 4);
+	MDUP(&(b1), biases[1], 1, 4);
+	MDUP(&(b2), biases[2], 1, 3);
+
+	/* Convert biases to column vectors */
+	biases[0] = mtrns(biases[0]);
+	biases[1] = mtrns(biases[1]);
+	biases[2] = mtrns(biases[2]);
+
+	/* Run the tests */
+	for(i = 0; i < sizeof(test_set)/sizeof(double*); i++){
+		MDUP(test_set[i], current_vector, 1, 4);
+		out = npred(current_vector, weights, biases, sizeof(test_set)/sizeof(double*), &arelu);
+		mprint(out);
+		mfree(current_vector);
+		mfree(out);
+	}
 	return NULL;
 }
 
@@ -174,6 +205,7 @@ static char* all_tests(){;
 	mu_run_test(test_mmul);
 	mu_run_test(test_mhad);
 	mu_run_test(test_arelu);
+	mu_run_test(test_npred);
 	return NULL;
 }
 
