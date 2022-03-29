@@ -1,6 +1,6 @@
 # To run infer: /opt/infer-linux64-v0.17.0/bin/infer run -- make
 CC=gcc
-CFLAGS=-std=c90 -pedantic -Wall -Wextra $(EFLAGS)
+CFLAGS=-std=c90 -pedantic -Wall -Wextra -lm $(EFLAGS)
 
 SRC_DIR=./src
 BIN_DIR=./build
