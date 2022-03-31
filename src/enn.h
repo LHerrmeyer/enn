@@ -27,5 +27,6 @@ static const char* UNUSED_VAR check_if_fmt = "**** Check <%s> failed at %s:%d **
 		}									\
 	} while(0)
 #define CHECK_NULL(expr) CHECK_IF(!expr)
+#define CHECK_IF_NOT
 #define SQR(x) ((x)*(x))
 #endif
