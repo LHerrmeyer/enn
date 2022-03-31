@@ -205,9 +205,12 @@ static char* test_npred(){
 
 	/* Run the tests */
 	for(i = 0; i < 5; i++){
-		MDUP(&test_set[i], current_vector, 1, 4);
+		Matrix* current_vector_trns;
+		MDUP(&test_set[i], current_vector_trns, 1, 4);
+		current_vector = mtrns(current_vector_trns, NULL);
 		out = npred(current_vector, (const Matrix**)weights, (const Matrix**)biases, sizeof(test_set[0])/sizeof(double*), &arelu);
 		mprint(out);
+		mfree(current_vector_trns);
 		mfree(current_vector);
 		mfree(out);
 	}
