@@ -155,6 +155,9 @@ Matrix* mmul(const Matrix* a, const Matrix* b, Matrix* out){
 	/* Make sure matrices are comformable */
 	/*CHECK_IF(a->cols != b->rows);*/
 	/*ENN_ASSERT(a->cols == b->rows);*/
+	printf("Just before result of check.\n");
+	printf("Result of check: %d\n", (a->cols == b->rows));
+	printf("A = %d x %d, B = %d x %d\n", a->rows, a->cols, b->rows, b->cols);
 	assert(a->cols == b->rows);
 
 	if(a->cols != b->rows) return NULL;
