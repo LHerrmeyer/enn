@@ -77,6 +77,8 @@ static char* test_mmul(){
 	MDUP(cd, c, 2, 3);
 
 	/* Run tests */
+	printf("A dims: %d x %d\n", a->rows, a->cols);
+	printf("B dims: %d x %d\n", b->rows, b->cols);
 	prod = mmul(a, b, NULL);
 	mu_assert("Error, a * b != c", mcmp(prod, c));
 	mfree(prod);
