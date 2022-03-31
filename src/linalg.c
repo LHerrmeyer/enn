@@ -150,6 +150,7 @@ Matrix* mmul(const Matrix* a, const Matrix* b, Matrix* out){
 	int row, col, index;
 
 	CHECK_NULL(a);CHECK_NULL(b);
+	CHECK_IF(a->cols == b->rows);
 
 	/* Make sure matrices are comformable */
 	if(a->cols != b->rows) return NULL;

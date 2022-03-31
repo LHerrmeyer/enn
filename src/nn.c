@@ -25,6 +25,7 @@ Matrix* npred(const Matrix* x, const Matrix** weights, const Matrix** biases, in
 	for(layer = 0; layer < n; layer++){
 		/* Apply the weights and biases */
 		product = mmul(weights[layer], current_vector, NULL);
+		CHECK_NULL(product);
 		sum = madd(product, biases[layer], NULL);
 		mfree(current_vector);
 		mfree(product);

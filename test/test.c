@@ -204,7 +204,7 @@ static char* test_npred(){
 	}
 
 	/* Run the tests */
-	for(i = 0; i < (int)(sizeof(test_set)/sizeof(double*)); i++){
+	for(i = 0; i < 5; i++){
 		MDUP(&test_set[i], current_vector, 1, 4);
 		out = npred(current_vector, (const Matrix**)weights, (const Matrix**)biases, sizeof(test_set[0])/sizeof(double*), &arelu);
 		mprint(out);
