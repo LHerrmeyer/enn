@@ -3,6 +3,7 @@
 #include <math.h>
 #include "enn.h"
 #include "linalg.h"
+#include <assert.h>
 
 /**
 * Prints out a Matrix to the screen.
@@ -67,7 +68,7 @@ Matrix* mnew(int rows, int cols){
 */
 Matrix* mnew2(int rows, int cols, Matrix* a){
 	if(a){
-		CHECK_IF(rows != a->rows || cols != a->cols);
+		ENN_ASSERT(rows == a->rows && cols == a->cols);
 		return a;
 	}
 	return mnew(rows, cols);
@@ -152,7 +153,10 @@ Matrix* mmul(const Matrix* a, const Matrix* b, Matrix* out){
 	CHECK_NULL(a);CHECK_NULL(b);
 
 	/* Make sure matrices are comformable */
-	CHECK_IF((a->cols != b->rows));
+	/*CHECK_IF(a->cols != b->rows);*/
+	/*ENN_ASSERT(a->cols == b->rows);*/
+	assert(a->cols == b->rows);
+
 	if(a->cols != b->rows) return NULL;
 
 	/* (n x m) * (m x k) -> (m x k) */
