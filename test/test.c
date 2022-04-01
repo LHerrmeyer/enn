@@ -155,7 +155,8 @@ static char* test_arelu(){
 
 static char* test_npred(){
 	Matrix **weights, **biases, *out, *out_prob, *current_vector, *current_vector_trns;
-	int i, n_tests, n_layers;
+	int i, j, n_tests, n_layers, prediction;
+	double pred_max;
 	double w0[4][4] = {
 		{-0.5206975 ,  0.5338802 , -0.5602411 , -0.09294045},
 		{-0.81646407,  0.07859222,  0.8910857 ,  0.9753645 },
@@ -183,7 +184,7 @@ static char* test_npred(){
 		{6. , 2.9, 4.5, 1.5},
 		{6.8, 2.8, 4.8, 1.4}
 	};
-	double test_set_y[5] = {1, 0, 2, 1, 1};
+	int test_set_y[5] = {1, 0, 2, 1, 1};
 	n_tests = 5;
 	n_layers = 3;
 
@@ -208,11 +209,28 @@ static char* test_npred(){
 
 	/* Run the tests */
 	for(i = 0; i < n_tests; i++){
+		/* Run the neural network prediction */
 		MDUP(&test_set_X[i], current_vector_trns, 1, 4);
 		current_vector = mtrns(current_vector_trns, NULL);
 		out = npred(current_vector, (const Matrix**)weights, (const Matrix**)biases, n_layers, &arelu);
+
+		/* Find the prediction using argmax */
 		out_prob = asmax(out);
+		pred_max = 0;
+		prediction = 0;
+		for(j = 0; j < 3; j++){
+			if(out_prob->data[j][0] > pred_max) prediction = j;
+		}
+
+		/* Test against actual TensorFlow predictions */
+		if(prediction != test_set_y[i]){
+			printf("Prediction: %d, Actual: %d, Index: %d\n", prediction, test_set_y[i], i);
+			mprint(out_prob);
+		}
+		mu_assert("Error: prediction != actual", prediction == test_set_y[i]);
 		mprint(out_prob);
+
+		/* Free variables */
 		mfree(current_vector_trns);
 		mfree(current_vector);
 		mfree(out);
