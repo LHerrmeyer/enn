@@ -24,6 +24,7 @@ Matrix* npred(const Matrix* x, const Matrix** weights, const Matrix** biases, in
 	current_vector = mscale(x, 1.0, NULL);
 	for(layer = 0; layer < n; layer++){
 		/* Apply the weights and biases */
+		/* Segfault here */
 		printf("Weights dimensions: %d x %d\n",
 				weights[layer]->rows,
 				weights[layer]->cols);

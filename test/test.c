@@ -196,6 +196,10 @@ static char* test_npred(){
 	MDUP(&b1, biases[1], 1, 4);
 	MDUP(&b2, biases[2], 1, 3);
 
+	mprint(weights[0]);
+	mprint(weights[1]);
+	mprint(weights[2]);
+
 	/* Convert biases to column vectors */
 	for(i = 0; i < 3; i++){
 		Matrix* cur_bias = biases[i];
@@ -204,11 +208,11 @@ static char* test_npred(){
 	}
 
 	/* Run the tests */
-	for(i = 0; i < 5; i++){
+	for(i = 0; i < (int)(sizeof(test_set)/sizeof(double*)); i++){
 		Matrix* current_vector_trns;
 		MDUP(&test_set[i], current_vector_trns, 1, 4);
 		current_vector = mtrns(current_vector_trns, NULL);
-		out = npred(current_vector, (const Matrix**)weights, (const Matrix**)biases, sizeof(test_set[0])/sizeof(double*), &arelu);
+		out = npred(current_vector, (const Matrix**)weights, (const Matrix**)biases, 3, &arelu);
 		mprint(out);
 		mfree(current_vector_trns);
 		mfree(current_vector);
