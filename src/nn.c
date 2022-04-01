@@ -25,12 +25,6 @@ Matrix* npred(const Matrix* x, const Matrix** weights, const Matrix** biases, in
 	for(layer = 0; layer < n; layer++){
 		/* Apply the weights and biases */
 		/* Segfault here */
-		printf("Weights dimensions: %d x %d\n",
-				weights[layer]->rows,
-				weights[layer]->cols);
-		printf("Current_vector dimensions: %d x %d\n",
-				current_vector->rows,
-				current_vector->cols);
 		product = mmul(weights[layer], current_vector, NULL);
 		CHECK_NULL(product);
 		sum = madd(product, biases[layer], NULL);

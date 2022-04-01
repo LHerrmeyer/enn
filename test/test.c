@@ -154,8 +154,8 @@ static char* test_arelu(){
 }
 
 static char* test_npred(){
-	Matrix **weights, **biases, *out, *current_vector;
-	int i;
+	Matrix **weights, **biases, *out, *out_prob, *current_vector, *current_vector_trns;
+	int i, n_tests, n_layers;
 	double w0[4][4] = {
 		{-0.5206975 ,  0.5338802 , -0.5602411 , -0.09294045},
 		{-0.81646407,  0.07859222,  0.8910857 ,  0.9753645 },
@@ -176,17 +176,20 @@ static char* test_npred(){
 	double b0[4] = {0.0, -0.563959, -0.06092859, 0.0};
 	double b1[4] = {0.0, -0.82546085, -0.3782354, -0.00169147};
 	double b2[3] = {1.9372896, -0.7055002, -1.4840443};
-	double test_set[5][4] = {
+	double test_set_X[5][4] = {
 		{6.1, 2.8, 4.7, 1.2},
 		{5.7, 3.8, 1.7, 0.3},
 		{7.7, 2.6, 6.9, 2.3},
 		{6. , 2.9, 4.5, 1.5},
 		{6.8, 2.8, 4.8, 1.4}
 	};
+	double test_set_y[5] = {1, 0, 2, 1, 1};
+	n_tests = 5;
+	n_layers = 3;
 
 	/* Allocate variables for weights and biases */
-	weights = malloc(sizeof(Matrix*) * 3);
-	biases = malloc(sizeof(Matrix*) * 3);
+	weights = malloc(sizeof(Matrix*) * n_layers);
+	biases = malloc(sizeof(Matrix*) * n_layers);
 
 	/* Put weights and biases into Matrix* structs */
 	MDUP(w0, weights[0], 4, 4);
@@ -196,24 +199,20 @@ static char* test_npred(){
 	MDUP(&b1, biases[1], 1, 4);
 	MDUP(&b2, biases[2], 1, 3);
 
-	mprint(weights[0]);
-	mprint(weights[1]);
-	mprint(weights[2]);
-
 	/* Convert biases to column vectors */
-	for(i = 0; i < 3; i++){
+	for(i = 0; i < n_layers; i++){
 		Matrix* cur_bias = biases[i];
 		biases[i] = mtrns(cur_bias, NULL);
 		mfree(cur_bias);
 	}
 
 	/* Run the tests */
-	for(i = 0; i < (int)(sizeof(test_set)/sizeof(double*)); i++){
-		Matrix* current_vector_trns;
-		MDUP(&test_set[i], current_vector_trns, 1, 4);
+	for(i = 0; i < n_tests; i++){
+		MDUP(&test_set_X[i], current_vector_trns, 1, 4);
 		current_vector = mtrns(current_vector_trns, NULL);
-		out = npred(current_vector, (const Matrix**)weights, (const Matrix**)biases, 3, &arelu);
-		mprint(out);
+		out = npred(current_vector, (const Matrix**)weights, (const Matrix**)biases, n_layers, &arelu);
+		out_prob = asmax(out);
+		mprint(out_prob);
 		mfree(current_vector_trns);
 		mfree(current_vector);
 		mfree(out);
