@@ -154,8 +154,9 @@ static char* test_arelu(){
 }
 
 static char* test_npred(){
+	#define N_TESTS 10
 	Matrix **weights, **biases, *out, *out_prob, *current_vector, *current_vector_trns;
-	int i, j, n_tests, n_layers, prediction;
+	int i, j, n_layers, prediction;
 	double pred_max;
 	double w0[4][4] = {
 		{-0.5206975 ,  0.5338802 , -0.5602411 , -0.09294045},
@@ -177,7 +178,7 @@ static char* test_npred(){
 	double b0[4] = {0.0, -0.563959, -0.06092859, 0.0};
 	double b1[4] = {0.0, -0.82546085, -0.3782354, -0.00169147};
 	double b2[3] = {1.9372896, -0.7055002, -1.4840443};
-	double test_set_X[5][4] = {
+	/*double test_set_X[5][4] = {
 		{6.1, 2.8, 4.7, 1.2},
 		{5.7, 3.8, 1.7, 0.3},
 		{7.7, 2.6, 6.9, 2.3},
@@ -185,7 +186,20 @@ static char* test_npred(){
 		{6.8, 2.8, 4.8, 1.4}
 	};
 	int test_set_y[5] = {1, 0, 2, 1, 1};
-	n_tests = 5;
+	*/
+	double test_set_X[N_TESTS][4] = {
+		{6.1, 2.8, 4.7, 1.2},
+		{5.7, 3.8, 1.7, 0.3},
+		{7.7, 2.6, 6.9, 2.3},
+		{6. , 2.9, 4.5, 1.5},
+		{6.8, 2.8, 4.8, 1.4},
+		{5.4, 3.4, 1.5, 0.4},
+		{5.6, 2.9, 3.6, 1.3},
+		{6.9, 3.1, 5.1, 2.3},
+		{6.2, 2.2, 4.5, 1.5},
+		{5.8, 2.7, 3.9, 1.2}
+	};
+	int test_set_y[N_TESTS] = {1, 0, 2, 1, 1, 0, 1, 2, 1, 1};
 	n_layers = 3;
 
 	/* Allocate variables for weights and biases */
@@ -208,7 +222,7 @@ static char* test_npred(){
 	}
 
 	/* Run the tests */
-	for(i = 0; i < n_tests; i++){
+	for(i = 0; i < N_TESTS; i++){
 		/* Run the neural network prediction */
 		MDUP(&test_set_X[i], current_vector_trns, 1, 4);
 		current_vector = mtrns(current_vector_trns, NULL);
@@ -216,19 +230,17 @@ static char* test_npred(){
 
 		/* Find the prediction using argmax */
 		out_prob = asmax(out);
-		pred_max = 0;
+		pred_max = 0.0;
 		prediction = 0;
 		for(j = 0; j < 3; j++){
-			if(out_prob->data[j][0] > pred_max) prediction = j;
+			if(out_prob->data[j][0] > pred_max){
+				pred_max = out_prob->data[j][0];
+				prediction = j;
+			}
 		}
 
 		/* Test against actual TensorFlow predictions */
-		if(prediction != test_set_y[i]){
-			printf("Prediction: %d, Actual: %d, Index: %d\n", prediction, test_set_y[i], i);
-			mprint(out_prob);
-		}
 		mu_assert("Error: prediction != actual", prediction == test_set_y[i]);
-		mprint(out_prob);
 
 		/* Free variables */
 		mfree(current_vector_trns);

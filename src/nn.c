@@ -24,19 +24,23 @@ Matrix* npred(const Matrix* x, const Matrix** weights, const Matrix** biases, in
 	current_vector = mscale(x, 1.0, NULL);
 	for(layer = 0; layer < n; layer++){
 		/* Apply the weights and biases */
-		/* Segfault here */
 		product = mmul(weights[layer], current_vector, NULL);
-		CHECK_NULL(product);
 		sum = madd(product, biases[layer], NULL);
 		mfree(current_vector);
 		mfree(product);
 
-		/* Apply the activation function */
-		current_vector = mapply(sum, activ_func, NULL);
+		/* Apply the activation function, but not on the output layer */
+		if(layer < n-1){
+			current_vector = mapply(sum, activ_func, NULL);
+		}
+		else{
+			current_vector = mscale(sum, 1.0, NULL);
+		}
 		mfree(sum);
 
 		/* Check for nulls */
-		if(!current_vector || !sum || !product) return NULL;
+		/*if(!current_vector || !sum || !product) return NULL;*/
+		CHECK_NULL(current_vector || sum || product);
 	}
 
 	/* Return the final predicted column vector */

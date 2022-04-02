@@ -36,7 +36,8 @@ for i in range(0, 3):
 	print(repr(np.transpose(weights[1])))
 
 np.set_printoptions(suppress=True)
-test_set = X_test[0:5]
+num_test = 10
+test_set = X_test[0:num_test]
 preds = model.predict(test_set)
 print("Test set (Sepal length, sepal width, petal length, petal width):")
 print(test_set)
@@ -45,4 +46,4 @@ print(preds)
 print("Preds (max prob):")
 print(preds.argmax(1))
 print("True results:")
-print(y_test[0:5])
+print(y_test[0:num_test])
