@@ -3,7 +3,6 @@
 #include <math.h>
 #include "enn.h"
 #include "linalg.h"
-#include <assert.h>
 
 /**
 * Prints out a Matrix to the screen.
@@ -14,7 +13,7 @@ void mprint(const Matrix* x){
 	int col;
 	int row;
 
-	CHECK_NULL(x);
+	if(!x)return;
 
 	printf("[\n");
 	for(row = 0; row < x->rows; row++){
@@ -41,7 +40,7 @@ Matrix* mnew(int rows, int cols){
 
 	/* Allocate a Matrix object and set the number of rows and cols */
 	output = malloc(sizeof(Matrix));
-	CHECK_NULL(output);
+	if(!output)return NULL;
 	output->rows = rows;
 	output->cols = cols;
 
@@ -68,7 +67,7 @@ Matrix* mnew(int rows, int cols){
 */
 Matrix* mnew2(int rows, int cols, Matrix* a){
 	if(a){
-		ENN_ASSERT(rows == a->rows && cols == a->cols);
+		if(rows != a->rows || cols != a->cols)return NULL;
 		return a;
 	}
 	return mnew(rows, cols);
@@ -101,9 +100,13 @@ void mfree(Matrix* x){
 Matrix* mapply(const Matrix* a, dfunc func, Matrix* out){
 	int row, col;
 
-	CHECK_NULL(a);CHECK_NULL(func);
+	if(!a || !func)return NULL;
 
+	/* Allocate output matrix and check for NULL */
 	out = mnew2(a->rows, a->cols, out);
+	if(!out)return NULL;
+
+	/* Set each cell of the output matrix to func(input matrix cell) */
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
 			out->data[row][col] = (*func)(a->data[row][col]);
@@ -125,7 +128,9 @@ Matrix* meye(int n, Matrix* out) {
 	int row;
 	int col;
 
+	/* Allocate output matrix and check for null */
 	out = mnew2(n, n, out);
+	if(!out)return NULL;
 
 	/* Fill with 1 for every diagonal, 0 otherwise */
 	for(row = 0; row < n; row++){
@@ -150,13 +155,12 @@ Matrix* meye(int n, Matrix* out) {
 Matrix* mmul(const Matrix* a, const Matrix* b, Matrix* out){
 	int row, col, index;
 
-	CHECK_NULL(a);CHECK_NULL(b);
-
-	/* Make sure matrices are comformable */
-	if(a->cols != b->rows) return NULL;
+	/* Make sure matrices are comformable and not NULL */
+	if(!a || !b || a->cols != b->rows) return NULL;
 
 	/* (n x m) * (m x k) -> (m x k) */
 	out = mnew2(a->rows, b->cols, out);
+	if(!out)return NULL;
 
 	/* For each row in matrix a */
 	for(row = 0; row < a->rows; row++){
@@ -186,13 +190,14 @@ Matrix* mmul(const Matrix* a, const Matrix* b, Matrix* out){
 Matrix* mhad(const Matrix* a, const Matrix* b, Matrix* out){
 	int row, col;
 
-	CHECK_NULL(a);CHECK_NULL(b);
+	/* Make sure matrices have same dimensions and not NULL */
+	if(!a || !b || (a->rows != b->rows) || (a->cols != b->cols)) return NULL;
 
-	/* Make sure matrices have same dimensions */
-	if((a->rows != b->rows) || (a->cols != b->cols)) return NULL;
-
+	/* Allocate output matrix and check for NULL */
 	out = mnew2(a->rows, a->cols, out);
+	if(!out)return NULL;
 
+	/* Calculate the Hadamard product */
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
 			out->data[row][col] = a->data[row][col] * b->data[row][col];
@@ -217,13 +222,14 @@ Matrix* madd(const Matrix* a, const Matrix* b, Matrix* out){
 
 	CHECK_NULL(a);CHECK_NULL(b);
 
-	/* Make sure both have the same number of rows and columns */
-	if(a->rows != b->rows || a->cols != b->cols){
-		return NULL;
-	}
+	/* Make sure both have the same number of rows and columns and not NULL */
+	if(!a || !b || a->rows != b->rows || a->cols != b->cols)return NULL;
 
-	/* Allocate output matrix and set it to the sum of the input matrices */
+	/* Allocate output matrix and check for NULL */
 	out = mnew2(a->rows, a->cols, out);
+	if(!out)return NULL;
+
+	/* Set output matrix to the sum of the input matrices */
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
 			out->data[row][col] = a->data[row][col] + b->data[row][col];
@@ -245,10 +251,13 @@ Matrix* madd(const Matrix* a, const Matrix* b, Matrix* out){
 Matrix* mscale(const Matrix* a, double b, Matrix* out){
 	int row, col;
 
-	CHECK_NULL(a);
+	if(!a)return NULL;
 
-	/* Allocate output matrix and set to the input matrix scaled by the scalar */
+	/* Allocate output matrix and check for NULL */
 	out = mnew2(a->rows, a->cols, out);
+	if(!out)return NULL;
+
+	/* Set output matrix to input matrix a scaled by the scalar b */
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
 			out->data[row][col] = a->data[row][col] * b;
@@ -269,10 +278,13 @@ Matrix* mscale(const Matrix* a, double b, Matrix* out){
 Matrix* mtrns(const Matrix* a, Matrix* out){
 	int row, col;
 
-	CHECK_NULL(a);
+	if(!a)return NULL;
 
+	/* Allocate output matrix and check for NULL */
 	out = mnew2(a->cols, a->rows, out);
+	if(!out)return NULL;
 
+	/* Set output matrix to transposed input matrix */
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
 			out->data[col][row] = a->data[row][col];
@@ -293,7 +305,7 @@ int mfrob(const Matrix* a){
 	int row, col;
 	double sum = 0;
 
-	CHECK_NULL(a);
+	if(!a)return 0.0;
 
 	for(row = 0; row < a->rows; row++){
 		for(col = 0; col < a->cols; col++){
@@ -314,10 +326,8 @@ int mfrob(const Matrix* a){
 int mcmp(const Matrix* a, const Matrix* b){
 	int row, col;
 
-	CHECK_NULL(a);CHECK_NULL(b);
-
-	/* If the rows or columns are not equal, then return 0 */
-	if(a->rows != b->rows || a->cols != b->cols) return 0;
+	/* If the rows or columns are not equal, or the matrices are NULL, then return 0 */
+	if(!a || !b || a->rows != b->rows || a->cols != b->cols) return 0;
 
 	/* If any cell is not equal, then return 0 */
 	for(row = 0; row < a->rows; row++){
@@ -326,5 +336,6 @@ int mcmp(const Matrix* a, const Matrix* b){
 		}
 	}
 
+	/* Otherwise, if matrices are the same size and every cell is equal, return 1 */
 	return 1;
 }
