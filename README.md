@@ -16,6 +16,7 @@ To build, run `make`. To enable debug flags, run `make EFLAGS=-g`.
 - Convert loss functions from Matrix* to double and use function pointers
 
 ### Not Done
+- Write errors in a functional way: https://softwareengineering.stackexchange.com/questions/420872/how-functional-programming-achieves-no-runtime-exceptions 
 - Add mnewo/mcreat/mnew2 function to allocate only if NULL or rows and cols incorrect.
 - Add optional out argument to linalg functions for mutability.
 - Add NULL checks to linalg functions
