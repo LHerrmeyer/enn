@@ -156,6 +156,7 @@ static char* test_arelu(){
 static char* test_npred(){
 	#define N_TESTS 10
 	Matrix **weights, **biases, *out, *out_prob, *current_vector, *current_vector_trns;
+	neural_network* nn;
 	int i, j, n_layers, prediction;
 	double pred_max;
 	double w0[4][4] = {
@@ -221,12 +222,20 @@ static char* test_npred(){
 		mfree(cur_bias);
 	}
 
+	/* Put everything into a neural network object */
+	nn = malloc(sizeof(neural_network));
+	nn->weights = weights;
+	nn->biases = biases;
+	nn->activ_func = &arelu;
+	nn->n_weights = 3;
+
 	/* Run the tests */
 	for(i = 0; i < N_TESTS; i++){
 		/* Run the neural network prediction */
 		MDUP(&test_set_X[i], current_vector_trns, 1, 4);
 		current_vector = mtrns(current_vector_trns, NULL);
-		out = npred(current_vector, (const Matrix**)weights, (const Matrix**)biases, n_layers, &arelu);
+		/*out = npred(current_vector, (const Matrix**)weights, (const Matrix**)biases, n_layers, &arelu); */
+		out = npred(nn, current_vector);
 
 		/* Find the prediction using argmax */
 		out_prob = asmax(out);
