@@ -49,6 +49,11 @@ Matrix* mnew(int rows, int cols){
 	Each row is an array of ncol doubles (double*).
 	*/
 	output->data = malloc(rows * sizeof(double*));
+	if(!output->data){
+		free(output->data);
+		free(output);
+		return NULL;
+	}
 	for(row = 0; row < rows; row++){
 		/* Set each row to have cols number of spots (one spot for each column in the row) */
 		output->data[row] = malloc(cols * sizeof(double));

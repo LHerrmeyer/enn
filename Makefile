@@ -1,4 +1,5 @@
 # To run infer: /opt/infer-linux64-v0.17.0/bin/infer run -- make
+# For clang static analyzer (package clang-tools): scan-build make
 CC=gcc
 CFLAGS=-std=c90 -pedantic -Wall -Wextra $(EFLAGS)
 LDFLAGS=-lm

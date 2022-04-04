@@ -12,7 +12,7 @@
 * @returns The mean squared error of the two column vectors.
 */
 double lmse(const Matrix* actual, const Matrix* pred){
-	double sum_square_error, mean_square_error;
+	double sum_square_error = 0, mean_square_error = 0;
 	int row;
 
 	ASSERTM(actual->rows != pred->rows, "Row counts not equal");
