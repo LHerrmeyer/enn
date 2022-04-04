@@ -9,6 +9,7 @@ struct Matrix {
 };
 typedef struct Matrix Matrix;
 typedef double (*dfunc)(double);
+typedef Matrix* (*mfunc)(const Matrix*);
 
 /* Define function prototypes*/
 void mprint(const Matrix* x);

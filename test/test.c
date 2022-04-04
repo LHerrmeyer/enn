@@ -226,7 +226,8 @@ static char* test_npred(){
 	nn = malloc(sizeof(neural_network));
 	nn->weights = weights;
 	nn->biases = biases;
-	nn->activ_func = &arelu;
+	nn->hidden_activ = &arelu;
+	nn->output_activ = &asmax;
 	nn->n_weights = 3;
 
 	/* Run the tests */

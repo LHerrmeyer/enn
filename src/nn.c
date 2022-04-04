@@ -27,8 +27,8 @@ Matrix* npred(neural_network* nn, const Matrix* x){
 		mfree(product);
 
 		/* Apply the activation function, if it exists, but not on the output layer */
-		if(layer < nn->n_weights-1 && nn->activ_func){
-			current_vector = mapply(sum, nn->activ_func, NULL);
+		if(nn->hidden_activ && layer < nn->n_weights-1){
+			current_vector = mapply(sum, nn->hidden_activ, NULL);
 		}
 		else{
 			current_vector = mscale(sum, 1.0, NULL);
@@ -37,6 +37,13 @@ Matrix* npred(neural_network* nn, const Matrix* x){
 
 		/* Check for nulls */
 		if(!current_vector || !sum || !product) return NULL;
+	}
+
+	/* Apply output activation, if applicable */
+	if(nn->output_activ){
+		sum = nn->output_activ(current_vector);
+		mfree(current_vector);
+		current_vector = sum;
 	}
 
 	/* Return the final predicted column vector */
