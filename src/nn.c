@@ -22,9 +22,9 @@ neural_network* ninit(int inputs, int hidden_layers, int hiddens, int outputs, d
 
 	/* Allocate all variables in the struct */
 	nn = malloc(sizeof(neural_network));
-	nn->n_weights = inputs + hidden_layers + outputs;
-	nn->weights = malloc(nn->n_weights * sizeof(Matrix*));
-	nn->biases = malloc(nn->n_weights * sizeof(Matrix*));
+	nn->n_layers = inputs + hidden_layers + outputs;
+	nn->weights = malloc(nn->n_layers * sizeof(Matrix*));
+	nn->biases = malloc(nn->n_layers * sizeof(Matrix*));
 	nn->hidden_activ = hidden_activ;
 	nn->output_activ = output_activ;
 
@@ -50,7 +50,7 @@ neural_network* ninit(int inputs, int hidden_layers, int hiddens, int outputs, d
 */
 void nfree(neural_network* nn){
 	int i;
-	for(i = 0; i < nn->n_weights; i++) {
+	for(i = 0; i < nn->n_layers; i++) {
 		mfree(nn->weights[i]);
 		mfree(nn->biases[i]);
 	}
@@ -75,7 +75,7 @@ Matrix* npred(const neural_network* nn, const Matrix* x){
 	if(!nn || !x || !nn->weights || !nn->biases)return NULL;
 
 	current_vector = mscale(x, 1.0, NULL);
-	for(layer = 0; layer < nn->n_weights; layer++){
+	for(layer = 0; layer < nn->n_layers; layer++){
 		/* Apply the weights and biases */
 		product = mmul(nn->weights[layer], current_vector, NULL);
 		sum = madd(product, nn->biases[layer], NULL);
@@ -83,7 +83,7 @@ Matrix* npred(const neural_network* nn, const Matrix* x){
 		mfree(product);
 
 		/* Apply the activation function, if it exists, but not on the output layer */
-		if(nn->hidden_activ && layer < nn->n_weights-1){
+		if(nn->hidden_activ && layer < nn->n_layers-1){
 			current_vector = mapply(sum, nn->hidden_activ, NULL);
 		}
 		else{
@@ -146,7 +146,7 @@ void nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* y_tra
 	if(!nn || !X_train || !y_train || !loss_func) return;
 
 	/* Allocate variables */
-	list_size = nn->n_weights * sizeof(Matrix*);
+	list_size = nn->n_layers * sizeof(Matrix*);
 	nabla_b = malloc(list_size);
 	nabla_w = malloc(list_size);
 	Zs = malloc(list_size);
@@ -156,7 +156,7 @@ void nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* y_tra
 	activations[0] = activation;
 
 	/* Run the forward propagation (prediction) pass */
-	for(layer = 0; layer < nn->n_weights; layer++){
+	for(layer = 0; layer < nn->n_layers; layer++){
 		Matrix *z, *weight, *bias;
 		bias = nn->biases[layer];
 		weight = nn->weights[layer];
@@ -173,13 +173,13 @@ void nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* y_tra
 
 	/* Calculate output delta*/
 	delta = dloss_func(activation, y_train); /* Derviative of loss function wrt output activations */
-	err = ndiff(Zs[nn->n_weights], nn->hidden_activ); /* Derivative of activation function wrt output Z vector */
+	err = ndiff(Zs[nn->n_layers], nn->hidden_activ); /* Derivative of activation function wrt output Z vector */
 	delta = mhad(delta, err, NULL); /* Delta is the Hadamard product of these 2 */
 	mfree(err);
 
 	/* Calculate output weight and bias derivatives */
 	/* Definition of dot product: x.y=x^T*y */
-	nabla_b[nn->n_weights] = delta;
-	nabla_w[nn->n_weights] = delta;
+	nabla_b[nn->n_layers] = delta;
+	nabla_w[nn->n_layers] = delta;
 }
 #endif

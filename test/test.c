@@ -228,7 +228,7 @@ static char* test_npred(){
 	nn->biases = biases;
 	nn->hidden_activ = &arelu;
 	nn->output_activ = &asmax;
-	nn->n_weights = 3;
+	nn->n_layers = 3;
 
 	/* Run the tests */
 	for(i = 0; i < N_TESTS; i++){
