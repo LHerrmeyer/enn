@@ -7,7 +7,7 @@ struct neural_network {
 	dfunc hidden_activ; /* Input/hidden layer activation (f: double->double) */
 	mfunc output_activ; /* Output layer activation (f: Matrix*->Matrix*) */
 	int n_weights;
-	int output_softmax;
+	/*int output_softmax;*/
 };
 typedef struct neural_network neural_network;
 
