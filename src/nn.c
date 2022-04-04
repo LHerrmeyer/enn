@@ -67,7 +67,7 @@ void nfree(neural_network* nn){
 * @returns A column vector of the neural network output
 */
 
-Matrix* npred(neural_network* nn, const Matrix* x){
+Matrix* npred(const neural_network* nn, const Matrix* x){
 	int layer;
 	Matrix *current_vector, *product, *sum;
 
@@ -104,3 +104,35 @@ Matrix* npred(neural_network* nn, const Matrix* x){
 	/* Return the final predicted column vector */
 	return current_vector;
 }
+
+#if 1
+void nbprop(neural_network* nn, Matrix* X_train, Matrix* y_train){
+	size_t list_size = nn->n_weights * sizeof(Matrix*);
+	/* Nabla_b and nabla_w are gradients of the biases and weights respectively. They are lists of Matrices
+	just as the weights and biases are in the neural network structure */
+	Matrix **nabla_b = malloc(list_size);
+	Matrix **nabla_w = malloc(list_size);
+	Matrix **Zs = malloc(list_size); /* A list of Z vectors (unactivated outputs) for each layer */
+	Matrix **activations = malloc(list_size); /* A list of activations for each layer */
+	Matrix *activation; /* Current activation */
+	int layer;
+
+	/* Set initial activation to first row of X_train */
+	MDUP(&X_train->data[0], activation, 1, X_train->cols);
+
+	/* Run the forward propagation (prediction) pass */
+	for(layer = 0; layer < nn->n_weights; layer++){
+		Matrix *z, *weight, *bias, *activation, *product, *sum;
+		bias = nn->biases[layer];
+		weight = nn->weights[layer];
+
+		/* Calculate Z (unactivated layer output) */
+		z = mmul(weight, activation, NULL);
+		z = madd(z, bias, z);
+		Zs[layer] = z;
+
+		/* Calculate the activation */
+	}
+	return;
+}
+#endif

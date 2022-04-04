@@ -12,5 +12,5 @@ struct neural_network {
 typedef struct neural_network neural_network;
 
 /* Functions */
-Matrix* npred(neural_network* nn, const Matrix* x);
+Matrix* npred(const neural_network* nn, const Matrix* x);
 #endif

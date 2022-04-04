@@ -18,8 +18,12 @@ double alin(double x){
 }
 
 /* Sigmoid activation function */
-double asig(double x){
+double asigm(double x){
 	return 1/(1 + exp(-1*x));
+}
+
+double dsigm(double output){
+	return output * (1.0 - output);
 }
 
 /* Softmax function, used for estimating probabilities from raw outputs */
