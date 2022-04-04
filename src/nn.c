@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "enn.h"
 #include "linalg.h"
+#include "loss.h"
 #include "nn.h"
 
 /**
@@ -103,7 +104,31 @@ Matrix* npred(const neural_network* nn, const Matrix* x){
 }
 
 #if 1
-void nbprop(neural_network* nn, Matrix* X_train, Matrix* y_train, mfunc cost_func){
+
+static Matrix* ndiff(const Matrix* x, const dfunc activ_func){
+	double h = 0.000001;
+	Matrix *activ_x, *activ_xh, *xh, *d_activ;
+
+	/* Vector of x + h */
+	xh = mconst(x->rows, x->cols, h, NULL);
+	xh = madd(x, xh, xh);
+
+	/* Numerically calculate derivative of activ_func wrt x.
+	d_activ = (f(x+h)-f(x))/h */
+	/* Numerator (f(x+h)-f(x)) */
+	activ_x = mapply(x, activ_func, NULL);
+	activ_xh = mapply(xh, activ_func, NULL);
+	d_activ = msub(activ_xh, activ_x, NULL);
+	/* Denominator (divide by h) */
+	d_activ = mscale(d_activ, 1.0/h, d_activ);
+
+	free(activ_xh);
+	free(activ_x);
+	return d_activ;
+}
+
+void nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* y_train, const lfunc loss_func,
+			const lfuncd dloss_func){
 	/* http://neuralnetworksanddeeplearning.com/chap2.html#the_code_for_backpropagation */
 	/* Nabla_b and nabla_w are gradients of the biases and weights respectively. They are lists of Matrices
 	just as the weights and biases are in the neural network structure */
@@ -111,12 +136,14 @@ void nbprop(neural_network* nn, Matrix* X_train, Matrix* y_train, mfunc cost_fun
 	Matrix **Zs; /* A list of Z vectors (unactivated outputs) for each layer */
 	Matrix **activations; /* A list of activations for each layer */
 	Matrix *activation = NULL; /* Current activation */
-	Matrix *err; /* Error (output of cost function) */
+	Matrix *err; /* Error (output of loss function) */
+	Matrix *delta;
+	Matrix *tmp1, *tmp2;
 	int layer;
 	size_t list_size;
 
 	/* Check for nulls */
-	if(!nn || !X_train || !y_train || !cost_func) return;
+	if(!nn || !X_train || !y_train || !loss_func) return;
 
 	/* Allocate variables */
 	list_size = nn->n_weights * sizeof(Matrix*);
@@ -144,7 +171,15 @@ void nbprop(neural_network* nn, Matrix* X_train, Matrix* y_train, mfunc cost_fun
 		activations[layer + 1] = activation;
 	}
 
-	/* Calculate output error vector*/
-	err = cost_func(activation);
+	/* Calculate output delta*/
+	delta = dloss_func(activation, y_train); /* Derviative of loss function wrt output activations */
+	err = ndiff(Zs[nn->n_weights], nn->hidden_activ); /* Derivative of activation function wrt output Z vector */
+	delta = mhad(delta, err, NULL); /* Delta is the Hadamard product of these 2 */
+	mfree(err);
+
+	/* Calculate output weight and bias derivatives */
+	/* Definition of dot product: x.y=x^T*y */
+	nabla_b[nn->n_weights] = delta;
+	nabla_w[nn->n_weights] = delta;
 }
 #endif

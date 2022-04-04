@@ -24,3 +24,11 @@ double lmse(const Matrix* actual, const Matrix* pred){
 
 	return mean_square_error;
 }
+
+/**
+* Calculates the derivative of mean squared error loss function wrt pred values
+*
+*/
+Matrix* dmse(const Matrix* actual, const Matrix* pred){
+	return msub(actual, pred, NULL);
+}

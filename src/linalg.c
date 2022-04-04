@@ -140,14 +140,41 @@ Matrix* meye(int n, Matrix* out) {
 	/* Fill with 1 for every diagonal, 0 otherwise */
 	for(row = 0; row < n; row++){
 		for(col = 0; col < n; col++){
-			if(row == col) out->data[row][col] = 1;
-			else out->data[row][col] = 0;
+			if(row == col) out->data[row][col] = 1.0;
+			else out->data[row][col] = 0.0;
 		}
 	}
 
 	return out;
 }
 
+/**
+* Calculates a matrix full of a constant scalar value.
+*
+* @param rows Number of rows for the output matrix.
+* @param cols Number of cols for the output matrix.
+* @param num Value to fill the matrix with.
+* @param out Pointer to output matrix (optional)
+*
+* @returns A pointer to the matrix with the scalar value.
+*/
+Matrix* mconst(int rows, int cols, double value, Matrix* out){
+	int row;
+	int col;
+
+	/* Allocate output matrix and check for null */
+	out = mnew2(rows, cols, out);
+	if(!out)return NULL;
+
+	/* Fill with constant value */
+	for(row = 0; row < rows; row++){
+		for(col = 0; col < cols; col++){
+			out->data[row][col] = value;
+		}
+	}
+
+	return out;
+}
 /**
 * Multiply two matrices
 *
@@ -213,13 +240,13 @@ Matrix* mhad(const Matrix* a, const Matrix* b, Matrix* out){
 }
 
 /**
-* Adds two Matrix* together and returns the result
+* Adds two matrices together and returns the result
 *
 * @param a Pointer to first matrix to be added
 * @param b Pointer to second matrix to be added
 * @param out Pointer to output matrix (optional)
 *
-* @return A pointer to the Matrix sum of the matrices
+* @return A pointer to the matrix sum of the matrices
 */
 Matrix* madd(const Matrix* a, const Matrix* b, Matrix* out){
 	int row;
@@ -240,6 +267,22 @@ Matrix* madd(const Matrix* a, const Matrix* b, Matrix* out){
 			out->data[row][col] = a->data[row][col] + b->data[row][col];
 		}
 	}
+	return out;
+}
+/**
+* Subtracts two matrices and returns the result
+*
+* @param a Pointer to first matrix to be added
+* @param b Pointer to second matrix to be added
+* @param out Pointer to output matrix (optional)
+*
+* @return A pointer to the matrix difference of the matrices
+*/
+Matrix* msub(const Matrix* a, const Matrix* b, Matrix* out){
+	Matrix *neg_b;
+	neg_b = mscale(b, -1.0, NULL);
+	out = madd(a, neg_b, out);
+	mfree(neg_b);
 	return out;
 }
 
