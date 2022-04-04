@@ -25,7 +25,7 @@ static char* test_mnew2(){
 	return NULL;
 }
 
-static char* test_meye(){
+static char* test_mcmp(){
 	Matrix *a, *a2, *b, *b2;
 	double a_data[2][2] = {
 		{1.0, 0.0},
@@ -51,6 +51,36 @@ static char* test_meye(){
 	mfree(a);
 	mfree(a2);
 	mfree(b);
+	mfree(b2);
+
+	return NULL;
+}
+
+static char* test_mconst(){
+	Matrix *a, *b, *a2, *b2;
+	double a_data[2][2] = {
+		{1.0, 1.0},
+		{1.0, 1.0}
+	};
+	double b_data[2][3] = {
+		{2.0, 2.0, 2.0},
+		{2.0, 2.0, 2.0}
+	};
+
+	/* Initialize matrices */
+	MDUP(a_data, a, 2, 2);
+	MDUP(b_data, b, 2, 3);
+	a2 = mconst(2, 2, 1.0, NULL);
+	b2 = mconst(2, 3, 2.0, NULL);
+
+	/* Run the tests */
+	mu_assert("Error, a != a2", mcmp(a, a2));
+	mu_assert("Error, b != b2", mcmp(b, b2));
+
+	/* Free variables */
+	mfree(a);
+	mfree(b);
+	mfree(a2);
 	mfree(b2);
 
 	return NULL;
@@ -263,7 +293,8 @@ static char* test_npred(){
 static char* all_tests(){;
 	mu_run_test(test_mnew);
 	mu_run_test(test_mnew2);
-	mu_run_test(test_meye);
+	mu_run_test(test_mcmp);
+	mu_run_test(test_mconst);
 	mu_run_test(test_mmul);
 	mu_run_test(test_mhad);
 	mu_run_test(test_arelu);
