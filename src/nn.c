@@ -89,9 +89,6 @@ Matrix* npred(const neural_network* nn, const Matrix* x){
 			current_vector = mscale(sum, 1.0, NULL);
 		}
 		mfree(sum);
-
-		/* Check for nulls */
-		if(!current_vector || !sum || !product) return NULL;
 	}
 
 	/* Apply output activation, if applicable */
@@ -106,33 +103,48 @@ Matrix* npred(const neural_network* nn, const Matrix* x){
 }
 
 #if 1
-void nbprop(neural_network* nn, Matrix* X_train, Matrix* y_train){
-	size_t list_size = nn->n_weights * sizeof(Matrix*);
+void nbprop(neural_network* nn, Matrix* X_train, Matrix* y_train, mfunc cost_func){
+	/* http://neuralnetworksanddeeplearning.com/chap2.html#the_code_for_backpropagation */
 	/* Nabla_b and nabla_w are gradients of the biases and weights respectively. They are lists of Matrices
 	just as the weights and biases are in the neural network structure */
-	Matrix **nabla_b = malloc(list_size);
-	Matrix **nabla_w = malloc(list_size);
-	Matrix **Zs = malloc(list_size); /* A list of Z vectors (unactivated outputs) for each layer */
-	Matrix **activations = malloc(list_size); /* A list of activations for each layer */
-	Matrix *activation; /* Current activation */
+	Matrix **nabla_b, **nabla_w;
+	Matrix **Zs; /* A list of Z vectors (unactivated outputs) for each layer */
+	Matrix **activations; /* A list of activations for each layer */
+	Matrix *activation = NULL; /* Current activation */
+	Matrix *err; /* Error (output of cost function) */
 	int layer;
+	size_t list_size;
 
-	/* Set initial activation to first row of X_train */
+	/* Check for nulls */
+	if(!nn || !X_train || !y_train || !cost_func) return;
+
+	/* Allocate variables */
+	list_size = nn->n_weights * sizeof(Matrix*);
+	nabla_b = malloc(list_size);
+	nabla_w = malloc(list_size);
+	Zs = malloc(list_size);
+	activations = malloc(list_size + 1*sizeof(Matrix));
+	/* Set initial activation to first row of X_train, TODO: stochastically select the row, with rand seed*/
 	MDUP(&X_train->data[0], activation, 1, X_train->cols);
+	activations[0] = activation;
 
 	/* Run the forward propagation (prediction) pass */
 	for(layer = 0; layer < nn->n_weights; layer++){
-		Matrix *z, *weight, *bias, *activation, *product, *sum;
+		Matrix *z, *weight, *bias;
 		bias = nn->biases[layer];
 		weight = nn->weights[layer];
 
 		/* Calculate Z (unactivated layer output) */
 		z = mmul(weight, activation, NULL);
-		z = madd(z, bias, z);
+		z = madd(z, bias, z); /* Addition is in-place, so we don't need an extra variable */
 		Zs[layer] = z;
 
 		/* Calculate the activation */
+		activation = mapply(activation, nn->hidden_activ, NULL);
+		activations[layer + 1] = activation;
 	}
-	return;
+
+	/* Calculate output error vector*/
+	err = cost_func(activation);
 }
 #endif
