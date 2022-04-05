@@ -22,11 +22,18 @@ neural_network* ninit(int inputs, int hidden_layers, int hiddens, int outputs, d
 
 	/* Allocate all variables in the struct */
 	nn = malloc(sizeof(neural_network));
+	if(!nn) return NULL;
 	nn->n_layers = inputs + hidden_layers + outputs;
 	nn->weights = malloc(nn->n_layers * sizeof(Matrix*));
 	nn->biases = malloc(nn->n_layers * sizeof(Matrix*));
 	nn->hidden_activ = hidden_activ;
 	nn->output_activ = output_activ;
+	if(!nn->weights || !nn->biases){
+		free(nn->weights);
+		free(nn->biases);
+		free(nn);
+		return NULL;
+	}
 
 	/* Allocate the individual weight and bias matrices */
 	/* First weight maps R^inputs -> R^hiddens, so it should be hidden rows x input cols */
@@ -107,6 +114,8 @@ static Matrix* ndiff(const Matrix* x, const dfunc activ_func){
 	double h = 0.000001;
 	Matrix *activ_x, *activ_xh, *xh, *d_activ;
 
+	if(!x || !activ_func) return NULL;
+
 	/* Vector of x + h */
 	xh = mconst(x->rows, x->cols, h, NULL);
 	xh = madd(x, xh, xh);
@@ -133,8 +142,8 @@ Matrix*** nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* 
 	Matrix **nabla_b, **nabla_w;
 	Matrix*** nablas;
 	Matrix **Zs; /* A list of Z vectors (unactivated outputs) for each layer */
-	Matrix **activations; /* A list of activations for each layer */
-	Matrix *z; /* Current z vector */
+	Matrix **activations = NULL; /* A list of activations for each layer */
+	Matrix *z = NULL; /* Current z vector */
 	Matrix *activation = NULL; /* Current activation */
 	Matrix *activationp; /* Activation prime */
 	Matrix *last_activation; /* Activation of last layer */
@@ -151,8 +160,9 @@ Matrix*** nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* 
 	list_size = nn->n_layers * sizeof(Matrix*);
 	nabla_b = malloc(list_size);
 	nabla_w = malloc(list_size);
-	Zs = malloc(list_size);
-	activations = malloc(list_size + 1*sizeof(Matrix));
+	Zs = calloc(list_size + 1, sizeof(Matrix*));
+	activations = calloc(list_size + 1, sizeof(Matrix*));
+
 	/* Set initial activation to first row of X_train, TODO: stochastically select the row, with rand seed*/
 	MDUP(&X_train->data[0], activation, 1, X_train->cols);
 	activations[0] = activation;
@@ -210,7 +220,7 @@ Matrix*** nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* 
 	}
 
 	/* Free unneeded variables */
-	for(layer = 0; layer < nn->n_layers; layer++){
+	for(layer = 0; layer < nn->n_layers + 1; layer++){
 		mfree(Zs[layer]);
 		mfree(activations[layer]);
 	}
