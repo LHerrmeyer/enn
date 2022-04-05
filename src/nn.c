@@ -103,8 +103,6 @@ Matrix* npred(const neural_network* nn, const Matrix* x){
 	return current_vector;
 }
 
-#if 1
-
 static Matrix* ndiff(const Matrix* x, const dfunc activ_func){
 	double h = 0.000001;
 	Matrix *activ_x, *activ_xh, *xh, *d_activ;
@@ -127,23 +125,27 @@ static Matrix* ndiff(const Matrix* x, const dfunc activ_func){
 	return d_activ;
 }
 
-void nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* y_train, const lfunc loss_func,
+Matrix*** nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* y_train, const lfunc loss_func,
 			const lfuncd dloss_func){
 	/* http://neuralnetworksanddeeplearning.com/chap2.html#the_code_for_backpropagation */
 	/* Nabla_b and nabla_w are gradients of the biases and weights respectively. They are lists of Matrices
 	just as the weights and biases are in the neural network structure */
 	Matrix **nabla_b, **nabla_w;
+	Matrix*** nablas;
 	Matrix **Zs; /* A list of Z vectors (unactivated outputs) for each layer */
 	Matrix **activations; /* A list of activations for each layer */
+	Matrix *z; /* Current z vector */
 	Matrix *activation = NULL; /* Current activation */
+	Matrix *activationp; /* Activation prime */
+	Matrix *last_activation; /* Activation of last layer */
 	Matrix *err; /* Error (output of loss function) */
-	Matrix *delta;
-	Matrix *tmp1, *tmp2;
+	Matrix *delta; /* Delta for current layer */
+	Matrix *tmp=NULL, *tmp2=NULL; /* Temporary variables for calculations */
 	int layer;
 	size_t list_size;
 
 	/* Check for nulls */
-	if(!nn || !X_train || !y_train || !loss_func) return;
+	if(!nn || !X_train || !y_train || !loss_func) return NULL;
 
 	/* Allocate variables */
 	list_size = nn->n_layers * sizeof(Matrix*);
@@ -157,7 +159,7 @@ void nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* y_tra
 
 	/* Run the forward propagation (prediction) pass */
 	for(layer = 0; layer < nn->n_layers; layer++){
-		Matrix *z, *weight, *bias;
+		Matrix *weight, *bias;
 		bias = nn->biases[layer];
 		weight = nn->weights[layer];
 
@@ -173,13 +175,55 @@ void nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* y_tra
 
 	/* Calculate output delta*/
 	delta = dloss_func(activation, y_train); /* Derviative of loss function wrt output activations */
-	err = ndiff(Zs[nn->n_layers], nn->hidden_activ); /* Derivative of activation function wrt output Z vector */
-	delta = mhad(delta, err, NULL); /* Delta is the Hadamard product of these 2 */
-	mfree(err);
+	err = ndiff(Zs[nn->n_layers - 1], nn->hidden_activ); /* Derivative of activation function wrt output Z vector */
+	delta = mhad(delta, err, NULL); /* Delta is the Hadamard product of these 2, equation BP1 */
 
 	/* Calculate output weight and bias derivatives */
 	/* Definition of dot product: x.y=x^T*y */
-	nabla_b[nn->n_layers] = delta;
-	nabla_w[nn->n_layers] = delta;
+	last_activation = mtrns(activations[nn->n_layers - 2], NULL);
+	nabla_b[nn->n_layers - 1] = mscale(delta, 1, NULL); /* Equation BP3 */
+	nabla_w[nn->n_layers - 1] = mmul(delta, last_activation, NULL); /* Equation BP4 */
+
+	mfree(err);
+	mfree(tmp);
+	mfree(last_activation);
+
+	for(layer = nn->n_layers - 1; layer > 0; layer--){
+		Matrix *transposed_weights;
+		z = Zs[nn->n_layers - layer]; /* Z vector for current layer (unactivated layer output) */
+		activationp = ndiff(z, nn->hidden_activ); /* Derivative of activation function for current layer */
+		last_activation = mtrns(activations[layer - 1], NULL); /* Transpose of activation of layer n-1 */
+
+		/* Calculate delta */
+		transposed_weights = mtrns(nn->weights[layer + 1], NULL); /* Transposed weights of next layer */
+		tmp = mmul(transposed_weights, delta, NULL);
+		delta = mhad(tmp, activationp, delta); /* Equation BP2 */
+
+		/* Calculate gradients */
+		nabla_b[layer] = mscale(delta, 1.0, NULL); /* Equation BP3 */
+		nabla_w[layer] = mmul(delta, last_activation, NULL); /* Equation BP4 */
+
+		/* Free variables */
+		mfree(transposed_weights);
+		mfree(last_activation);
+		mfree(tmp);
+	}
+
+	/* Free unneeded variables */
+	for(layer = 0; layer < nn->n_layers; layer++){
+		mfree(Zs[layer]);
+		mfree(activations[layer]);
+	}
+	mfree(activation);
+	mfree(z);
+	mfree(tmp);
+	mfree(tmp2);
+	free(activations);
+	free(Zs);
+
+	/* Package up and return pointer to gradients */
+	nablas = malloc(2 * sizeof(Matrix**));
+	nablas[0] = nabla_w;
+	nablas[1] = nabla_b;
+	return nablas;
 }
-#endif
