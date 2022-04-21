@@ -134,13 +134,24 @@ static Matrix* ndiff(const Matrix* x, const dfunc activ_func){
 	return d_activ;
 }
 
+/**
+* Run backpropagation
+*
+* @param nn A constant pointer to the neural network to backpropagate.
+* @param X_train A pointer to the Matrix row from the training dataset to backpropagate on.
+* @param y_train A pointer to the Matrix desired output for the row of the training dataset.
+* @param loss_func A function pointer to the loss function.
+* @param dloss_func A function pointer to the derivative of the loss function.
+*
+* @returns A Matrix*** of the gradients for the weights and biases. (Contains Matrix** nabla_w, Matrix** nabla_b)
+*/
 Matrix*** nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* y_train, const lfunc loss_func,
-			const lfuncd dloss_func){
+				 const lfuncd dloss_func){
 	/* http://neuralnetworksanddeeplearning.com/chap2.html#the_code_for_backpropagation */
 	/* Nabla_b and nabla_w are gradients of the biases and weights respectively. They are lists of Matrices
 	just as the weights and biases are in the neural network structure */
 	Matrix **nabla_b, **nabla_w;
-	Matrix*** nablas;
+	Matrix*** nablas; /* Holds both the weight and bias gradients */
 	Matrix **Zs; /* A list of Z vectors (unactivated outputs) for each layer */
 	Matrix **activations = NULL; /* A list of activations for each layer */
 	Matrix *z = NULL; /* Current z vector */
