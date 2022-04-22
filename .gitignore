@@ -52,6 +52,8 @@ enn_test
 *.pdb
 *.stackdump
 infer-out
+gmon.out
+prof_output
 
 # Kernel Module Compile Results
 *.mod*
