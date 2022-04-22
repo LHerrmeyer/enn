@@ -30,17 +30,14 @@ int mfrob(const Matrix* a);
 
 /* Define macros */
 #define MDUP(arr,out,nrow,ncol) do { \
-								Matrix* output; \
 								int row, col; \
 								(out) = NULL; \
-								output = (Matrix*)(out); \
-								output = mnew((nrow), (ncol)); \
+								(out) = mnew((nrow), (ncol)); \
 								for(row = 0; row < nrow; row++){ \
 									for(col = 0; col < ncol; col++){ \
-										output->data[row][col] = (arr)[row][col]; \
+										(out)->data[row][col] = (arr)[row][col]; \
 									} \
 								} \
-								(out) = output; \
                                	} while (0)
 
 #endif
