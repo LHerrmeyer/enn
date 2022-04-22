@@ -290,6 +290,16 @@ static char* test_npred(){
 	return NULL;
 }
 
+/* This causes a memory leak, why? */
+/* valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./build/enn_test */
+
+static char* test_mfree(){
+	Matrix* abc;
+	abc = mnew(10,20);
+	mfree(abc);
+	return NULL;
+}
+
 static char* all_tests(){;
 	mu_run_test(test_mnew);
 	mu_run_test(test_mnew2);
@@ -299,6 +309,7 @@ static char* all_tests(){;
 	mu_run_test(test_mhad);
 	mu_run_test(test_arelu);
 	mu_run_test(test_npred);
+	mu_run_test(test_mfree);
 	return NULL;
 }
 

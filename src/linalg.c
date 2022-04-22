@@ -89,6 +89,7 @@ void mfree(Matrix* x){
 	for(row = 0; row < x->rows; row++){
 		free(x->data[row]);
 	}
+	free(x->data);
 	free(x);
 }
 
