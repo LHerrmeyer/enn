@@ -1,296 +1,111 @@
-==488== Memcheck, a memory error detector
-==488== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==488== Using Valgrind-3.14.0-353a3587bb-20181007X and LibVEX; rerun with -h for copyright info
-==488== Command: ./build/enn_test
-==488== Parent PID: 8
-==488== 
---488-- 
---488-- Valgrind options:
---488--    --leak-check=full
---488--    --show-leak-kinds=all
---488--    --track-origins=yes
---488--    --verbose
---488--    --log-file=valgrind-out.txt
---488-- Contents of /proc/version:
---488--   Linux version 4.4.0-22000-Microsoft (Microsoft@Microsoft.com) (gcc version 5.4.0 (GCC) ) #1-Microsoft Fri Jun 04 16:28:00 PST 2021
---488-- 
---488-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-avx-avx2-bmi
---488-- Page sizes: currently 4096, max supported 4096
---488-- Valgrind library directory: /usr/lib/x86_64-linux-gnu/valgrind
---488-- Reading syms from /mnt/c/Users/logan/Documents/prog/enn/build/enn_test
---488-- Reading syms from /lib/x86_64-linux-gnu/ld-2.28.so
---488--   Considering /usr/lib/debug/.build-id/f2/5dfd7b95be4ba386fd71080accae8c0732b711.debug ..
---488--   .. build-id is valid
---488-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/memcheck-amd64-linux
---488--   Considering /usr/lib/debug/.build-id/32/2e77af97f403c3d34ff09edf60b089e72ec889.debug ..
---488--   .. build-id is valid
---488--    object doesn't have a dynamic symbol table
---488-- Scheduler: using generic scheduler lock implementation.
---488-- Reading suppressions file: /usr/lib/x86_64-linux-gnu/valgrind/default.supp
-==488== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-488-by-logern-on-???
-==488== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-488-by-logern-on-???
-==488== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-488-by-logern-on-???
-==488== 
-==488== TO CONTROL THIS PROCESS USING vgdb (which you probably
-==488== don't want to do, unless you know exactly what you're doing,
-==488== or are doing some strange experiment):
-==488==   /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=488 ...command...
-==488== 
-==488== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==488==   /path/to/gdb ./build/enn_test
-==488== and then give GDB the following command
-==488==   target remote | /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=488
-==488== --pid is optional if only one valgrind process is running
-==488== 
-==488== error calling PR_SET_PTRACER, vgdb might block
---488-- REDIR: 0x401e2f0 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c9ce2 (vgPlain_amd64_linux_REDIR_FOR_strlen)
---488-- REDIR: 0x401e0d0 (ld-linux-x86-64.so.2:index) redirected to 0x580c9cfc (vgPlain_amd64_linux_REDIR_FOR_index)
---488-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_core-amd64-linux.so
---488--   Considering /usr/lib/debug/.build-id/34/fbc4cdfbfce1bfc3d2e522a01a050bf724c930.debug ..
---488--   .. build-id is valid
---488-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so
---488--   Considering /usr/lib/debug/.build-id/ca/bb7898ea982d936cbfadd70ae831c6eb63623f.debug ..
---488--   .. build-id is valid
-==488== WARNING: new redirection conflicts with existing -- ignoring it
---488--     old: 0x0401e2f0 (strlen              ) R-> (0000.0) 0x580c9ce2 vgPlain_amd64_linux_REDIR_FOR_strlen
---488--     new: 0x0401e2f0 (strlen              ) R-> (2007.0) 0x04838d80 strlen
---488-- REDIR: 0x401ab10 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4839e40 (strcmp)
---488-- REDIR: 0x401e830 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x483d860 (mempcpy)
---488-- Reading syms from /lib/x86_64-linux-gnu/libm-2.28.so
---488--   Considering /usr/lib/debug/.build-id/88/5dda4b4a5cea600e7b5b98c1ad86996c8d2299.debug ..
---488--   .. build-id is valid
---488-- Reading syms from /lib/x86_64-linux-gnu/libc-2.28.so
---488--   Considering /usr/lib/debug/.build-id/18/b9a9a8c523e5cfe5b5d946d605d09242f09798.debug ..
---488--   .. build-id is valid
---488-- REDIR: 0x4a63f70 (libc.so.6:memmove) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a63160 (libc.so.6:strncpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a64250 (libc.so.6:strcasecmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a62b70 (libc.so.6:strcat) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a63190 (libc.so.6:rindex) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a65890 (libc.so.6:rawmemchr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a7e230 (libc.so.6:wmemchr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a7dcd0 (libc.so.6:wcscmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a640e0 (libc.so.6:mempcpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a63f10 (libc.so.6:bcmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a63100 (libc.so.6:strncmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a62be0 (libc.so.6:strcmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a64040 (libc.so.6:memset) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a7dca0 (libc.so.6:wcschr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a630a0 (libc.so.6:strnlen) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a62c70 (libc.so.6:strcspn) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a642a0 (libc.so.6:strncasecmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a62c40 (libc.so.6:strcpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a643e0 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a7f4d0 (libc.so.6:wcsnlen) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a631c0 (libc.so.6:strpbrk) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a62ba0 (libc.so.6:index) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a63070 (libc.so.6:strlen) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a6a280 (libc.so.6:memrchr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a642f0 (libc.so.6:strcasecmp_l) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a63ee0 (libc.so.6:memchr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a7ddb0 (libc.so.6:wcslen) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a63460 (libc.so.6:strspn) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a64220 (libc.so.6:stpncpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a641f0 (libc.so.6:stpcpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a658c0 (libc.so.6:strchrnul) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4a64340 (libc.so.6:strncasecmp_l) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---488-- REDIR: 0x4b36fa0 (libc.so.6:__strrchr_avx2) redirected to 0x4838790 (rindex)
---488-- REDIR: 0x4a5f350 (libc.so.6:malloc) redirected to 0x4835710 (malloc)
---488-- REDIR: 0x4a5f9a0 (libc.so.6:free) redirected to 0x4836940 (free)
---488-- REDIR: 0x4b37170 (libc.so.6:__strlen_avx2) redirected to 0x4838c60 (strlen)
---488-- REDIR: 0x4b36db0 (libc.so.6:__strchrnul_avx2) redirected to 0x483d390 (strchrnul)
---488-- REDIR: 0x4b37690 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x483d4a0 (mempcpy)
-==488== 
-==488== HEAP SUMMARY:
-==488==     in use at exit: 1,792 bytes in 101 blocks
-==488==   total heap usage: 927 allocs, 826 frees, 18,880 bytes allocated
-==488== 
-==488== Searching for pointers to 101 not-freed blocks
-==488== Checked 74,040 bytes
-==488== 
-==488== 16 bytes in 1 blocks are indirectly lost in loss record 1 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A1C7: mnew (linalg.c:42)
-==488==    by 0x10C1FB: test_npred (test.c:241)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 16 bytes in 1 blocks are indirectly lost in loss record 2 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A1C7: mnew (linalg.c:42)
-==488==    by 0x10C2A2: test_npred (test.c:242)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 16 bytes in 1 blocks are indirectly lost in loss record 3 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A1C7: mnew (linalg.c:42)
-==488==    by 0x10C356: test_npred (test.c:243)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 24 bytes in 1 blocks are indirectly lost in loss record 4 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10C1BD: test_npred (test.c:237)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 24 bytes in 1 blocks are indirectly lost in loss record 5 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10C1D2: test_npred (test.c:238)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 24 bytes in 1 blocks are indirectly lost in loss record 6 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A200: mnew (linalg.c:51)
-==488==    by 0x10C356: test_npred (test.c:243)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 32 bytes in 1 blocks are indirectly lost in loss record 7 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A200: mnew (linalg.c:51)
-==488==    by 0x10C1FB: test_npred (test.c:241)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 32 bytes in 1 blocks are indirectly lost in loss record 8 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A200: mnew (linalg.c:51)
-==488==    by 0x10C2A2: test_npred (test.c:242)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 40 bytes in 1 blocks are indirectly lost in loss record 9 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A200: mnew (linalg.c:51)
-==488==    by 0x10AE25: test_mnew (test.c:13)
-==488==    by 0x10C905: all_tests (test.c:304)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 40 bytes in 1 blocks are indirectly lost in loss record 10 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A200: mnew (linalg.c:51)
-==488==    by 0x10A2D5: mnew2 (linalg.c:78)
-==488==    by 0x10AE75: test_mnew2 (test.c:21)
-==488==    by 0x10C932: all_tests (test.c:305)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 48 bytes in 3 blocks are indirectly lost in loss record 11 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A1C7: mnew (linalg.c:42)
-==488==    by 0x10A2D5: mnew2 (linalg.c:78)
-==488==    by 0x10ABC0: mtrns (linalg.c:333)
-==488==    by 0x10C659: test_npred (test.c:251)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 88 bytes in 3 blocks are indirectly lost in loss record 12 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A200: mnew (linalg.c:51)
-==488==    by 0x10A2D5: mnew2 (linalg.c:78)
-==488==    by 0x10ABC0: mtrns (linalg.c:333)
-==488==    by 0x10C659: test_npred (test.c:251)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 88 bytes in 11 blocks are indirectly lost in loss record 13 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A26F: mnew (linalg.c:59)
-==488==    by 0x10A2D5: mnew2 (linalg.c:78)
-==488==    by 0x10ABC0: mtrns (linalg.c:333)
-==488==    by 0x10C659: test_npred (test.c:251)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 96 bytes in 3 blocks are indirectly lost in loss record 14 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A26F: mnew (linalg.c:59)
-==488==    by 0x10C356: test_npred (test.c:243)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 120 bytes in 5 blocks are indirectly lost in loss record 15 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A26F: mnew (linalg.c:59)
-==488==    by 0x10AE25: test_mnew (test.c:13)
-==488==    by 0x10C905: all_tests (test.c:304)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 120 bytes in 5 blocks are indirectly lost in loss record 16 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A26F: mnew (linalg.c:59)
-==488==    by 0x10A2D5: mnew2 (linalg.c:78)
-==488==    by 0x10AE75: test_mnew2 (test.c:21)
-==488==    by 0x10C932: all_tests (test.c:305)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 128 bytes in 4 blocks are indirectly lost in loss record 17 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A26F: mnew (linalg.c:59)
-==488==    by 0x10C1FB: test_npred (test.c:241)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 128 bytes in 4 blocks are indirectly lost in loss record 18 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A26F: mnew (linalg.c:59)
-==488==    by 0x10C2A2: test_npred (test.c:242)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 176 (16 direct, 160 indirect) bytes in 1 blocks are definitely lost in loss record 19 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A1C7: mnew (linalg.c:42)
-==488==    by 0x10AE25: test_mnew (test.c:13)
-==488==    by 0x10C905: all_tests (test.c:304)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 176 (16 direct, 160 indirect) bytes in 1 blocks are definitely lost in loss record 20 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A1C7: mnew (linalg.c:42)
-==488==    by 0x10A2D5: mnew2 (linalg.c:78)
-==488==    by 0x10AE75: test_mnew2 (test.c:21)
-==488==    by 0x10C932: all_tests (test.c:305)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 240 bytes in 10 blocks are indirectly lost in loss record 21 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A200: mnew (linalg.c:51)
-==488==    by 0x109F89: asmax (activ.c:35)
-==488==    by 0x10C7E7: test_npred (test.c:272)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 240 bytes in 30 blocks are indirectly lost in loss record 22 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A26F: mnew (linalg.c:59)
-==488==    by 0x109F89: asmax (activ.c:35)
-==488==    by 0x10C7E7: test_npred (test.c:272)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 640 (160 direct, 480 indirect) bytes in 10 blocks are definitely lost in loss record 23 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10A1C7: mnew (linalg.c:42)
-==488==    by 0x109F89: asmax (activ.c:35)
-==488==    by 0x10C7E7: test_npred (test.c:272)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== 800 (40 direct, 760 indirect) bytes in 1 blocks are definitely lost in loss record 24 of 24
-==488==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==488==    by 0x10C681: test_npred (test.c:256)
-==488==    by 0x10CA3D: all_tests (test.c:311)
-==488==    by 0x10CAA0: main (test.c:317)
-==488== 
-==488== LEAK SUMMARY:
-==488==    definitely lost: 232 bytes in 13 blocks
-==488==    indirectly lost: 1,560 bytes in 88 blocks
-==488==      possibly lost: 0 bytes in 0 blocks
-==488==    still reachable: 0 bytes in 0 blocks
-==488==         suppressed: 0 bytes in 0 blocks
-==488== 
-==488== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
-==488== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
+==685== Memcheck, a memory error detector
+==685== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==685== Using Valgrind-3.14.0-353a3587bb-20181007X and LibVEX; rerun with -h for copyright info
+==685== Command: ./build/enn_test
+==685== Parent PID: 8
+==685== 
+--685-- 
+--685-- Valgrind options:
+--685--    --leak-check=full
+--685--    --show-leak-kinds=all
+--685--    --track-origins=yes
+--685--    --verbose
+--685--    --log-file=valgrind-out.txt
+--685-- Contents of /proc/version:
+--685--   Linux version 4.4.0-22000-Microsoft (Microsoft@Microsoft.com) (gcc version 5.4.0 (GCC) ) #1-Microsoft Fri Jun 04 16:28:00 PST 2021
+--685-- 
+--685-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-avx-avx2-bmi
+--685-- Page sizes: currently 4096, max supported 4096
+--685-- Valgrind library directory: /usr/lib/x86_64-linux-gnu/valgrind
+--685-- Reading syms from /mnt/c/Users/logan/Documents/prog/enn/build/enn_test
+--685-- Reading syms from /lib/x86_64-linux-gnu/ld-2.28.so
+--685--   Considering /usr/lib/debug/.build-id/f2/5dfd7b95be4ba386fd71080accae8c0732b711.debug ..
+--685--   .. build-id is valid
+--685-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/memcheck-amd64-linux
+--685--   Considering /usr/lib/debug/.build-id/32/2e77af97f403c3d34ff09edf60b089e72ec889.debug ..
+--685--   .. build-id is valid
+--685--    object doesn't have a dynamic symbol table
+--685-- Scheduler: using generic scheduler lock implementation.
+--685-- Reading suppressions file: /usr/lib/x86_64-linux-gnu/valgrind/default.supp
+==685== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-685-by-logern-on-???
+==685== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-685-by-logern-on-???
+==685== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-685-by-logern-on-???
+==685== 
+==685== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==685== don't want to do, unless you know exactly what you're doing,
+==685== or are doing some strange experiment):
+==685==   /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=685 ...command...
+==685== 
+==685== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==685==   /path/to/gdb ./build/enn_test
+==685== and then give GDB the following command
+==685==   target remote | /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=685
+==685== --pid is optional if only one valgrind process is running
+==685== 
+==685== error calling PR_SET_PTRACER, vgdb might block
+--685-- REDIR: 0x401e2f0 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c9ce2 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--685-- REDIR: 0x401e0d0 (ld-linux-x86-64.so.2:index) redirected to 0x580c9cfc (vgPlain_amd64_linux_REDIR_FOR_index)
+--685-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_core-amd64-linux.so
+--685--   Considering /usr/lib/debug/.build-id/34/fbc4cdfbfce1bfc3d2e522a01a050bf724c930.debug ..
+--685--   .. build-id is valid
+--685-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so
+--685--   Considering /usr/lib/debug/.build-id/ca/bb7898ea982d936cbfadd70ae831c6eb63623f.debug ..
+--685--   .. build-id is valid
+==685== WARNING: new redirection conflicts with existing -- ignoring it
+--685--     old: 0x0401e2f0 (strlen              ) R-> (0000.0) 0x580c9ce2 vgPlain_amd64_linux_REDIR_FOR_strlen
+--685--     new: 0x0401e2f0 (strlen              ) R-> (2007.0) 0x04838d80 strlen
+--685-- REDIR: 0x401ab10 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4839e40 (strcmp)
+--685-- REDIR: 0x401e830 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x483d860 (mempcpy)
+--685-- Reading syms from /lib/x86_64-linux-gnu/libm-2.28.so
+--685--   Considering /usr/lib/debug/.build-id/88/5dda4b4a5cea600e7b5b98c1ad86996c8d2299.debug ..
+--685--   .. build-id is valid
+--685-- Reading syms from /lib/x86_64-linux-gnu/libc-2.28.so
+--685--   Considering /usr/lib/debug/.build-id/18/b9a9a8c523e5cfe5b5d946d605d09242f09798.debug ..
+--685--   .. build-id is valid
+--685-- REDIR: 0x4a63f70 (libc.so.6:memmove) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a63160 (libc.so.6:strncpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a64250 (libc.so.6:strcasecmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a62b70 (libc.so.6:strcat) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a63190 (libc.so.6:rindex) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a65890 (libc.so.6:rawmemchr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a7e230 (libc.so.6:wmemchr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a7dcd0 (libc.so.6:wcscmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a640e0 (libc.so.6:mempcpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a63f10 (libc.so.6:bcmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a63100 (libc.so.6:strncmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a62be0 (libc.so.6:strcmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a64040 (libc.so.6:memset) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a7dca0 (libc.so.6:wcschr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a630a0 (libc.so.6:strnlen) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a62c70 (libc.so.6:strcspn) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a642a0 (libc.so.6:strncasecmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a62c40 (libc.so.6:strcpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a643e0 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a7f4d0 (libc.so.6:wcsnlen) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a631c0 (libc.so.6:strpbrk) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a62ba0 (libc.so.6:index) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a63070 (libc.so.6:strlen) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a6a280 (libc.so.6:memrchr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a642f0 (libc.so.6:strcasecmp_l) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a63ee0 (libc.so.6:memchr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a7ddb0 (libc.so.6:wcslen) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a63460 (libc.so.6:strspn) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a64220 (libc.so.6:stpncpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a641f0 (libc.so.6:stpcpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a658c0 (libc.so.6:strchrnul) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4a64340 (libc.so.6:strncasecmp_l) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--685-- REDIR: 0x4b36fa0 (libc.so.6:__strrchr_avx2) redirected to 0x4838790 (rindex)
+--685-- REDIR: 0x4a5f350 (libc.so.6:malloc) redirected to 0x4835710 (malloc)
+--685-- REDIR: 0x4a5f9a0 (libc.so.6:free) redirected to 0x4836940 (free)
+--685-- REDIR: 0x4b37170 (libc.so.6:__strlen_avx2) redirected to 0x4838c60 (strlen)
+--685-- REDIR: 0x4b36db0 (libc.so.6:__strchrnul_avx2) redirected to 0x483d390 (strchrnul)
+--685-- REDIR: 0x4b37690 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x483d4a0 (mempcpy)
+==685== 
+==685== HEAP SUMMARY:
+==685==     in use at exit: 0 bytes in 0 blocks
+==685==   total heap usage: 927 allocs, 927 frees, 18,880 bytes allocated
+==685== 
+==685== All heap blocks were freed -- no leaks are possible
+==685== 
+==685== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==685== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

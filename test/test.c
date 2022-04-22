@@ -13,6 +13,7 @@ static char* test_mnew(){
 	mat = mnew(5,3);
 	mu_assert("Error, rows != 5", mat->rows == 5);
 	mu_assert("Error, cols != 3", mat->cols == 3);
+	mfree(mat);
 	return NULL;
 }
 
@@ -22,6 +23,7 @@ static char* test_mnew2(){
 	mat2 = mnew2(5, 3, mat);
 	mu_assert("Error, mat is NULL", mat);
 	mu_assert("Error, mat != mat2", mat == mat2);
+	mfree(mat); /* Only one needs to be freed as mat and mat2 point to the same memory */
 	return NULL;
 }
 
@@ -286,11 +288,23 @@ static char* test_npred(){
 		mfree(current_vector_trns);
 		mfree(current_vector);
 		mfree(out);
+		mfree(out_prob);
 	}
+
+	/* Free the rest of the variables */
+	mfree(weights[0]);
+	mfree(weights[1]);
+	mfree(weights[2]);
+	mfree(biases[0]);
+	mfree(biases[1]);
+	mfree(biases[2]);
+	free(weights);
+	free(biases);
+	free(nn);
+
 	return NULL;
 }
 
-/* This causes a memory leak, why? */
 /* valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./build/enn_test */
 
 static char* test_mfree(){
