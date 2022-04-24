@@ -248,7 +248,6 @@ Matrix*** nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* 
 		mfree(Zs[layer]);
 		mfree(activations[layer]);
 	}
-	mfree(activation);
 	mfree(z);
 	mfree(tmp);
 	mfree(tmp2);
