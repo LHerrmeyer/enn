@@ -253,8 +253,6 @@ Matrix* madd(const Matrix* a, const Matrix* b, Matrix* out){
 	int row;
 	int col;
 
-	CHECK_NULL(a);CHECK_NULL(b);
-
 	/* Make sure both have the same number of rows and columns and not NULL */
 	if(!a || !b || a->rows != b->rows || a->cols != b->cols)return NULL;
 

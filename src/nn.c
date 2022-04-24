@@ -23,7 +23,7 @@ neural_network* ninit(int inputs, int hidden_layers, int hiddens, int outputs, d
 	/* Allocate all variables in the struct */
 	nn = malloc(sizeof(neural_network));
 	if(!nn) return NULL;
-	nn->n_layers = inputs + hidden_layers + outputs;
+	nn->n_layers = hidden_layers + 2; /* 1 Input layer + n hidden layers + 1 output layer */
 	nn->weights = malloc(nn->n_layers * sizeof(Matrix*));
 	nn->biases = malloc(nn->n_layers * sizeof(Matrix*));
 	nn->hidden_activ = hidden_activ;
@@ -43,6 +43,9 @@ neural_network* ninit(int inputs, int hidden_layers, int hiddens, int outputs, d
 	for(i = 1; i < hidden_layers + 1; i++){
 		nn->weights[i] = mnew(hiddens, hiddens);
 		nn->biases[i] = mnew(hiddens, 1);
+		/* Scale to 0 */
+		nn->weights[i] = mscale(nn->weights[i], 0.0, nn->weights[i]);
+		nn->biases[i] = mscale(nn->biases[i], 0.0, nn->biases[i]);
 	}
 	/* Allocate the output layer. This maps R^hiddens -> R^outputs, so it is outputs x hiddens */
 	nn->weights[hidden_layers + 1] = mnew(outputs, hiddens);
@@ -160,12 +163,15 @@ Matrix*** nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* 
 	Matrix *last_activation; /* Activation of last layer */
 	Matrix *err; /* Error (output of loss function) */
 	Matrix *delta; /* Delta for current layer */
-	Matrix *tmp=NULL, *tmp2=NULL; /* Temporary variables for calculations */
+	Matrix *tmp = NULL, *tmp2 = NULL; /* Temporary variables for calculations */
 	int layer;
 	size_t list_size;
 
 	/* Check for nulls */
 	if(!nn || !X_train || !y_train || !loss_func) return NULL;
+
+	/* Make sure we only have 1 row of data */
+	if(X_train->rows != 1 || y_train->rows != 1) return NULL;
 
 	/* Allocate variables */
 	list_size = nn->n_layers * sizeof(Matrix*);
@@ -174,8 +180,15 @@ Matrix*** nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* 
 	Zs = calloc(list_size + 1, sizeof(Matrix*));
 	activations = calloc(list_size + 1, sizeof(Matrix*));
 
-	/* Set initial activation to first row of X_train, TODO: stochastically select the row, with rand seed*/
-	MDUP(&X_train->data[0], activation, 1, X_train->cols);
+	/* Get data from designated row of X_train and y_train for stochastic gradient descent */
+	/*
+	MDUP(&X_train->data[index], cur_X_train, 1, X_train->cols);
+	MDUP(&y_train->data[index], cur_y_train, 1, y_train->cols);
+	*/
+
+	/* Set initial activation to the row of training data (cur_X_train we are training on */
+	/*activation = cur_X_train;*/
+	activation = mscale(X_train, 1.0, NULL);
 	activations[0] = activation;
 
 	/* Run the forward propagation (prediction) pass */
@@ -210,7 +223,7 @@ Matrix*** nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* 
 	mfree(last_activation);
 
 	for(layer = nn->n_layers - 1; layer > 0; layer--){
-		Matrix *transposed_weights;
+		Matrix *transposed_weights, *current_weights;
 		z = Zs[nn->n_layers - layer]; /* Z vector for current layer (unactivated layer output) */
 		activationp = ndiff(z, nn->hidden_activ); /* Derivative of activation function for current layer */
 		last_activation = mtrns(activations[layer - 1], NULL); /* Transpose of activation of layer n-1 */

@@ -4,6 +4,7 @@
 #include "../src/linalg.h"
 #include "../src/activ.h"
 #include "../src/nn.h"
+#include "../src/loss.h"
 #include "minunit.h"
 
 int tests_run = 0;
@@ -187,10 +188,11 @@ static char* test_arelu(){
 
 static char* test_npred(){
 	#define N_TESTS 10
-	Matrix **weights, **biases, *out, *out_prob, *current_vector, *current_vector_trns;
+	Matrix **weights, **biases, *out_prob, *current_vector, *current_vector_trns;
 	neural_network* nn;
 	int i, j, n_layers, prediction;
 	double pred_max;
+	/* Weights and biases of neural network to test predictions */
 	double w0[4][4] = {
 		{-0.5206975 ,  0.5338802 , -0.5602411 , -0.09294045},
 		{-0.81646407,  0.07859222,  0.8910857 ,  0.9753645 },
@@ -267,11 +269,9 @@ static char* test_npred(){
 		/* Run the neural network prediction */
 		MDUP(&test_set_X[i], current_vector_trns, 1, 4);
 		current_vector = mtrns(current_vector_trns, NULL);
-		/*out = npred(current_vector, (const Matrix**)weights, (const Matrix**)biases, n_layers, &arelu); */
-		out = npred(nn, current_vector);
+		out_prob = npred(nn, current_vector); /* Prediction is a probably as we are using softmax output */
 
 		/* Find the prediction using argmax */
-		out_prob = asmax(out);
 		pred_max = 0.0;
 		prediction = 0;
 		for(j = 0; j < 3; j++){
@@ -287,7 +287,6 @@ static char* test_npred(){
 		/* Free variables */
 		mfree(current_vector_trns);
 		mfree(current_vector);
-		mfree(out);
 		mfree(out_prob);
 	}
 
@@ -314,6 +313,34 @@ static char* test_mfree(){
 	return NULL;
 }
 
+static char* test_nbprop(){
+	Matrix *test_X2, *test_y2, *test_X, *test_y;
+	Matrix *cur_X, *cur_y;
+	Matrix ***gradients, **weight_gradients, **bias_gradients;
+	neural_network* nn = ninit(4, 2, 4, 1, &arelu, NULL);
+	int current_index = 0;
+	/* Data is from Anscombe's quartet set 1. Equation should be y=3x+5 */
+	double test_set_X[11] = {10.0, 8.0, 13.0, 9.0, 11.0, 14.0, 6.0, 4.0, 12.0, 7.0, 5.0};
+	double test_set_y[11] = {8.04, 6.95, 7.58, 8.81, 8.33, 9.96, 7.24, 4.26, 10.84, 4.82, 5.68};
+
+	/* Convert test and training sets to matrices and convert them to column vectors */
+	MDUP(&test_set_X, test_y2, 1, 11);
+	MDUP(&test_set_y, test_X2, 1, 11);
+	test_X = mtrns(test_X2, NULL);
+	test_y = mtrns(test_y2, NULL);
+	mfree(test_X2);
+	mfree(test_y2);
+
+	/* Get current X and y values to train on */
+	MDUP(&test_X->data[current_index], cur_X, 1, 1); /* One row, one col */
+	MDUP(&test_y->data[current_index], cur_y, 1, 1);
+
+	/* Start backprop with mean squared error loss function */
+	gradients = nbprop(nn, cur_X, cur_y, lmse, dmse);
+
+	return NULL;
+}
+
 static char* all_tests(){;
 	mu_run_test(test_mnew);
 	mu_run_test(test_mnew2);
@@ -324,6 +351,7 @@ static char* all_tests(){;
 	mu_run_test(test_arelu);
 	mu_run_test(test_npred);
 	mu_run_test(test_mfree);
+	mu_run_test(test_nbprop);
 	return NULL;
 }
 
