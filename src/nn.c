@@ -206,8 +206,8 @@ Matrix*** nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* 
 		z = madd(z, bias, z); /* Addition is in-place, so we don't need an extra variable */
 		Zs[layer] = z;
 
-		/* Calculate the activation */
-		activation = mapply(activation, nn->hidden_activ, NULL);
+		/* Calculate the activation by applying it to Z (the output of the layer before activtion) */
+		activation = mapply(z, nn->hidden_activ, NULL);
 		activations[layer + 1] = activation;
 	}
 
