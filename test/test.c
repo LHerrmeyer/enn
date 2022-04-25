@@ -304,8 +304,6 @@ static char* test_npred(){
 	return NULL;
 }
 
-/* valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./build/enn_test */
-
 static char* test_mfree(){
 	Matrix* abc;
 	abc = mnew(10,20);
@@ -317,16 +315,17 @@ static char* test_nbprop(){
 	Matrix *test_X2, *test_y2, *test_X, *test_y;
 	Matrix *cur_X, *cur_y;
 	Matrix ***gradients, **weight_gradients, **bias_gradients;
-	neural_network* nn = ninit(4, 2, 4, 1, &arelu, NULL);
+	/* 1 input neuron, 2 hidden layers, 2  */
+	neural_network* nn = ninit(1, 2, 2, 1, &arelu, NULL);
 	int current_index = 0;
 	/* Data is from Anscombe's quartet set 1. Equation should be y=3x+5 */
 	double test_set_X[11] = {10.0, 8.0, 13.0, 9.0, 11.0, 14.0, 6.0, 4.0, 12.0, 7.0, 5.0};
 	double test_set_y[11] = {8.04, 6.95, 7.58, 8.81, 8.33, 9.96, 7.24, 4.26, 10.84, 4.82, 5.68};
 
 	/* Convert test and training sets to matrices and convert them to column vectors */
-	MDUP(&test_set_X, test_y2, 1, 11);
+	MDUP(&test_set_X, test_y2, 1, 11); /* 1 row, 11 cols */
 	MDUP(&test_set_y, test_X2, 1, 11);
-	test_X = mtrns(test_X2, NULL);
+	test_X = mtrns(test_X2, NULL); /* Converting into 11 rows, 1 col */
 	test_y = mtrns(test_y2, NULL);
 	mfree(test_X2);
 	mfree(test_y2);

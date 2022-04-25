@@ -1,5 +1,6 @@
 # To run infer: /opt/infer-linux64-v0.17.0/bin/infer run -- make
 # For clang static analyzer (package clang-tools): scan-build make
+# valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./build/enn_test
 CC=gcc
 CFLAGS=-std=c90 -pedantic -Wall -Wextra $(EFLAGS)
 LDFLAGS=-lm

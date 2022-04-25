@@ -38,7 +38,8 @@ neural_network* ninit(int inputs, int hidden_layers, int hiddens, int outputs, d
 	/* Allocate the individual weight and bias matrices */
 	/* First weight maps R^inputs -> R^hiddens, so it should be hidden rows x input cols */
 	nn->weights[0] = mnew(hiddens, inputs);
-	nn->biases[0] = mnew(inputs, 1);
+	/* First biases is added after transformation to R^hiddens, so it should be in R^hiddens */
+	nn->biases[0] = mnew(hiddens, 1);
 	/* Allocate the hidden layers. These map R^hiddens -> R^hiddens*/
 	for(i = 1; i < hidden_layers + 1; i++){
 		nn->weights[i] = mnew(hiddens, hiddens);
@@ -49,6 +50,8 @@ neural_network* ninit(int inputs, int hidden_layers, int hiddens, int outputs, d
 	}
 	/* Allocate the output layer. This maps R^hiddens -> R^outputs, so it is outputs x hiddens */
 	nn->weights[hidden_layers + 1] = mnew(outputs, hiddens);
+	/* Last bias added to output, so it should be in R^outputs */
+	nn->biases[hidden_layers + 1] = mnew(outputs, 1);
 
 	return nn;
 }
@@ -169,9 +172,10 @@ Matrix*** nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* 
 
 	/* Check for nulls */
 	if(!nn || !X_train || !y_train || !loss_func) return NULL;
-
 	/* Make sure we only have 1 row of data */
 	if(X_train->rows != 1 || y_train->rows != 1) return NULL;
+	/* Make sure training data is right size */
+	if(X_train->cols != nn->weights[0]->cols) return NULL;
 
 	/* Allocate variables */
 	list_size = nn->n_layers * sizeof(Matrix*);
@@ -222,7 +226,7 @@ Matrix*** nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* 
 	mfree(tmp);
 	mfree(last_activation);
 
-	for(layer = nn->n_layers - 1; layer > 0; layer--){
+	for(layer = nn->n_layers - 2; layer > 0; layer--){
 		Matrix *transposed_weights, *current_weights;
 		z = Zs[nn->n_layers - layer]; /* Z vector for current layer (unactivated layer output) */
 		activationp = ndiff(z, nn->hidden_activ); /* Derivative of activation function for current layer */
