@@ -158,6 +158,37 @@ static char* test_mhad(){
 	return NULL;
 }
 
+static char* test_mscale(){
+	Matrix *a, *as, *b, *c, *cs, *d;
+	double ad[2][2] = {
+		{1.0, 2.0},
+		{3.0, 4.0}
+	};
+	double bd[2][2] = {
+		{2.0, 4.0},
+		{6.0, 8.0}
+	};
+
+	MDUP(ad, a, 2, 2);
+	MDUP(bd, b, 2, 2);
+
+	c = mnew(1, 1);
+	d = mnew(1, 1);
+	c->data[0][0] = -8.0;
+	d->data[0][0] = -8.0;
+
+	as = mscale(a, 2.0, NULL);
+	mu_assert("Error, b != mscale(a)", mcmp(b, as));
+	cs = mscale(c, 1.0, NULL);
+	mu_assert("Error, d != mscale(c)", mcmp(d, cs));
+
+	mfree(as);
+	mfree(a);
+	mfree(b);
+
+	return NULL;
+}
+
 /* This function tests both arelu() and mapply() */
 static char* test_arelu(){
 	Matrix *a_in, *a_int, *a_out, *a_outt, *res;
@@ -347,6 +378,7 @@ static char* all_tests(){;
 	mu_run_test(test_mconst);
 	mu_run_test(test_mmul);
 	mu_run_test(test_mhad);
+	mu_run_test(test_mscale);
 	mu_run_test(test_arelu);
 	mu_run_test(test_npred);
 	mu_run_test(test_mfree);

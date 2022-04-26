@@ -189,7 +189,13 @@ Matrix* mmul(const Matrix* a, const Matrix* b, Matrix* out){
 	int row, col, index;
 
 	/* Make sure matrices are comformable and not NULL */
-	if(!a || !b || a->cols != b->rows) return NULL;
+	if(!a || !b) return NULL;
+	if(a->cols != b->rows){
+		fprintf(stderr, "mmul(): Matrices not conformable\n");
+		mprint(a);
+		mprint(b);
+		return NULL;
+	}
 
 	/* (n x m) * (m x k) -> (m x k) */
 	out = mnew2(a->rows, b->cols, out);

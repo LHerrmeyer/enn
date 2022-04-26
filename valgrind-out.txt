@@ -1,414 +1,898 @@
-==1334== Memcheck, a memory error detector
-==1334== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334== Using Valgrind-3.14.0-353a3587bb-20181007X and LibVEX; rerun with -h for copyright info
-==1334== Command: ./build/enn_test
-==1334== Parent PID: 19
-==1334== 
---1334-- 
---1334-- Valgrind options:
---1334--    --leak-check=full
---1334--    --show-leak-kinds=all
---1334--    --track-origins=yes
---1334--    --verbose
---1334--    --log-file=valgrind-out.txt
---1334-- Contents of /proc/version:
---1334--   Linux version 4.4.0-22000-Microsoft (Microsoft@Microsoft.com) (gcc version 5.4.0 (GCC) ) #1-Microsoft Fri Jun 04 16:28:00 PST 2021
---1334-- 
---1334-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-avx-avx2-bmi
---1334-- Page sizes: currently 4096, max supported 4096
---1334-- Valgrind library directory: /usr/lib/x86_64-linux-gnu/valgrind
---1334-- Reading syms from /mnt/c/Users/Logan/Documents/prog/enn/build/enn_test
---1334-- Reading syms from /lib/x86_64-linux-gnu/ld-2.28.so
---1334--   Considering /usr/lib/debug/.build-id/f2/5dfd7b95be4ba386fd71080accae8c0732b711.debug ..
---1334--   .. build-id is valid
---1334-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/memcheck-amd64-linux
---1334--   Considering /usr/lib/debug/.build-id/32/2e77af97f403c3d34ff09edf60b089e72ec889.debug ..
---1334--   .. build-id is valid
---1334--    object doesn't have a dynamic symbol table
---1334-- Scheduler: using generic scheduler lock implementation.
---1334-- Reading suppressions file: /usr/lib/x86_64-linux-gnu/valgrind/default.supp
-==1334== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-1334-by-logern-on-???
-==1334== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-1334-by-logern-on-???
-==1334== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-1334-by-logern-on-???
-==1334== 
-==1334== TO CONTROL THIS PROCESS USING vgdb (which you probably
-==1334== don't want to do, unless you know exactly what you're doing,
-==1334== or are doing some strange experiment):
-==1334==   /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=1334 ...command...
-==1334== 
-==1334== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==1334==   /path/to/gdb ./build/enn_test
-==1334== and then give GDB the following command
-==1334==   target remote | /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=1334
-==1334== --pid is optional if only one valgrind process is running
-==1334== 
-==1334== error calling PR_SET_PTRACER, vgdb might block
---1334-- REDIR: 0x401e2f0 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c9ce2 (vgPlain_amd64_linux_REDIR_FOR_strlen)
---1334-- REDIR: 0x401e0d0 (ld-linux-x86-64.so.2:index) redirected to 0x580c9cfc (vgPlain_amd64_linux_REDIR_FOR_index)
---1334-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_core-amd64-linux.so
---1334--   Considering /usr/lib/debug/.build-id/34/fbc4cdfbfce1bfc3d2e522a01a050bf724c930.debug ..
---1334--   .. build-id is valid
---1334-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so
---1334--   Considering /usr/lib/debug/.build-id/ca/bb7898ea982d936cbfadd70ae831c6eb63623f.debug ..
---1334--   .. build-id is valid
-==1334== WARNING: new redirection conflicts with existing -- ignoring it
---1334--     old: 0x0401e2f0 (strlen              ) R-> (0000.0) 0x580c9ce2 vgPlain_amd64_linux_REDIR_FOR_strlen
---1334--     new: 0x0401e2f0 (strlen              ) R-> (2007.0) 0x04838d80 strlen
---1334-- REDIR: 0x401ab10 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4839e40 (strcmp)
---1334-- REDIR: 0x401e830 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x483d860 (mempcpy)
---1334-- Reading syms from /lib/x86_64-linux-gnu/libm-2.28.so
---1334--   Considering /usr/lib/debug/.build-id/88/5dda4b4a5cea600e7b5b98c1ad86996c8d2299.debug ..
---1334--   .. build-id is valid
---1334-- Reading syms from /lib/x86_64-linux-gnu/libc-2.28.so
---1334--   Considering /usr/lib/debug/.build-id/18/b9a9a8c523e5cfe5b5d946d605d09242f09798.debug ..
---1334--   .. build-id is valid
---1334-- REDIR: 0x4a63f70 (libc.so.6:memmove) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a63160 (libc.so.6:strncpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a64250 (libc.so.6:strcasecmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a62b70 (libc.so.6:strcat) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a63190 (libc.so.6:rindex) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a65890 (libc.so.6:rawmemchr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a7e230 (libc.so.6:wmemchr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a7dcd0 (libc.so.6:wcscmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a640e0 (libc.so.6:mempcpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a63f10 (libc.so.6:bcmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a63100 (libc.so.6:strncmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a62be0 (libc.so.6:strcmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a64040 (libc.so.6:memset) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a7dca0 (libc.so.6:wcschr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a630a0 (libc.so.6:strnlen) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a62c70 (libc.so.6:strcspn) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a642a0 (libc.so.6:strncasecmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a62c40 (libc.so.6:strcpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a643e0 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a7f4d0 (libc.so.6:wcsnlen) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a631c0 (libc.so.6:strpbrk) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a62ba0 (libc.so.6:index) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a63070 (libc.so.6:strlen) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a6a280 (libc.so.6:memrchr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a642f0 (libc.so.6:strcasecmp_l) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a63ee0 (libc.so.6:memchr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a7ddb0 (libc.so.6:wcslen) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a63460 (libc.so.6:strspn) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a64220 (libc.so.6:stpncpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a641f0 (libc.so.6:stpcpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a658c0 (libc.so.6:strchrnul) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4a64340 (libc.so.6:strncasecmp_l) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
---1334-- REDIR: 0x4b36fa0 (libc.so.6:__strrchr_avx2) redirected to 0x4838790 (rindex)
---1334-- REDIR: 0x4a5f350 (libc.so.6:malloc) redirected to 0x4835710 (malloc)
---1334-- REDIR: 0x4a5f9a0 (libc.so.6:free) redirected to 0x4836940 (free)
---1334-- REDIR: 0x4a60120 (libc.so.6:calloc) redirected to 0x4837ab0 (calloc)
---1334-- REDIR: 0x4b37170 (libc.so.6:__strlen_avx2) redirected to 0x4838c60 (strlen)
---1334-- REDIR: 0x4b36db0 (libc.so.6:__strchrnul_avx2) redirected to 0x483d390 (strchrnul)
---1334-- REDIR: 0x4b37690 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x483d4a0 (mempcpy)
-==1334== 
-==1334== HEAP SUMMARY:
-==1334==     in use at exit: 1,488 bytes in 80 blocks
-==1334==   total heap usage: 1,004 allocs, 924 frees, 21,024 bytes allocated
-==1334== 
-==1334== Searching for pointers to 80 not-freed blocks
-==1334== Checked 74,040 bytes
-==1334== 
-==1334== 8 bytes in 1 blocks are indirectly lost in loss record 1 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A222: mnew (linalg.c:51)
-==1334==    by 0x10959E: ninit (nn.c:51)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 8 bytes in 1 blocks are indirectly lost in loss record 2 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A222: mnew (linalg.c:51)
-==1334==    by 0x10CAAA: test_nbprop (test.c:333)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 8 bytes in 1 blocks are indirectly lost in loss record 3 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A291: mnew (linalg.c:59)
-==1334==    by 0x10CAAA: test_nbprop (test.c:333)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 8 bytes in 1 blocks are indirectly lost in loss record 4 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A222: mnew (linalg.c:51)
-==1334==    by 0x10CB46: test_nbprop (test.c:334)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 8 bytes in 1 blocks are indirectly lost in loss record 5 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A291: mnew (linalg.c:59)
-==1334==    by 0x10CB46: test_nbprop (test.c:334)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 8 bytes in 1 blocks are indirectly lost in loss record 6 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A222: mnew (linalg.c:51)
-==1334==    by 0x10A2F7: mnew2 (linalg.c:78)
-==1334==    by 0x10A921: madd (linalg.c:260)
-==1334==    by 0x10AA42: msub (linalg.c:283)
-==1334==    by 0x10933B: dmse (loss.c:33)
-==1334==    by 0x109B2E: nbprop (nn.c:211)
-==1334==    by 0x10CBF0: test_nbprop (test.c:337)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 8 bytes in 1 blocks are indirectly lost in loss record 7 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A291: mnew (linalg.c:59)
-==1334==    by 0x10A2F7: mnew2 (linalg.c:78)
-==1334==    by 0x10A921: madd (linalg.c:260)
-==1334==    by 0x10AA42: msub (linalg.c:283)
-==1334==    by 0x10933B: dmse (loss.c:33)
-==1334==    by 0x109B2E: nbprop (nn.c:211)
-==1334==    by 0x10CBF0: test_nbprop (test.c:337)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 16 bytes in 1 blocks are indirectly lost in loss record 8 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A1E9: mnew (linalg.c:42)
-==1334==    by 0x109441: ninit (nn.c:40)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 16 bytes in 1 blocks are indirectly lost in loss record 9 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A1E9: mnew (linalg.c:42)
-==1334==    by 0x10945B: ninit (nn.c:41)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 16 bytes in 1 blocks are indirectly lost in loss record 10 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A1E9: mnew (linalg.c:42)
-==1334==    by 0x10959E: ninit (nn.c:51)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 32 bytes in 1 blocks are indirectly lost in loss record 11 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10939B: ninit (nn.c:27)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 32 bytes in 1 blocks are indirectly lost in loss record 12 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x1093BA: ninit (nn.c:28)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 32 bytes in 1 blocks are indirectly lost in loss record 13 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A222: mnew (linalg.c:51)
-==1334==    by 0x109441: ninit (nn.c:40)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 32 bytes in 1 blocks are indirectly lost in loss record 14 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A222: mnew (linalg.c:51)
-==1334==    by 0x10945B: ninit (nn.c:41)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 32 bytes in 1 blocks are indirectly lost in loss record 15 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A291: mnew (linalg.c:59)
-==1334==    by 0x10959E: ninit (nn.c:51)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 32 bytes in 1 blocks are indirectly lost in loss record 16 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x1099AF: nbprop (nn.c:178)
-==1334==    by 0x10CBF0: test_nbprop (test.c:337)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 32 bytes in 1 blocks are indirectly lost in loss record 17 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x1099BF: nbprop (nn.c:179)
-==1334==    by 0x10CBF0: test_nbprop (test.c:337)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 32 bytes in 2 blocks are indirectly lost in loss record 18 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A1E9: mnew (linalg.c:42)
-==1334==    by 0x10948E: ninit (nn.c:44)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 32 bytes in 2 blocks are indirectly lost in loss record 19 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A1E9: mnew (linalg.c:42)
-==1334==    by 0x1094B6: ninit (nn.c:45)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 32 bytes in 4 blocks are indirectly lost in loss record 20 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A291: mnew (linalg.c:59)
-==1334==    by 0x10945B: ninit (nn.c:41)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 32 (16 direct, 16 indirect) bytes in 1 blocks are definitely lost in loss record 21 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A1E9: mnew (linalg.c:42)
-==1334==    by 0x10CAAA: test_nbprop (test.c:333)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 32 (16 direct, 16 indirect) bytes in 1 blocks are definitely lost in loss record 22 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A1E9: mnew (linalg.c:42)
-==1334==    by 0x10CB46: test_nbprop (test.c:334)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 32 (16 direct, 16 indirect) bytes in 1 blocks are definitely lost in loss record 23 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A1E9: mnew (linalg.c:42)
-==1334==    by 0x10A2F7: mnew2 (linalg.c:78)
-==1334==    by 0x10A921: madd (linalg.c:260)
-==1334==    by 0x10AA42: msub (linalg.c:283)
-==1334==    by 0x10933B: dmse (loss.c:33)
-==1334==    by 0x109B2E: nbprop (nn.c:211)
-==1334==    by 0x10CBF0: test_nbprop (test.c:337)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 64 bytes in 2 blocks are indirectly lost in loss record 24 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A222: mnew (linalg.c:51)
-==1334==    by 0x10948E: ninit (nn.c:44)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 64 bytes in 2 blocks are indirectly lost in loss record 25 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A222: mnew (linalg.c:51)
-==1334==    by 0x1094B6: ninit (nn.c:45)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 64 bytes in 8 blocks are indirectly lost in loss record 26 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A291: mnew (linalg.c:59)
-==1334==    by 0x1094B6: ninit (nn.c:45)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 80 (16 direct, 64 indirect) bytes in 1 blocks are definitely lost in loss record 27 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x109E82: nbprop (nn.c:258)
-==1334==    by 0x10CBF0: test_nbprop (test.c:337)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 88 bytes in 1 blocks are indirectly lost in loss record 28 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A222: mnew (linalg.c:51)
-==1334==    by 0x10A2F7: mnew2 (linalg.c:78)
-==1334==    by 0x10AB76: mtrns (linalg.c:331)
-==1334==    by 0x10CA62: test_nbprop (test.c:327)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 88 bytes in 1 blocks are indirectly lost in loss record 29 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A222: mnew (linalg.c:51)
-==1334==    by 0x10A2F7: mnew2 (linalg.c:78)
-==1334==    by 0x10AB76: mtrns (linalg.c:331)
-==1334==    by 0x10CA77: test_nbprop (test.c:328)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 88 bytes in 11 blocks are indirectly lost in loss record 30 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A291: mnew (linalg.c:59)
-==1334==    by 0x10A2F7: mnew2 (linalg.c:78)
-==1334==    by 0x10AB76: mtrns (linalg.c:331)
-==1334==    by 0x10CA62: test_nbprop (test.c:327)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 88 bytes in 11 blocks are indirectly lost in loss record 31 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A291: mnew (linalg.c:59)
-==1334==    by 0x10A2F7: mnew2 (linalg.c:78)
-==1334==    by 0x10AB76: mtrns (linalg.c:331)
-==1334==    by 0x10CA77: test_nbprop (test.c:328)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 128 bytes in 4 blocks are indirectly lost in loss record 32 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A291: mnew (linalg.c:59)
-==1334==    by 0x109441: ninit (nn.c:40)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 192 (16 direct, 176 indirect) bytes in 1 blocks are definitely lost in loss record 33 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A1E9: mnew (linalg.c:42)
-==1334==    by 0x10A2F7: mnew2 (linalg.c:78)
-==1334==    by 0x10AB76: mtrns (linalg.c:331)
-==1334==    by 0x10CA62: test_nbprop (test.c:327)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 192 (16 direct, 176 indirect) bytes in 1 blocks are definitely lost in loss record 34 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A1E9: mnew (linalg.c:42)
-==1334==    by 0x10A2F7: mnew2 (linalg.c:78)
-==1334==    by 0x10AB76: mtrns (linalg.c:331)
-==1334==    by 0x10CA77: test_nbprop (test.c:328)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 256 bytes in 8 blocks are indirectly lost in loss record 35 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x10A291: mnew (linalg.c:59)
-==1334==    by 0x10948E: ninit (nn.c:44)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== 928 (40 direct, 888 indirect) bytes in 1 blocks are definitely lost in loss record 36 of 36
-==1334==    at 0x483577F: malloc (vg_replace_malloc.c:299)
-==1334==    by 0x109364: ninit (nn.c:24)
-==1334==    by 0x10C7B7: test_nbprop (test.c:318)
-==1334==    by 0x10CD9C: all_tests (test.c:352)
-==1334==    by 0x10CDD5: main (test.c:357)
-==1334== 
-==1334== LEAK SUMMARY:
-==1334==    definitely lost: 136 bytes in 7 blocks
-==1334==    indirectly lost: 1,352 bytes in 73 blocks
-==1334==      possibly lost: 0 bytes in 0 blocks
-==1334==    still reachable: 0 bytes in 0 blocks
-==1334==         suppressed: 0 bytes in 0 blocks
-==1334== 
-==1334== ERROR SUMMARY: 7 errors from 7 contexts (suppressed: 0 from 0)
-==1334== ERROR SUMMARY: 7 errors from 7 contexts (suppressed: 0 from 0)
+==3622== Memcheck, a memory error detector
+==3622== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==3622== Using Valgrind-3.14.0-353a3587bb-20181007X and LibVEX; rerun with -h for copyright info
+==3622== Command: ./build/enn_test
+==3622== Parent PID: 3579
+==3622== 
+--3622-- 
+--3622-- Valgrind options:
+--3622--    --leak-check=full
+--3622--    --show-leak-kinds=all
+--3622--    --track-origins=yes
+--3622--    --verbose
+--3622--    --log-file=valgrind-out.txt
+--3622-- Contents of /proc/version:
+--3622--   Linux version 4.4.0-22000-Microsoft (Microsoft@Microsoft.com) (gcc version 5.4.0 (GCC) ) #1-Microsoft Fri Jun 04 16:28:00 PST 2021
+--3622-- 
+--3622-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-avx-avx2-bmi
+--3622-- Page sizes: currently 4096, max supported 4096
+--3622-- Valgrind library directory: /usr/lib/x86_64-linux-gnu/valgrind
+--3622-- Reading syms from /mnt/c/Users/Logan/Documents/prog/enn/build/enn_test
+--3622-- Reading syms from /lib/x86_64-linux-gnu/ld-2.28.so
+--3622--   Considering /usr/lib/debug/.build-id/f2/5dfd7b95be4ba386fd71080accae8c0732b711.debug ..
+--3622--   .. build-id is valid
+--3622-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/memcheck-amd64-linux
+--3622--   Considering /usr/lib/debug/.build-id/32/2e77af97f403c3d34ff09edf60b089e72ec889.debug ..
+--3622--   .. build-id is valid
+--3622--    object doesn't have a dynamic symbol table
+--3622-- Scheduler: using generic scheduler lock implementation.
+--3622-- Reading suppressions file: /usr/lib/x86_64-linux-gnu/valgrind/default.supp
+==3622== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-3622-by-logern-on-???
+==3622== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-3622-by-logern-on-???
+==3622== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-3622-by-logern-on-???
+==3622== 
+==3622== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==3622== don't want to do, unless you know exactly what you're doing,
+==3622== or are doing some strange experiment):
+==3622==   /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=3622 ...command...
+==3622== 
+==3622== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==3622==   /path/to/gdb ./build/enn_test
+==3622== and then give GDB the following command
+==3622==   target remote | /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=3622
+==3622== --pid is optional if only one valgrind process is running
+==3622== 
+==3622== error calling PR_SET_PTRACER, vgdb might block
+--3622-- REDIR: 0x401e2f0 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c9ce2 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--3622-- REDIR: 0x401e0d0 (ld-linux-x86-64.so.2:index) redirected to 0x580c9cfc (vgPlain_amd64_linux_REDIR_FOR_index)
+--3622-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_core-amd64-linux.so
+--3622--   Considering /usr/lib/debug/.build-id/34/fbc4cdfbfce1bfc3d2e522a01a050bf724c930.debug ..
+--3622--   .. build-id is valid
+--3622-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so
+--3622--   Considering /usr/lib/debug/.build-id/ca/bb7898ea982d936cbfadd70ae831c6eb63623f.debug ..
+--3622--   .. build-id is valid
+==3622== WARNING: new redirection conflicts with existing -- ignoring it
+--3622--     old: 0x0401e2f0 (strlen              ) R-> (0000.0) 0x580c9ce2 vgPlain_amd64_linux_REDIR_FOR_strlen
+--3622--     new: 0x0401e2f0 (strlen              ) R-> (2007.0) 0x04838d80 strlen
+--3622-- REDIR: 0x401ab10 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4839e40 (strcmp)
+--3622-- REDIR: 0x401e830 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x483d860 (mempcpy)
+--3622-- Reading syms from /lib/x86_64-linux-gnu/libm-2.28.so
+--3622--   Considering /usr/lib/debug/.build-id/88/5dda4b4a5cea600e7b5b98c1ad86996c8d2299.debug ..
+--3622--   .. build-id is valid
+--3622-- Reading syms from /lib/x86_64-linux-gnu/libc-2.28.so
+--3622--   Considering /usr/lib/debug/.build-id/18/b9a9a8c523e5cfe5b5d946d605d09242f09798.debug ..
+--3622--   .. build-id is valid
+--3622-- REDIR: 0x4a64f70 (libc.so.6:memmove) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a64160 (libc.so.6:strncpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a65250 (libc.so.6:strcasecmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a63b70 (libc.so.6:strcat) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a64190 (libc.so.6:rindex) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a66890 (libc.so.6:rawmemchr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a7f230 (libc.so.6:wmemchr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a7ecd0 (libc.so.6:wcscmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a650e0 (libc.so.6:mempcpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a64f10 (libc.so.6:bcmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a64100 (libc.so.6:strncmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a63be0 (libc.so.6:strcmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a65040 (libc.so.6:memset) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a7eca0 (libc.so.6:wcschr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a640a0 (libc.so.6:strnlen) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a63c70 (libc.so.6:strcspn) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a652a0 (libc.so.6:strncasecmp) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a63c40 (libc.so.6:strcpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a653e0 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a804d0 (libc.so.6:wcsnlen) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a641c0 (libc.so.6:strpbrk) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a63ba0 (libc.so.6:index) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a64070 (libc.so.6:strlen) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a6b280 (libc.so.6:memrchr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a652f0 (libc.so.6:strcasecmp_l) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a64ee0 (libc.so.6:memchr) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a7edb0 (libc.so.6:wcslen) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a64460 (libc.so.6:strspn) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a65220 (libc.so.6:stpncpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a651f0 (libc.so.6:stpcpy) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a668c0 (libc.so.6:strchrnul) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4a65340 (libc.so.6:strncasecmp_l) redirected to 0x482b1b0 (_vgnU_ifunc_wrapper)
+--3622-- REDIR: 0x4b37fa0 (libc.so.6:__strrchr_avx2) redirected to 0x4838790 (rindex)
+--3622-- REDIR: 0x4a60350 (libc.so.6:malloc) redirected to 0x4835710 (malloc)
+--3622-- REDIR: 0x4a609a0 (libc.so.6:free) redirected to 0x4836940 (free)
+--3622-- REDIR: 0x4a61120 (libc.so.6:calloc) redirected to 0x4837ab0 (calloc)
+==3622== Conditional jump or move depends on uninitialised value(s)
+==3622==    at 0x109E7F: arelu (activ.c:7)
+==3622==    by 0x10A3D6: mapply (linalg.c:118)
+==3622==    by 0x109A94: nbprop (nn.c:207)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622==  Uninitialised value was created by a heap allocation
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10945B: ninit (nn.c:42)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== Conditional jump or move depends on uninitialised value(s)
+==3622==    at 0x109E7F: arelu (activ.c:7)
+==3622==    by 0x10A3D6: mapply (linalg.c:118)
+==3622==    by 0x1097F4: ndiff (nn.c:129)
+==3622==    by 0x109B20: nbprop (nn.c:213)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622==  Uninitialised value was created by a heap allocation
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x109530: ninit (nn.c:51)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== Conditional jump or move depends on uninitialised value(s)
+==3622==    at 0x109E7F: arelu (activ.c:7)
+==3622==    by 0x10A3D6: mapply (linalg.c:118)
+==3622==    by 0x109810: ndiff (nn.c:130)
+==3622==    by 0x109B20: nbprop (nn.c:213)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622==  Uninitialised value was created by a heap allocation
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x109530: ninit (nn.c:51)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== Conditional jump or move depends on uninitialised value(s)
+==3622==    at 0x109E7F: arelu (activ.c:7)
+==3622==    by 0x10A3D6: mapply (linalg.c:118)
+==3622==    by 0x1097F4: ndiff (nn.c:129)
+==3622==    by 0x109C5F: nbprop (nn.c:229)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622==  Uninitialised value was created by a heap allocation
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10945B: ninit (nn.c:42)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== Conditional jump or move depends on uninitialised value(s)
+==3622==    at 0x109E7F: arelu (activ.c:7)
+==3622==    by 0x10A3D6: mapply (linalg.c:118)
+==3622==    by 0x109810: ndiff (nn.c:130)
+==3622==    by 0x109C5F: nbprop (nn.c:229)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622==  Uninitialised value was created by a heap allocation
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10945B: ninit (nn.c:42)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+--3622-- REDIR: 0x4b38170 (libc.so.6:__strlen_avx2) redirected to 0x4838c60 (strlen)
+--3622-- REDIR: 0x4b37db0 (libc.so.6:__strchrnul_avx2) redirected to 0x483d390 (strchrnul)
+--3622-- REDIR: 0x4b38690 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x483d4a0 (mempcpy)
+==3622== 
+==3622== HEAP SUMMARY:
+==3622==     in use at exit: 1,480 bytes in 111 blocks
+==3622==   total heap usage: 1,072 allocs, 961 frees, 21,400 bytes allocated
+==3622== 
+==3622== Searching for pointers to 111 not-freed blocks
+==3622== Checked 74,040 bytes
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 1 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x109504: ninit (nn.c:49)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 2 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x109530: ninit (nn.c:51)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 3 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x109530: ninit (nn.c:51)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 4 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10CA58: test_nbprop (test.c:334)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 5 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10CA58: test_nbprop (test.c:334)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 6 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10CAF4: test_nbprop (test.c:335)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 7 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10CAF4: test_nbprop (test.c:335)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 8 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A8CF: madd (linalg.c:260)
+==3622==    by 0x10A9F0: msub (linalg.c:283)
+==3622==    by 0x10933B: dmse (loss.c:33)
+==3622==    by 0x109AE8: nbprop (nn.c:212)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 9 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A8CF: madd (linalg.c:260)
+==3622==    by 0x10A9F0: msub (linalg.c:283)
+==3622==    by 0x10933B: dmse (loss.c:33)
+==3622==    by 0x109AE8: nbprop (nn.c:212)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 10 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A50C: mconst (linalg.c:167)
+==3622==    by 0x1097BD: ndiff (nn.c:123)
+==3622==    by 0x109B20: nbprop (nn.c:213)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 11 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A50C: mconst (linalg.c:167)
+==3622==    by 0x1097BD: ndiff (nn.c:123)
+==3622==    by 0x109B20: nbprop (nn.c:213)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 12 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A35A: mapply (linalg.c:112)
+==3622==    by 0x1097F4: ndiff (nn.c:129)
+==3622==    by 0x109B20: nbprop (nn.c:213)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 13 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A35A: mapply (linalg.c:112)
+==3622==    by 0x109810: ndiff (nn.c:130)
+==3622==    by 0x109B20: nbprop (nn.c:213)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 14 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A78E: mhad (linalg.c:230)
+==3622==    by 0x109B3C: nbprop (nn.c:214)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 15 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A78E: mhad (linalg.c:230)
+==3622==    by 0x109B3C: nbprop (nn.c:214)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 16 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10AA46: mscale (linalg.c:304)
+==3622==    by 0x109BA7: nbprop (nn.c:219)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 17 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10AA46: mscale (linalg.c:304)
+==3622==    by 0x109BA7: nbprop (nn.c:219)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 8 bytes in 1 blocks are indirectly lost in loss record 18 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A5D3: mmul (linalg.c:195)
+==3622==    by 0x109BE1: nbprop (nn.c:220)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 16 bytes in 1 blocks are indirectly lost in loss record 19 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A197: mnew (linalg.c:42)
+==3622==    by 0x109441: ninit (nn.c:40)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 16 bytes in 1 blocks are indirectly lost in loss record 20 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x109441: ninit (nn.c:40)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 16 bytes in 1 blocks are indirectly lost in loss record 21 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A197: mnew (linalg.c:42)
+==3622==    by 0x10945B: ninit (nn.c:42)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 16 bytes in 1 blocks are indirectly lost in loss record 22 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10945B: ninit (nn.c:42)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 16 bytes in 1 blocks are indirectly lost in loss record 23 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A197: mnew (linalg.c:42)
+==3622==    by 0x109504: ninit (nn.c:49)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 16 bytes in 1 blocks are indirectly lost in loss record 24 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x109504: ninit (nn.c:49)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 16 bytes in 1 blocks are indirectly lost in loss record 25 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A197: mnew (linalg.c:42)
+==3622==    by 0x109530: ninit (nn.c:51)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 16 bytes in 1 blocks are indirectly lost in loss record 26 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A197: mnew (linalg.c:42)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10AA46: mscale (linalg.c:304)
+==3622==    by 0x109BA7: nbprop (nn.c:219)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 16 bytes in 1 blocks are indirectly lost in loss record 27 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A197: mnew (linalg.c:42)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A5D3: mmul (linalg.c:195)
+==3622==    by 0x109BE1: nbprop (nn.c:220)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 16 bytes in 1 blocks are indirectly lost in loss record 28 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A5D3: mmul (linalg.c:195)
+==3622==    by 0x109BE1: nbprop (nn.c:220)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 16 bytes in 2 blocks are indirectly lost in loss record 29 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x109441: ninit (nn.c:40)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 16 bytes in 2 blocks are indirectly lost in loss record 30 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10945B: ninit (nn.c:42)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 16 (8 direct, 8 indirect) bytes in 1 blocks are definitely lost in loss record 31 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A35A: mapply (linalg.c:112)
+==3622==    by 0x1097F4: ndiff (nn.c:129)
+==3622==    by 0x109B20: nbprop (nn.c:213)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 16 (8 direct, 8 indirect) bytes in 1 blocks are definitely lost in loss record 32 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A35A: mapply (linalg.c:112)
+==3622==    by 0x109810: ndiff (nn.c:130)
+==3622==    by 0x109B20: nbprop (nn.c:213)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 24 bytes in 2 blocks are indirectly lost in loss record 33 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A50C: mconst (linalg.c:167)
+==3622==    by 0x1097BD: ndiff (nn.c:123)
+==3622==    by 0x109C5F: nbprop (nn.c:229)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 24 bytes in 2 blocks are indirectly lost in loss record 34 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A8CF: madd (linalg.c:260)
+==3622==    by 0x10A9F0: msub (linalg.c:283)
+==3622==    by 0x10982C: ndiff (nn.c:131)
+==3622==    by 0x109C5F: nbprop (nn.c:229)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 24 bytes in 3 blocks are indirectly lost in loss record 35 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A50C: mconst (linalg.c:167)
+==3622==    by 0x1097BD: ndiff (nn.c:123)
+==3622==    by 0x109C5F: nbprop (nn.c:229)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 24 bytes in 3 blocks are indirectly lost in loss record 36 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A35A: mapply (linalg.c:112)
+==3622==    by 0x1097F4: ndiff (nn.c:129)
+==3622==    by 0x109C5F: nbprop (nn.c:229)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 24 bytes in 3 blocks are indirectly lost in loss record 37 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A35A: mapply (linalg.c:112)
+==3622==    by 0x109810: ndiff (nn.c:130)
+==3622==    by 0x109C5F: nbprop (nn.c:229)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 24 bytes in 3 blocks are indirectly lost in loss record 38 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A8CF: madd (linalg.c:260)
+==3622==    by 0x10A9F0: msub (linalg.c:283)
+==3622==    by 0x10982C: ndiff (nn.c:131)
+==3622==    by 0x109C5F: nbprop (nn.c:229)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 32 bytes in 1 blocks are indirectly lost in loss record 39 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10939B: ninit (nn.c:27)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 32 bytes in 1 blocks are indirectly lost in loss record 40 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x1093BA: ninit (nn.c:28)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 32 bytes in 1 blocks are indirectly lost in loss record 41 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x109969: nbprop (nn.c:179)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 32 bytes in 1 blocks are indirectly lost in loss record 42 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x109979: nbprop (nn.c:180)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 32 bytes in 2 blocks are indirectly lost in loss record 43 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A197: mnew (linalg.c:42)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A50C: mconst (linalg.c:167)
+==3622==    by 0x109498: ninit (nn.c:45)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 32 bytes in 2 blocks are indirectly lost in loss record 44 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A50C: mconst (linalg.c:167)
+==3622==    by 0x109498: ninit (nn.c:45)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 32 bytes in 2 blocks are indirectly lost in loss record 45 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A197: mnew (linalg.c:42)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A50C: mconst (linalg.c:167)
+==3622==    by 0x1094CD: ninit (nn.c:46)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 32 bytes in 2 blocks are indirectly lost in loss record 46 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A50C: mconst (linalg.c:167)
+==3622==    by 0x1094CD: ninit (nn.c:46)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 32 bytes in 4 blocks are indirectly lost in loss record 47 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A50C: mconst (linalg.c:167)
+==3622==    by 0x1094CD: ninit (nn.c:46)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 32 (16 direct, 16 indirect) bytes in 1 blocks are definitely lost in loss record 48 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A197: mnew (linalg.c:42)
+==3622==    by 0x10CA58: test_nbprop (test.c:334)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 32 (16 direct, 16 indirect) bytes in 1 blocks are definitely lost in loss record 49 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A197: mnew (linalg.c:42)
+==3622==    by 0x10CAF4: test_nbprop (test.c:335)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 32 (16 direct, 16 indirect) bytes in 1 blocks are definitely lost in loss record 50 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A197: mnew (linalg.c:42)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A8CF: madd (linalg.c:260)
+==3622==    by 0x10A9F0: msub (linalg.c:283)
+==3622==    by 0x10933B: dmse (loss.c:33)
+==3622==    by 0x109AE8: nbprop (nn.c:212)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 32 (16 direct, 16 indirect) bytes in 1 blocks are definitely lost in loss record 51 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A197: mnew (linalg.c:42)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A50C: mconst (linalg.c:167)
+==3622==    by 0x1097BD: ndiff (nn.c:123)
+==3622==    by 0x109B20: nbprop (nn.c:213)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 32 (16 direct, 16 indirect) bytes in 1 blocks are definitely lost in loss record 52 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A197: mnew (linalg.c:42)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A78E: mhad (linalg.c:230)
+==3622==    by 0x109B3C: nbprop (nn.c:214)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 48 (24 direct, 24 indirect) bytes in 2 blocks are definitely lost in loss record 53 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A35A: mapply (linalg.c:112)
+==3622==    by 0x1097F4: ndiff (nn.c:129)
+==3622==    by 0x109C5F: nbprop (nn.c:229)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 48 (24 direct, 24 indirect) bytes in 2 blocks are definitely lost in loss record 54 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A35A: mapply (linalg.c:112)
+==3622==    by 0x109810: ndiff (nn.c:130)
+==3622==    by 0x109C5F: nbprop (nn.c:229)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 64 bytes in 4 blocks are indirectly lost in loss record 55 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A50C: mconst (linalg.c:167)
+==3622==    by 0x109498: ninit (nn.c:45)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 80 (32 direct, 48 indirect) bytes in 2 blocks are definitely lost in loss record 56 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A197: mnew (linalg.c:42)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A50C: mconst (linalg.c:167)
+==3622==    by 0x1097BD: ndiff (nn.c:123)
+==3622==    by 0x109C5F: nbprop (nn.c:229)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 80 (32 direct, 48 indirect) bytes in 2 blocks are definitely lost in loss record 57 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A197: mnew (linalg.c:42)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10A8CF: madd (linalg.c:260)
+==3622==    by 0x10A9F0: msub (linalg.c:283)
+==3622==    by 0x10982C: ndiff (nn.c:131)
+==3622==    by 0x109C5F: nbprop (nn.c:229)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 88 bytes in 1 blocks are indirectly lost in loss record 58 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10AB24: mtrns (linalg.c:331)
+==3622==    by 0x10CA10: test_nbprop (test.c:328)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 88 bytes in 1 blocks are indirectly lost in loss record 59 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A1D0: mnew (linalg.c:51)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10AB24: mtrns (linalg.c:331)
+==3622==    by 0x10CA25: test_nbprop (test.c:329)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 88 bytes in 11 blocks are indirectly lost in loss record 60 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10AB24: mtrns (linalg.c:331)
+==3622==    by 0x10CA10: test_nbprop (test.c:328)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 88 bytes in 11 blocks are indirectly lost in loss record 61 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10AB24: mtrns (linalg.c:331)
+==3622==    by 0x10CA25: test_nbprop (test.c:329)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 152 (16 direct, 136 indirect) bytes in 1 blocks are definitely lost in loss record 62 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x109E30: nbprop (nn.c:258)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 192 (16 direct, 176 indirect) bytes in 1 blocks are definitely lost in loss record 63 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A197: mnew (linalg.c:42)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10AB24: mtrns (linalg.c:331)
+==3622==    by 0x10CA10: test_nbprop (test.c:328)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 192 (16 direct, 176 indirect) bytes in 1 blocks are definitely lost in loss record 64 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A197: mnew (linalg.c:42)
+==3622==    by 0x10A2A5: mnew2 (linalg.c:78)
+==3622==    by 0x10AB24: mtrns (linalg.c:331)
+==3622==    by 0x10CA25: test_nbprop (test.c:329)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 496 (40 direct, 456 indirect) bytes in 1 blocks are definitely lost in loss record 65 of 65
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x109364: ninit (nn.c:24)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== LEAK SUMMARY:
+==3622==    definitely lost: 296 bytes in 19 blocks
+==3622==    indirectly lost: 1,184 bytes in 92 blocks
+==3622==      possibly lost: 0 bytes in 0 blocks
+==3622==    still reachable: 0 bytes in 0 blocks
+==3622==         suppressed: 0 bytes in 0 blocks
+==3622== 
+==3622== ERROR SUMMARY: 30 errors from 20 contexts (suppressed: 0 from 0)
+==3622== 
+==3622== 1 errors in context 1 of 20:
+==3622== Conditional jump or move depends on uninitialised value(s)
+==3622==    at 0x109E7F: arelu (activ.c:7)
+==3622==    by 0x10A3D6: mapply (linalg.c:118)
+==3622==    by 0x109810: ndiff (nn.c:130)
+==3622==    by 0x109B20: nbprop (nn.c:213)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622==  Uninitialised value was created by a heap allocation
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x109530: ninit (nn.c:51)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 
+==3622== 1 errors in context 2 of 20:
+==3622== Conditional jump or move depends on uninitialised value(s)
+==3622==    at 0x109E7F: arelu (activ.c:7)
+==3622==    by 0x10A3D6: mapply (linalg.c:118)
+==3622==    by 0x1097F4: ndiff (nn.c:129)
+==3622==    by 0x109B20: nbprop (nn.c:213)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622==  Uninitialised value was created by a heap allocation
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x109530: ninit (nn.c:51)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 
+==3622== 3 errors in context 3 of 20:
+==3622== Conditional jump or move depends on uninitialised value(s)
+==3622==    at 0x109E7F: arelu (activ.c:7)
+==3622==    by 0x10A3D6: mapply (linalg.c:118)
+==3622==    by 0x109810: ndiff (nn.c:130)
+==3622==    by 0x109C5F: nbprop (nn.c:229)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622==  Uninitialised value was created by a heap allocation
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10945B: ninit (nn.c:42)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 
+==3622== 3 errors in context 4 of 20:
+==3622== Conditional jump or move depends on uninitialised value(s)
+==3622==    at 0x109E7F: arelu (activ.c:7)
+==3622==    by 0x10A3D6: mapply (linalg.c:118)
+==3622==    by 0x1097F4: ndiff (nn.c:129)
+==3622==    by 0x109C5F: nbprop (nn.c:229)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622==  Uninitialised value was created by a heap allocation
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10945B: ninit (nn.c:42)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== 
+==3622== 7 errors in context 5 of 20:
+==3622== Conditional jump or move depends on uninitialised value(s)
+==3622==    at 0x109E7F: arelu (activ.c:7)
+==3622==    by 0x10A3D6: mapply (linalg.c:118)
+==3622==    by 0x109A94: nbprop (nn.c:207)
+==3622==    by 0x10CB9E: test_nbprop (test.c:338)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622==  Uninitialised value was created by a heap allocation
+==3622==    at 0x483577F: malloc (vg_replace_malloc.c:299)
+==3622==    by 0x10A23F: mnew (linalg.c:59)
+==3622==    by 0x10945B: ninit (nn.c:42)
+==3622==    by 0x10C765: test_nbprop (test.c:319)
+==3622==    by 0x10CD4A: all_tests (test.c:353)
+==3622==    by 0x10CD83: main (test.c:358)
+==3622== 
+==3622== ERROR SUMMARY: 30 errors from 20 contexts (suppressed: 0 from 0)
