@@ -49,7 +49,7 @@ neural_network* ninit(int inputs, int hidden_layers, int hiddens, int outputs, d
 	/* First biases is added after transformation to R^hiddens, so it should be in R^hiddens */
 	nn->biases[0] = mconst(hiddens, 1, 1.0, NULL);
 	/* Allocate the hidden layers and initialize them with ones. These map R^hiddens -> R^hiddens*/
-	for(i = 1; i < hidden_layers + 1; i++){
+	for(i = 1; i < hidden_layers; i++){
 		nn->weights[i] = mconst(hiddens, hiddens, 1.0, NULL);
 		nn->biases[i] = mconst(hiddens, 1, 1.0, NULL);
 	}

@@ -346,7 +346,14 @@ static char* test_nbprop(){
 	Matrix *test_X2, *test_y2, *test_X, *test_y;
 	Matrix *cur_X, *cur_y;
 	Matrix ***gradients, **weight_gradients, **bias_gradients;
-	/* 1 input neuron, 2 hidden layers, 2  */
+	/* 1 input neuron on input layer, 2 hidden layers /w 2 neurons each, 1 output layer with 1 neuron */
+	/* Weight 1 maps R^1 -> R^2 (2 x 1) layer 0 (input) -> layer 1
+	Layer 1 maps R^2 -> R^2 (2 x 2) layer 1 -> layer 2
+	Layer 3 maps R^2 -> R^1 (1 x 2) layer 2 -> layer 3 (output)
+	There are supposed to be n-1 weights and not n weights, why?
+	Ah, weights are between layers and not on them. The last doesn't need a weight.
+	Weights correspond to a transformation between layers, not a layer itself.
+	*/
 	neural_network* nn = ninit(1, 2, 2, 1, &arelu, NULL);
 	int current_index = 0;
 	/* Data is from Anscombe's quartet set 1. Equation should be y=3x+5 */
