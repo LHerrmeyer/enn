@@ -344,7 +344,7 @@ static char* test_mfree(){
 
 static char* test_nbprop(){
 	Matrix *test_X2, *test_y2, *test_X, *test_y;
-	Matrix *cur_X, *cur_y;
+	Matrix *cur_X, *cur_y, *preds, *pred, *x_in;
 	Matrix ***gradients, **weight_gradients, **bias_gradients;
 	/* 1 input neuron on input layer, 2 hidden layers /w 2 neurons each, 1 output layer with 1 neuron */
 	/* Weight 1 maps R^1 -> R^2 (2 x 1) layer 0 (input) -> layer 1
@@ -355,7 +355,7 @@ static char* test_nbprop(){
 	Weights correspond to a transformation between layers, not a layer itself.
 	*/
 	neural_network* nn = ninit(1, 2, 2, 1, &arelu, NULL);
-	int current_index = 0;
+	int current_index = 0, i = 0;
 	/* Data is from Anscombe's quartet set 1. Equation should be y=3x+5 */
 	double test_set_X[11] = {10.0, 8.0, 13.0, 9.0, 11.0, 14.0, 6.0, 4.0, 12.0, 7.0, 5.0};
 	double test_set_y[11] = {8.04, 6.95, 7.58, 8.81, 8.33, 9.96, 7.24, 4.26, 10.84, 4.82, 5.68};
@@ -374,6 +374,18 @@ static char* test_nbprop(){
 
 	/* Start backprop with mean squared error loss function */
 	gradients = nbprop(nn, cur_X, cur_y, lmse, dmse);
+	weight_gradients = gradients[0];
+	bias_gradients = gradients[1];
+
+	/* Calculate MSE */
+	preds = mnew(test_X->rows, 1);
+	for(i = 0; i < test_X->rows; i++){
+		MDUP(test_X->data + i, x_in, 1, 1);
+		mprint(x_in);
+		mprint(nn->weights[0]);
+		pred = npred(nn, x_in);
+	}
+	mprint(preds);
 
 	return NULL;
 }

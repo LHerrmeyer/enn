@@ -99,7 +99,8 @@ class Network(object):
         for l in xrange(2, self.num_layers):
             print "========================================="
             z = zs[-l]
-            print "l: {0}, self.num_layers-l: {1}".format(l, self.num_layers-l)
+            layer = len(self.weights) + 1 - l
+            print "l: {0}, Layer: {1}".format(l, layer)
             print "Z:"
             print z
             sp = sigmoid_prime(z)
@@ -107,9 +108,17 @@ class Network(object):
             print sp
             print "Last activation (transposed):"
             print activations[-l-1].transpose()
-            print "Next weights (transposed):"
+            print "Last activation (layer - 1)"
+            print activations[layer - 1].transpose()
+            print "Activations[-l]"
+            print activations[-l]
+            print "Activations[layer]"
+            print activations[layer]
+            print "Next ({0}) weights (transposed):".format(layer+1)
             print self.weights[-l+1].transpose()
-            print "Current weights:"
+            print "Next weights transposed using layer instead of l and sub 1:"
+            print self.weights[layer+1 - 1].transpose()
+            print "Current ({0}) weights:".format(layer)
             print self.weights[-l]
             print "Old delta:"
             print delta

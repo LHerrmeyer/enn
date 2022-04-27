@@ -15,7 +15,7 @@ double lmse(const Matrix* actual, const Matrix* pred){
 	double sum_square_error = 0, mean_square_error = 0;
 	int row;
 
-	ASSERTM(actual->rows != pred->rows, "Row counts not equal");
+	if(actual->rows != pred->rows)return 0.0;
 
 	for(row = 0; row < actual->rows; row++){
 		sum_square_error += SQR((actual->data[row][0] - pred->data[row][0]));
