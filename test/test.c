@@ -266,11 +266,11 @@ static char* test_npred(){
 		{5.8, 2.7, 3.9, 1.2}
 	};
 	int test_set_y[N_TESTS] = {1, 0, 2, 1, 1, 0, 1, 2, 1, 1};
-	n_layers = 3;
+	n_layers = 4;
 
 	/* Allocate variables for weights and biases */
-	weights = malloc(sizeof(Matrix*) * n_layers);
-	biases = malloc(sizeof(Matrix*) * n_layers);
+	weights = malloc(sizeof(Matrix*) * (n_layers - 1));
+	biases = malloc(sizeof(Matrix*) * (n_layers - 1));
 
 	/* Put weights and biases into Matrix* structs */
 	MDUP(w0, weights[0], 4, 4);
@@ -281,7 +281,7 @@ static char* test_npred(){
 	MDUP(&b2, biases[2], 1, 3);
 
 	/* Convert biases to column vectors */
-	for(i = 0; i < n_layers; i++){
+	for(i = 0; i < n_layers - 1; i++){
 		Matrix* cur_bias = biases[i];
 		biases[i] = mtrns(cur_bias, NULL);
 		mfree(cur_bias);
@@ -293,7 +293,7 @@ static char* test_npred(){
 	nn->biases = biases;
 	nn->hidden_activ = &arelu;
 	nn->output_activ = &asmax;
-	nn->n_layers = 3;
+	nn->n_layers = n_layers;
 
 	/* Run the tests */
 	for(i = 0; i < N_TESTS; i++){
@@ -355,8 +355,10 @@ static char* test_nbprop(){
 	Weights correspond to a transformation between layers, not a layer itself.
 	*/
 	neural_network* nn = ninit(1, 2, 2, 1, &arelu, NULL);
-	int current_index = 0, i = 0;
-	/* Data is from Anscombe's quartet set 1. Equation should be y=3x+5 */
+	int current_index = 0, i, epoch;
+	double mse;
+	double learning_rate = 0.001;
+	/* Data is from Anscombe's quartet set 1. Equation should be y=3x+5, and MSE for a linear model is 1.25 */
 	double test_set_X[11] = {10.0, 8.0, 13.0, 9.0, 11.0, 14.0, 6.0, 4.0, 12.0, 7.0, 5.0};
 	double test_set_y[11] = {8.04, 6.95, 7.58, 8.81, 8.33, 9.96, 7.24, 4.26, 10.84, 4.82, 5.68};
 
@@ -368,25 +370,60 @@ static char* test_nbprop(){
 	mfree(test_X2);
 	mfree(test_y2);
 
-	/* Get current X and y values to train on */
-	MDUP(&test_X->data[current_index], cur_X, 1, 1); /* One row, one col */
-	MDUP(&test_y->data[current_index], cur_y, 1, 1);
+	for(epoch = 0; epoch < 200; epoch++){
+		int current_index = epoch % test_X->rows;
+		printf("Current epoch: %d, index: %d\n", epoch, current_index);
+		/* Get current X and y values to train on */
+		MDUP(&test_X->data[current_index], cur_X, 1, 1); /* One row, one col */
+		MDUP(&test_y->data[current_index], cur_y, 1, 1);
+		printf("Current x: %f\n",cur_X->data[0][0]);
+		printf("Current y: %f\n",cur_y->data[0][0]);
 
-	/* Start backprop with mean squared error loss function */
-	gradients = nbprop(nn, cur_X, cur_y, lmse, dmse);
-	weight_gradients = gradients[0];
-	bias_gradients = gradients[1];
+		/* Start backprop with mean squared error loss function */
+		gradients = nbprop(nn, cur_X, cur_y, lmse, dmse);
+		weight_gradients = gradients[0];
+		bias_gradients = gradients[1];
 
-	/* Calculate MSE */
-	preds = mnew(test_X->rows, 1);
-	for(i = 0; i < test_X->rows; i++){
-		MDUP(test_X->data + i, x_in, 1, 1);
-		mprint(x_in);
-		mprint(nn->weights[0]);
-		pred = npred(nn, x_in);
+		printf("Updating weights...\n");
+		for(i = 0; i < nn->n_layers - 1; i++){
+			Matrix *cur_weight_gradient = mscale(weight_gradients[i], learning_rate, NULL);
+			Matrix *cur_bias_gradient = mscale(bias_gradients[i], learning_rate, NULL);
+			/*printf("Current weight gradient:\n");
+			mprint(weight_gradients[i]);
+			printf("Current bias gradient:\n");
+			mprint(bias_gradients[i]);*/
+			nn->weights[i] = msub(nn->weights[i], cur_weight_gradient, nn->weights[i]);
+			nn->biases[i] = msub(nn->biases[i], cur_bias_gradient, nn->biases[i]);
+			mfree(cur_weight_gradient);
+			mfree(cur_bias_gradient);
+			printf("Current weights:\n");
+			mprint(nn->weights[i]);
+			printf("Current biases:\n");
+			mprint(nn->biases[i]);
+		}
+		/* Calculate MSE */
+		preds = mnew(test_X->rows, 1);
+		for(i = 0; i < test_X->rows; i++){
+			MDUP(test_X->data + i, x_in, 1, 1);
+			/*printf("X_in:\n");
+			mprint(x_in);*/
+			/*printf("nn->weights[0]:\n");
+			mprint(nn->weights[0]);*/
+			pred = npred(nn, x_in);
+			/*printf("pred:\n");
+			mprint(pred);*/
+			preds->data[i][0] = pred->data[0][0];
+			mfree(pred);
+		}
+		/*
+		printf("Preds:\n");
+		mprint(preds);
+		printf("Actuals:\n");
+		mprint(test_y);*/
+		mse = lmse(test_y, preds);
+		printf("mse: %f\n",mse);
 	}
-	mprint(preds);
-
+	
 	return NULL;
 }
 

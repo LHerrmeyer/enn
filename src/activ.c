@@ -7,6 +7,10 @@ double arelu(double x){
 	return (x >= 0) ? x : 0;
 }
 
+double drelu(double output){
+	return output > 0;
+}
+
 /* Leaky ReLU */
 double alrelu(double x){
 	return (x >= 0) ? x : 0.01*x;

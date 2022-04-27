@@ -94,16 +94,17 @@ Matrix* npred(const neural_network* nn, const Matrix* x){
 	if(!nn || !x || !nn->weights || !nn->biases)return NULL;
 
 	current_vector = mscale(x, 1.0, NULL);
-	for(layer = 0; layer < nn->n_layers; layer++){
+	/* There are 1 less weights than layers */
+	for(layer = 0; layer < nn->n_layers - 1; layer++){
 		/* Apply the weights and biases */
 		product = mmul(nn->weights[layer], current_vector, NULL);
-		printf("Product:\n");
-		mprint(product);
-		printf("biases:\n");
-		mprint(nn->biases[layer]);
-		printf("Sum:\n");
+		D printf("Product:\n");
+		D mprint(product);
+		D printf("biases:\n");
+		D mprint(nn->biases[layer]);
+		D printf("Sum:\n");
 		sum = madd(product, nn->biases[layer], NULL); /* Segfault here */
-		mprint(sum);
+		D mprint(sum);
 		mfree(current_vector);
 		mfree(product);
 
@@ -303,6 +304,7 @@ Matrix*** nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* 
 		z = Zs[layer - 1]; /* Z vector for current layer (unactivated layer output) */
 		/* sp = sigmoid_prime(z) */
 		activationp = ndiff(z, nn->hidden_activ); /* Derivative of activation function for current layer */
+		/*activationp = mapply(z, drelu, NULL);*/
 		/* last_activation = activations[-l-1].transpose() */
 		last_activation = mtrns(activations[layer - 1], NULL); /* Transpose of activation of layer n-1 */
 		D printf("z:\n");

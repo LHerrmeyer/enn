@@ -5,6 +5,7 @@ enn_test
 # Nano files
 *.swp
 *.save
+*.bak
 
 # Prerequisites
 *.d
