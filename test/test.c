@@ -354,10 +354,10 @@ static char* test_nbprop(){
 	Ah, weights are between layers and not on them. The last doesn't need a weight.
 	Weights correspond to a transformation between layers, not a layer itself.
 	*/
-	neural_network* nn = ninit(1, 2, 2, 1, &arelu, NULL);
+	neural_network* nn = ninit(1, 2, 2, 1, &alrelu, NULL);
 	int current_index = 0, i, epoch;
 	double mse;
-	double learning_rate = 0.001;
+	double learning_rate = 0.0025;
 	/* Data is from Anscombe's quartet set 1. Equation should be y=3x+5, and MSE for a linear model is 1.25 */
 	double test_set_X[11] = {10.0, 8.0, 13.0, 9.0, 11.0, 14.0, 6.0, 4.0, 12.0, 7.0, 5.0};
 	double test_set_y[11] = {8.04, 6.95, 7.58, 8.81, 8.33, 9.96, 7.24, 4.26, 10.84, 4.82, 5.68};
@@ -370,7 +370,7 @@ static char* test_nbprop(){
 	mfree(test_X2);
 	mfree(test_y2);
 
-	for(epoch = 0; epoch < 200; epoch++){
+	for(epoch = 0; epoch < 2000; epoch++){
 		int current_index = epoch % test_X->rows;
 		printf("Current epoch: %d, index: %d\n", epoch, current_index);
 		/* Get current X and y values to train on */

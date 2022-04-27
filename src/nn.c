@@ -173,7 +173,7 @@ Matrix*** nbprop(const neural_network* nn, const Matrix* X_train, const Matrix* 
 	Matrix*** nablas; /* Holds both the weight and bias gradients */
 	Matrix **Zs; /* A list of Z vectors (unactivated outputs) for each layer */
 	Matrix **activations = NULL; /* A list of activations for each layer */
-	Matrix *z = NULL; /* Current z vector */
+	Matrix *z = NULL; /* Current z (unactivated layer output) vector */
 	Matrix *activation = NULL; /* Current activation */
 	Matrix *activationp; /* Activation prime */
 	Matrix *last_activation; /* Activation of last layer */
